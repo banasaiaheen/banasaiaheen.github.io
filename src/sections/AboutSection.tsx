@@ -19,9 +19,9 @@ export default function AboutSection({ language }: AboutSectionProps) {
     <section id="about" className="flex flex-col gap-8 bg-[#0d0d0d] px-5 py-14 lg:gap-12 lg:px-8 lg:py-24">
       <SectionTitle number={getSectionNumber("about")} title={t.title} />
       <div className="flex flex-col gap-6 lg:flex-row lg:flex-wrap">
-        <div className="relative w-full lg:w-[262px] lg:shrink-0">
-          <div className="flex aspect-[4/3] w-full items-center justify-center border border-[#2a2a2a] bg-[#1c1c1c] lg:aspect-square">
-            <span className="font-barlow text-[36px] font-black tracking-[4px] text-[#2a2a2a] lg:text-[80px]">
+        <div className="relative w-[140px] lg:w-[262px] lg:shrink-0">
+          <div className="flex aspect-square w-full items-center justify-center border border-[#2a2a2a] bg-[#1c1c1c]">
+            <span className="font-barlow text-[28px] font-black tracking-[4px] text-[#2a2a2a] lg:text-[80px]">
               B
             </span>
           </div>
