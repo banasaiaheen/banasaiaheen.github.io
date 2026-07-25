@@ -1,10 +1,12 @@
-export type EducationCardLanguage = "english" | "arabic";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
+
 export type EducationCardVersion = "desktop" | "responsive";
 export type EducationCardType = "main" | "sub";
 
 export interface EducationCardProps {
   className?: string;
-  language?: EducationCardLanguage;
+  language?: Language;
   version?: EducationCardVersion;
   type?: EducationCardType;
   /** "main" only */
@@ -23,6 +25,7 @@ export interface EducationCardProps {
   source?: string;
 }
 
+/** Presentational only — content comes from src/data/education.ts. */
 export default function EducationCard({
   className,
   language = "english",
@@ -44,11 +47,11 @@ export default function EducationCard({
     return (
       <div
         dir={dir}
-        className={[
+        className={cn(
           "relative flex items-start overflow-hidden border-b border-[#2a2a2a] bg-[#d42b2b]",
           isResponsive ? "w-full flex-col gap-2 p-4" : "w-[548px] min-w-[548px] flex-col gap-2 px-8 py-10",
-          className ?? "",
-        ].join(" ")}
+          className,
+        )}
       >
         <span
           aria-hidden="true"
@@ -91,11 +94,11 @@ export default function EducationCard({
   return (
     <div
       dir={dir}
-      className={[
+      className={cn(
         "flex items-start gap-6 border-b border-[#5f5f5f]",
         isResponsive ? "w-full p-4" : "w-[548px] min-w-[548px] px-8 py-10",
-        className ?? "",
-      ].join(" ")}
+        className,
+      )}
     >
       {numberEl}
       {details}

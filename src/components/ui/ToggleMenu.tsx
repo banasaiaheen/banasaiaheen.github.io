@@ -1,11 +1,11 @@
 import { useState, type ButtonHTMLAttributes } from "react";
-
-export type ToggleMenuLanguage = "english" | "arabic";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
 
 export interface ToggleMenuProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "type" | "onToggle"> {
   className?: string;
-  language?: ToggleMenuLanguage;
+  language?: Language;
   /** Controlled: true shows the hamburger, false shows the close (X) icon. */
   collapsed?: boolean;
   defaultCollapsed?: boolean;
@@ -39,11 +39,11 @@ export default function ToggleMenu({
       aria-label={collapsed ? "Open menu" : "Close menu"}
       onClick={handleClick}
       {...rest}
-      className={[
+      className={cn(
         "group flex w-[28px] cursor-pointer flex-col items-start gap-[6px] pb-3.5",
         "text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b]",
-        className ?? "",
-      ].join(" ")}
+        className,
+      )}
     >
       {collapsed ? (
         <>

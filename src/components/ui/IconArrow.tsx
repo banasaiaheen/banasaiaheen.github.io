@@ -1,8 +1,8 @@
-import type { IconLanguage } from "./IconNewWindow";
+import type { Language } from "../../types/language";
 
 type IconArrowProps = {
   size?: number;
-  language?: IconLanguage;
+  language?: Language;
   className?: string;
 };
 

@@ -1,12 +1,12 @@
 import { useState, type ChangeEvent } from "react";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
 import ChevronDownIcon from "./ChevronDownIcon";
-
-export type InputLanguage = "english" | "arabic";
 
 export interface InputProps {
   className?: string;
   placeholder?: string;
-  language?: InputLanguage;
+  language?: Language;
   /** Renders a multi-line textarea (115px tall) instead of a single-line field. */
   freeInputField?: boolean;
   trailingIcon?: boolean;
@@ -40,25 +40,25 @@ export default function Input({
     onChange?.(e.target.value);
   };
 
-  const fieldClasses = [
+  const fieldClasses = cn(
     "flex-1 min-w-0 bg-transparent border-none outline-none resize-none p-0 m-0",
     "font-barlow font-light text-[14px] leading-normal",
     isRtl ? "text-right" : "text-left",
     hasValue
       ? "text-white placeholder:text-white"
       : "text-[#848484] placeholder:text-[#848484] focus:text-[#767676] focus:placeholder:text-[#767676]",
-  ].join(" ");
+  );
 
   const iconColorClass = hasValue ? "text-white" : "text-[#848484]";
 
   return (
     <div
       dir={isRtl ? "rtl" : "ltr"}
-      className={[
+      className={cn(
         "flex w-full min-w-0 items-center bg-[#1c1c1c] px-5 py-4 transition-colors duration-150 focus-within:bg-[#343434]",
-        freeInputField ? "h-[115px] items-start" : "",
-        className ?? "",
-      ].join(" ")}
+        freeInputField && "h-[115px] items-start",
+        className,
+      )}
     >
       {freeInputField ? (
         <textarea
@@ -68,7 +68,7 @@ export default function Input({
           value={isControlled ? value : undefined}
           defaultValue={isControlled ? undefined : defaultValue}
           onChange={handleChange}
-          className={`${fieldClasses} h-full`}
+          className={cn(fieldClasses, "h-full")}
         />
       ) : (
         <input

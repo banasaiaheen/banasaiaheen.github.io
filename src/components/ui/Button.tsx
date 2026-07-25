@@ -1,14 +1,15 @@
 import type { MouseEventHandler } from "react";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
 import IconNewWindow from "./IconNewWindow";
 
 export type ButtonVariant = "primary" | "link" | "link-xl";
-export type ButtonLanguage = "english" | "arabic";
 export type ButtonVisualState = "default" | "hover";
 
 export interface ButtonProps {
   className?: string;
   cta?: string;
-  language?: ButtonLanguage;
+  language?: Language;
   variant?: ButtonVariant;
   /** Forces the hover look for style-guide previews. Real pointer hover works regardless. */
   state?: ButtonVisualState;
@@ -78,14 +79,14 @@ export default function Button({
     </>
   );
 
-  const sharedClassName = [
+  const sharedClassName = cn(
     "inline-flex items-center whitespace-nowrap leading-none",
     "font-barlow disabled:cursor-not-allowed enabled:cursor-pointer",
     "transition-colors duration-150",
     layoutClasses[variant],
     colorClasses[variant][colorKey],
-    className ?? "",
-  ].join(" ");
+    className,
+  );
 
   if (href && !disabled) {
     return (

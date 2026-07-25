@@ -1,6 +1,7 @@
-import IconNewWindow from "./IconNewWindow";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
+import IconNewWindow from "../ui/IconNewWindow";
 
-export type WorkCardLanguage = "english" | "arabic";
 export type WorkCardVersion = "desktop" | "responsive";
 
 export interface WorkCardProps {
@@ -14,11 +15,14 @@ export interface WorkCardProps {
   freelance?: boolean;
   recommendation?: boolean;
   experienceLetterHref?: string;
+  /** Label for the "Experience Letter" link. Pass the translated string from src/i18n. */
+  experienceLetterLabel?: string;
   subText?: string;
-  language?: WorkCardLanguage;
+  language?: Language;
   version?: WorkCardVersion;
 }
 
+/** Presentational only — content comes from src/data/workExperience.ts, labels from src/i18n. */
 export default function WorkCard({
   className,
   title = "UX/DESIGNER",
@@ -30,6 +34,7 @@ export default function WorkCard({
   freelance = true,
   recommendation = true,
   experienceLetterHref = "#",
+  experienceLetterLabel = "Experience Letter",
   subText,
   language = "english",
   version = "desktop",
@@ -46,7 +51,7 @@ export default function WorkCard({
       href={experienceLetterHref}
       className="inline-flex shrink-0 items-center gap-[6px] py-1 font-barlow text-[14px] text-[#0d0d0d] transition-colors duration-150 hover:text-[#d42b2b]"
     >
-      <span>{isArabic ? "خطاب الخبرة" : "Experience Letter"}</span>
+      <span>{experienceLetterLabel}</span>
       <IconNewWindow size={14} language={language} />
     </a>
   );
@@ -98,10 +103,10 @@ export default function WorkCard({
     return (
       <div
         dir={dir}
-        className={[
+        className={cn(
           "flex w-full flex-col items-start gap-0 border-b-[0.8px] border-[#e0e0e0] pb-[16.8px] pt-4",
-          className ?? "",
-        ].join(" ")}
+          className,
+        )}
       >
         {yearInline}
         <div className="mt-2 w-full">{content}</div>
@@ -112,10 +117,10 @@ export default function WorkCard({
   return (
     <div
       dir={dir}
-      className={[
+      className={cn(
         "flex w-[548px] items-start gap-6 border-b-[0.8px] border-[#e0e0e0] pb-[32.8px] pt-8",
-        className ?? "",
-      ].join(" ")}
+        className,
+      )}
     >
       {yearStacked}
       {content}

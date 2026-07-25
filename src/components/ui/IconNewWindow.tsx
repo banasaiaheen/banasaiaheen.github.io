@@ -1,8 +1,8 @@
-export type IconLanguage = "english" | "arabic";
+import type { Language } from "../../types/language";
 
 type IconNewWindowProps = {
   size?: number;
-  language?: IconLanguage;
+  language?: Language;
   className?: string;
 };
 

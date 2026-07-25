@@ -1,12 +1,13 @@
-export type SkillToolCardLanguage = "english" | "arabic";
+import type { Language } from "../../types/language";
 
 export interface SkillToolCardProps {
   className?: string;
-  language?: SkillToolCardLanguage;
+  language?: Language;
   number?: string;
   skillTool?: string;
 }
 
+/** Presentational only — content comes from src/data/skills.ts. */
 export default function SkillToolCard({
   className,
   language = "english",

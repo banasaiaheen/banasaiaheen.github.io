@@ -1,11 +1,12 @@
-import IconArrow from "./IconArrow";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
+import IconArrow from "../ui/IconArrow";
 
-export type ResourcesCardLanguage = "english" | "arabic";
 export type ResourcesCardVersion = "desktop" | "responsive";
 
 export interface ResourcesCardProps {
   className?: string;
-  language?: ResourcesCardLanguage;
+  language?: Language;
   version?: ResourcesCardVersion;
   number?: string;
   software?: string;
@@ -14,8 +15,11 @@ export interface ResourcesCardProps {
   subText?: string;
   disabled?: boolean;
   href?: string;
+  /** Badge text shown instead of the arrow when `disabled` is true. Pass the translated string from src/i18n. */
+  comingSoonLabel?: string;
 }
 
+/** Presentational only — content comes from src/data/resources.ts, labels from src/i18n. */
 export default function ResourcesCard({
   className,
   language = "english",
@@ -27,6 +31,7 @@ export default function ResourcesCard({
   subText = "A behind-the-scenes look at how this portfolio was designed from concept to final product.",
   disabled = false,
   href = "#",
+  comingSoonLabel = "Coming Soon!",
 }: ResourcesCardProps) {
   const isArabic = language === "arabic";
   const isResponsive = version === "responsive";
@@ -44,7 +49,7 @@ export default function ResourcesCard({
 
   const trailing = disabled ? (
     <span className="shrink-0 whitespace-nowrap rounded-full bg-[#d4612b] px-3 py-1 font-barlow text-[12px] font-bold text-[#1c1a1a]">
-      {isArabic ? "قريبًا!" : "Coming Soon!"}
+      {comingSoonLabel}
     </span>
   ) : (
     <IconArrow
@@ -78,12 +83,12 @@ export default function ResourcesCard({
     </div>
   );
 
-  const sharedClassName = [
+  const sharedClassName = cn(
     "group border-b border-[#d8d8d8] bg-[#f7f4f0] transition-colors duration-150",
     !disabled ? "cursor-pointer hover:bg-[#f0f6f7]" : "cursor-default",
     isResponsive ? "w-full px-0 py-4" : "w-full min-w-[280px] px-5 py-8",
-    className ?? "",
-  ].join(" ");
+    className,
+  );
 
   if (disabled) {
     return (

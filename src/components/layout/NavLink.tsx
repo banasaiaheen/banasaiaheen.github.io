@@ -1,23 +1,24 @@
 import type { AnchorHTMLAttributes } from "react";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
 
-export type PagesLanguage = "english" | "arabic";
-
-export interface PagesProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> {
+export interface NavLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> {
   className?: string;
-  language?: PagesLanguage;
+  language?: Language;
   nav?: string;
   number?: string;
   selected?: boolean;
 }
 
-export default function Pages({
+/** A single numbered row in the site navigation (e.g. "01  ABOUT"). */
+export default function NavLink({
   className,
   language = "english",
   nav = "NAV",
   number = "00",
   selected = false,
   ...rest
-}: PagesProps) {
+}: NavLinkProps) {
   const isArabic = language === "arabic";
 
   const numberEl = (
@@ -40,12 +41,12 @@ export default function Pages({
       aria-current={selected ? "page" : undefined}
       {...rest}
       dir={isArabic ? "rtl" : "ltr"}
-      className={[
+      className={cn(
         "group flex items-center gap-[10px] border-b-[0.8px] border-transparent pt-2 pb-[8.8px]",
         "transition-[padding] duration-150",
         selected ? "text-[#d42b2b]" : isArabic ? "hover:pr-2" : "hover:pl-2",
-        className ?? "",
-      ].join(" ")}
+        className,
+      )}
     >
       {numberEl}
       {navEl}

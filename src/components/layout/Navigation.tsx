@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Pages from "./Pages";
-import Button from "./Button";
-import ToggleMenu from "./ToggleMenu";
-import jordanFlag from "../assets/jordan-flag.png";
+import type { Language } from "../../types/language";
+import { cn } from "../../utils/cn";
+import NavLink from "./NavLink";
+import Button from "../ui/Button";
+import ToggleMenu from "../ui/ToggleMenu";
+import defaultFlagImage from "../../assets/jordan-flag.png";
 
-export type NavigationLanguage = "english" | "arabic";
 export type NavigationVersion = "desktop" | "responsive";
 
 export interface NavigationPage {
@@ -23,16 +24,26 @@ export interface NavigationSocialLink {
 
 export interface NavigationProps {
   className?: string;
-  language?: NavigationLanguage;
+  language?: Language;
   version?: NavigationVersion;
   name?: string;
   title?: string;
   location?: string;
+  locationFlagSrc?: string;
   pages?: NavigationPage[];
   socialLinks?: NavigationSocialLink[];
-  onLanguageChange?: (language: NavigationLanguage) => void;
+  /** Label on the button that switches to the other language. Pass the translated string from src/i18n. */
+  switchToLabel?: string;
+  /** Copyright line trailing text (e.g. "ALL RIGHTS RESERVED"). Pass the translated string from src/i18n. */
+  rightsLabel?: string;
+  copyrightYear?: string;
+  onLanguageChange?: (language: Language) => void;
 }
 
+// Generic English fallbacks so this component still renders sensibly when
+// used standalone (a style guide, Storybook, etc). The real site always
+// supplies `pages`/`socialLinks`/`switchToLabel`/`rightsLabel` explicitly
+// from src/data and src/i18n.
 const DEFAULT_PAGES: NavigationPage[] = [
   { number: "00", nav: "HOME" },
   { number: "01", nav: "ABOUT" },
@@ -42,24 +53,13 @@ const DEFAULT_PAGES: NavigationPage[] = [
   { number: "05", nav: "CONTACT" },
 ];
 
-const DEFAULT_SOCIAL_LINKS: Record<NavigationLanguage, NavigationSocialLink[]> = {
-  english: [
-    { cta: "EMAIL", href: "mailto:hello@example.com" },
-    { cta: "LINKEDIN", href: "https://linkedin.com", target: "_blank", rel: "noreferrer" },
-    { cta: "FIGMA", href: "https://figma.com", target: "_blank", rel: "noreferrer" },
-  ],
-  arabic: [
-    { cta: "البريد الإلكتروني", href: "mailto:hello@example.com" },
-    { cta: "LINKEDIN", href: "https://linkedin.com", target: "_blank", rel: "noreferrer" },
-    { cta: "FIGMA", href: "https://figma.com", target: "_blank", rel: "noreferrer" },
-  ],
-};
+const DEFAULT_SOCIAL_LINKS: NavigationSocialLink[] = [
+  { cta: "EMAIL", href: "mailto:hello@example.com" },
+  { cta: "LINKEDIN", href: "https://linkedin.com", target: "_blank", rel: "noreferrer" },
+  { cta: "FIGMA", href: "https://figma.com", target: "_blank", rel: "noreferrer" },
+];
 
-const COPY = {
-  english: { switchTo: "العربية", rights: "ALL RIGHTS RESERVED" },
-  arabic: { switchTo: "English", rights: "جميع الحقوق محفوظة" },
-};
-
+/** Presentational only — labels/links come from src/data and src/i18n via props. */
 export default function Navigation({
   className,
   language = "english",
@@ -67,12 +67,15 @@ export default function Navigation({
   name = "Bana Saiaheen",
   title = "UX/UI DESIGNER",
   location = "Amman, Jordan",
+  locationFlagSrc = defaultFlagImage,
   pages = DEFAULT_PAGES,
-  socialLinks,
+  socialLinks = DEFAULT_SOCIAL_LINKS,
+  switchToLabel = "العربية",
+  rightsLabel = "ALL RIGHTS RESERVED",
+  copyrightYear = "2026",
   onLanguageChange,
 }: NavigationProps) {
   const isArabic = language === "arabic";
-  const resolvedSocialLinks = socialLinks ?? DEFAULT_SOCIAL_LINKS[language];
   const [expanded, setExpanded] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -114,7 +117,7 @@ export default function Navigation({
         <span className="font-barlow text-[14px] text-[#aeaeae]">{title}</span>
       </div>
       <div className="flex w-full items-center gap-2">
-        <img src={jordanFlag} alt="" className="h-[17px] w-[18px] shrink-0 object-cover" />
+        <img src={locationFlagSrc} alt="" className="h-[17px] w-[18px] shrink-0 object-cover" />
         <span className="whitespace-nowrap font-barlow text-[14px] text-[#aeaeae]">{location}</span>
       </div>
     </div>
@@ -123,7 +126,7 @@ export default function Navigation({
   const pagesList = (
     <div className="flex w-full flex-col items-start gap-[6px] font-barlow text-[18px]">
       {pages.map((page) => (
-        <Pages
+        <NavLink
           key={page.number}
           href={page.href ?? "#"}
           language={language}
@@ -146,14 +149,14 @@ export default function Navigation({
     <Button
       variant="link"
       language={isArabic ? "english" : "arabic"}
-      cta={COPY[language].switchTo}
+      cta={switchToLabel}
       onClick={() => onLanguageChange?.(isArabic ? "english" : "arabic")}
     />
   );
 
   const copyrightEl = (
     <p className="w-full font-barlow text-[12px] text-[#847e7e]">
-      © 2026 — {name.toUpperCase()} · {COPY[language].rights}
+      © {copyrightYear} — {name.toUpperCase()} · {rightsLabel}
     </p>
   );
 
@@ -167,12 +170,12 @@ export default function Navigation({
         <nav
           ref={headerRef}
           dir={isArabic ? "rtl" : "ltr"}
-          className={[
+          className={cn(
             "sticky top-0 z-50 w-full items-center justify-between border-b-[0.8px] bg-[#0d0d0d] py-8 transition-colors duration-150",
             isArabic ? "pr-4 pl-[16.8px]" : "pl-4 pr-[16.8px]",
             expanded ? "border-transparent" : "border-[#2a2a2a]",
-            className ?? "",
-          ].join(" ")}
+            className,
+          )}
         >
           {nameEl}
           {toggle}
@@ -184,16 +187,16 @@ export default function Navigation({
               type="button"
               aria-label="Dismiss menu overlay"
               onClick={() => setExpanded(false)}
-              className={`fixed inset-x-0 bottom-0 z-40 bg-black/60 ${className ?? ""}`}
+              className={cn("fixed inset-x-0 bottom-0 z-40 bg-black/60", className)}
               style={{ top: headerHeight }}
             />
             <div
               dir={isArabic ? "rtl" : "ltr"}
-              className={[
+              className={cn(
                 "fixed inset-x-0 z-40 flex max-h-[calc(100vh-var(--nav-header-h))] flex-col items-center gap-4 overflow-y-auto bg-[#0d0d0d] px-4 pb-4",
                 isArabic ? "pl-[16.8px]" : "pr-[16.8px]",
-                className ?? "",
-              ].join(" ")}
+                className,
+              )}
               style={{ top: headerHeight, ["--nav-header-h" as string]: `${headerHeight}px` }}
             >
               <div className="w-full">
@@ -208,7 +211,7 @@ export default function Navigation({
               <div className="h-px w-full shrink-0 bg-[#5f5f5f]" />
 
               <div className="flex w-full items-center justify-between">
-                {resolvedSocialLinks.map((link) => (
+                {socialLinks.map((link) => (
                   <Button
                     key={link.cta}
                     variant="link"
@@ -222,7 +225,7 @@ export default function Navigation({
               </div>
 
               <p className="w-full text-center font-barlow text-[12px] text-[#847e7e]">
-                © 2026 — {name.toUpperCase()} · {COPY[language].rights}
+                © {copyrightYear} — {name.toUpperCase()} · {rightsLabel}
               </p>
             </div>
           </>
@@ -234,11 +237,11 @@ export default function Navigation({
   return (
     <nav
       dir={isArabic ? "rtl" : "ltr"}
-      className={[
+      className={cn(
         "sticky top-0 h-screen w-[256px] shrink-0 flex-col justify-between self-start overflow-y-auto border-[#2a2a2a] bg-[#0d0d0d] py-11",
         isArabic ? "border-l-[0.8px] pr-8 pl-[32.8px]" : "border-r-[0.8px] pl-8 pr-[32.8px]",
-        className ?? "",
-      ].join(" ")}
+        className,
+      )}
     >
       <div className="flex w-full flex-col items-start gap-4">
         {nameEl}
@@ -254,7 +257,7 @@ export default function Navigation({
         <div className="h-px w-full shrink-0 bg-[#5f5f5f]" />
 
         <div className="flex w-full flex-col items-start gap-1">
-          {resolvedSocialLinks.map((link) => (
+          {socialLinks.map((link) => (
             <Button
               key={link.cta}
               variant="link"
