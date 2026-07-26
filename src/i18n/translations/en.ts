@@ -80,7 +80,6 @@ const en: Translations = {
     },
   },
   caseStudy: {
-    backToResources: "Back to Resources",
     overviewTitle: "Overview",
     highlightsTitle: "What I Did",
     galleryTitle: "Selected Screens",

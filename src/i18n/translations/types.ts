@@ -80,7 +80,6 @@ export interface Translations {
   };
   /** Chrome for resource sub-pages (e.g. src/pages/ResourceDetailPage.tsx). The case study content itself lives in src/data/caseStudies.ts. */
   caseStudy: {
-    backToResources: string;
     overviewTitle: string;
     highlightsTitle: string;
     galleryTitle: string;

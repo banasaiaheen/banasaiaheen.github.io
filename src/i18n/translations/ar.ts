@@ -79,7 +79,6 @@ const ar: Translations = {
     },
   },
   caseStudy: {
-    backToResources: "العودة إلى الموارد",
     overviewTitle: "نظرة عامة",
     highlightsTitle: "ماذا فعلت",
     galleryTitle: "شاشات مختارة",
