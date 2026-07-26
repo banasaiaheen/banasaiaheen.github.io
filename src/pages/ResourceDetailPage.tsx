@@ -152,9 +152,9 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
               {caseStudy.highlights.map((item, i) => (
                 <div key={item.title} className="flex gap-4 border-t-[0.8px] border-[#2a2a2a] pt-6 first:border-t-0 first:pt-0">
                   <span className="font-barlow text-[14px] text-[#d42b2b]">{String(i).padStart(2, "0")}</span>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-2">
                     <p className="font-barlow text-[16px] font-bold text-[#f7f4f0]">{item.title}</p>
-                    <p className="font-barlow text-[14px] font-normal text-[#9e9e9e] lg:text-[15px]">
+                    <p className="font-barlow text-[15px] font-medium leading-relaxed text-[#b8b8b8] lg:text-[16px]">
                       {item.description}
                     </p>
                   </div>
