@@ -183,7 +183,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
           </p>
         </header>
 
-        <div className="flex flex-col gap-12 px-5 py-10 lg:gap-[62px] lg:px-8 lg:py-8">
+        <div className="flex flex-col gap-12 px-5 pb-10 pt-6 lg:gap-[62px] lg:px-8 lg:py-8">
           <section className="flex flex-col gap-6">
             <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
               {t.caseStudy.overviewTitle}
