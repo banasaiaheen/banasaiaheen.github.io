@@ -1,11 +1,10 @@
 import type { Language } from "./types/language";
 import { getTranslations } from "./i18n/translations";
 import { SITE_PROFILE, LOCATION_FLAG_IMAGE, COPYRIGHT_YEAR } from "./data/siteProfile";
-import { NAV_ITEMS, getSectionNumber } from "./data/navigation";
-import { SOCIAL_LINKS } from "./data/socialLinks";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useScrollToHash } from "./hooks/useScrollToHash";
-import Navigation, { type NavigationPage, type NavigationSocialLink } from "./components/layout/Navigation";
+import { getNavPages, getNavSocialLinks } from "./lib/navChrome";
+import Navigation from "./components/layout/Navigation";
 import HeroSection from "./sections/HeroSection";
 import AboutSection from "./sections/AboutSection";
 import WorkSection from "./sections/WorkSection";
@@ -42,20 +41,8 @@ export default function HomePage({ language, onLanguageChange }: HomePageProps) 
   useScrollToHash();
   const t = getTranslations(language);
   const profile = SITE_PROFILE[language];
-
-  const pages: NavigationPage[] = NAV_ITEMS.map((item) => ({
-    number: getSectionNumber(item.id),
-    nav: t.nav[item.id as keyof typeof t.nav],
-    href: item.href,
-    selected: item.href === `#${activeSection}`,
-  }));
-
-  const socialLinks: NavigationSocialLink[] = SOCIAL_LINKS.map((link) => ({
-    cta: t.social[link.id as keyof typeof t.social],
-    href: link.href,
-    target: link.target,
-    rel: link.rel,
-  }));
+  const pages = getNavPages(language, activeSection);
+  const socialLinks = getNavSocialLinks(language);
 
   return (
     <div dir={isArabic ? "rtl" : "ltr"} className="flex min-h-screen flex-col bg-[#0d0d0d] lg:flex-row">

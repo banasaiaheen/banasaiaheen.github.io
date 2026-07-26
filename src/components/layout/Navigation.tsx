@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { Language } from "../../types/language";
 import { cn } from "../../utils/cn";
 import NavLink from "./NavLink";
@@ -76,6 +77,7 @@ export default function Navigation({
   onLanguageChange,
 }: NavigationProps) {
   const isArabic = language === "arabic";
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -138,7 +140,15 @@ export default function Navigation({
             e.preventDefault();
             setExpanded(false);
             document.body.style.overflow = "";
-            document.querySelector(page.href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+            const target = document.querySelector(page.href);
+            if (target) {
+              // The section lives on this page (we're on the homepage) — scroll to it directly.
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+              // We're on a different route (e.g. a resource sub-page) — navigate to the
+              // homepage with the hash; its own scroll-to-hash effect takes it from there.
+              navigate(`/${page.href}`);
+            }
           }}
         />
       ))}
