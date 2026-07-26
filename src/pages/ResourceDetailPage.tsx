@@ -111,7 +111,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
       {navBars}
 
       <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">
-        <header className="relative flex flex-col gap-5 overflow-hidden bg-[#1c1c1c] px-5 py-8 lg:px-8">
+        <header className="sticky top-0 z-10 flex flex-col gap-5 overflow-hidden bg-[#1c1c1c] px-5 py-8 lg:px-8">
           <StrokeNumber
             value={resourceNumber}
             size={90}
@@ -200,7 +200,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
           </section>
         </div>
 
-        <div className="sticky bottom-0 z-10 flex flex-wrap items-center justify-center gap-5 bg-[#f7f4f0] px-5 py-3 lg:px-8">
+        <div className="flex flex-wrap items-center justify-center gap-5 bg-[#f7f4f0] px-5 py-3 lg:px-8">
           <h2 className="font-barlow text-[22px] font-black text-[#1e1e1e] lg:text-[32px]">{t.caseStudy.ctaTitle}</h2>
           <Button variant="primary" cta={t.caseStudy.ctaButton} language={language} href="/#contact" />
         </div>
