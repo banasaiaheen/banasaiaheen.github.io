@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import type { Language } from "../types/language";
 import { getTranslations } from "../i18n/translations";
@@ -38,10 +38,20 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
   // grid (e.g. "00" for the first card), matching the number on its card.
   const resourceIndex = RESOURCES[language].findIndex((r) => r.slug === slug);
   const resourceNumber = String(Math.max(resourceIndex, 0)).padStart(2, "0");
+  // Once the page has scrolled, the sticky header collapses to just the back
+  // link + title so it doesn't eat scroll real estate on a long page.
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navBars = (
     <>
@@ -111,34 +121,46 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
       {navBars}
 
       <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">
-        <header className="sticky top-0 z-10 flex flex-col gap-5 overflow-hidden bg-[#1c1c1c] px-5 py-8 lg:px-8">
-          <StrokeNumber
-            value={resourceNumber}
-            size={90}
-            strokeColor="#3a3a3a"
-            strokeWidth={2}
-            className={`pointer-events-none absolute top-4 lg:top-6 ${isArabic ? "left-4 lg:left-8" : "right-4 lg:right-8"}`}
-          />
+        <header
+          className={`sticky top-[101px] z-10 flex flex-col overflow-hidden bg-[#1c1c1c] px-5 lg:top-0 lg:px-8 ${
+            isScrolled ? "gap-2 py-4" : "gap-5 py-8"
+          }`}
+        >
+          {!isScrolled && (
+            <StrokeNumber
+              value={resourceNumber}
+              size={90}
+              strokeColor="#3a3a3a"
+              strokeWidth={2}
+              className={`pointer-events-none absolute top-4 lg:top-6 ${isArabic ? "left-4 lg:left-8" : "right-4 lg:right-8"}`}
+            />
+          )}
           {backLink}
-          <div className="flex flex-wrap items-center gap-x-[6px] gap-y-1 pe-28 font-barlow text-[14px] text-[#d42b2b] lg:pe-0">
-            <span>{caseStudy.tools}</span>
-            <span>·</span>
-            <span>{caseStudy.category}</span>
-            <span>·</span>
-            <span>{caseStudy.role}</span>
-          </div>
-          <div className="flex flex-wrap items-center justify-between gap-3">
+          {!isScrolled && (
+            <div className="flex flex-wrap items-center gap-x-[6px] gap-y-1 pe-28 font-barlow text-[14px] text-[#d42b2b] lg:pe-0">
+              <span>{caseStudy.tools}</span>
+              <span>·</span>
+              <span>{caseStudy.category}</span>
+              <span>·</span>
+              <span>{caseStudy.role}</span>
+            </div>
+          )}
+          <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
             <h1 className="font-barlow text-[36px] font-black uppercase leading-[1.05] tracking-[1.68px] text-[#f7f4f0] lg:text-[56px]">
               {caseStudy.title}
             </h1>
-            <a
-              href={caseStudy.figmaHref}
-              className="font-barlow text-[14px] text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b]"
-            >
-              {t.caseStudy.figmaLinkLabel}
-            </a>
+            {!isScrolled && (
+              <a
+                href={caseStudy.figmaHref}
+                className="font-barlow text-[14px] text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b]"
+              >
+                {t.caseStudy.figmaLinkLabel}
+              </a>
+            )}
           </div>
-          <p className="font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">{caseStudy.summary}</p>
+          {!isScrolled && (
+            <p className="font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">{caseStudy.summary}</p>
+          )}
         </header>
 
         <div className="flex flex-col gap-12 px-5 py-10 lg:gap-[62px] lg:px-8 lg:py-8">
