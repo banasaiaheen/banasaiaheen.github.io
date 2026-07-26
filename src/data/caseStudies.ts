@@ -43,34 +43,34 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
       title: "Portfolio Design",
       category: "Personal Project",
       summary:
-        "A bilingual portfolio designed in Figma and brought to life with Claude Code — every detail considered twice, once for English and once for Arabic.",
+        "Red, black, and white — a portfolio built on the idea that great design doesn't need a big palette. Designed and prototyped entirely in Figma, then built by hand with Claude Code.",
       role: "UX/UI Design & Direction",
       tools: "Figma, Claude Code",
       year: "2026",
       overview: [
-        "The goal was a portfolio that feels equally native in English and Arabic — not a layout mirrored as an afterthought, but one where the type scale, spacing, and composition were considered for both reading directions from the very first sketch.",
-        "Every section — hero, about, experience, education, resources, and contact — started as a design decision in Figma first: a dark, editorial palette carried by a single red accent, oversized outlined numerals marking each section, and Barlow Condensed's heavy display weight for English headlines, paired with Cairo for Arabic so the same bold, confident presence carries across both languages.",
+        "The idea was to create something entirely my own, using my three favourite colours: red, black, and white. I wanted a clean, responsive site available in both English and my native language, Arabic — and I kept everything neat and simple on purpose. I've always believed you don't need an overwhelming variety of colours or complex design to prove you can create something great.",
+        "Everything was first designed and prototyped in Figma. Once the design system was in place, I prototyped the entire experience — navigation, interactions, both layouts — to validate the user flow and make sure it felt polished before development ever started.",
       ],
       highlights: [
         {
+          title: "Built on variables, not one-off screens",
+          description:
+            "My favourite part of Figma is variables, so I built the whole design system on them: a numbers collection with reusable values that weren't limited to a specific scope, a typography collection that switches between English and Arabic type styles with a single click, a version collection for desktop and responsive layouts, a navigation collection that powered the nav prototype without building every state by hand, and a content collection that handled the language switcher and every piece of translated content.",
+        },
+        {
+          title: "Prototyped before a line of code existed",
+          description:
+            "I prototyped the full experience in Figma before moving into development, so the navigation and interactions were already validated and the portfolio already felt polished across both desktop and responsive layouts.",
+        },
+        {
+          title: "One set of components, two languages",
+          description:
+            "Rather than build separate translated components, the Arabic version just switches the layout from left-to-right to right-to-left. Once the right variable collection is selected, everything I built applies automatically.",
+        },
+        {
           title: "Designed by me, built with Claude Code",
           description:
-            "I made every visual and layout decision in Figma — spacing, type scale, color, hierarchy — and worked screen by screen with Claude Code to bring it to life exactly as designed, reviewing and refining each one until it matched.",
-        },
-        {
-          title: "A bilingual design, not a translation",
-          description:
-            "Arabic isn't a mirrored afterthought. Borders, icons, and alignment flip with intention, and the display type switches to Cairo so Arabic headlines carry the same weight and confidence as the English ones.",
-        },
-        {
-          title: "Content that stays out of the designer's way",
-          description:
-            "The visuals are separated from the words — swapping in a new project, rewriting a headline, or adding a skill never touches the design, and never risks breaking it.",
-        },
-        {
-          title: "One visual language, everywhere",
-          description:
-            "Every card, number, and section title follows the same rules across the site, so new pages — like this one — read as if they were part of the original design from day one.",
+            "My original plan was to publish this with Framer, but I decided to challenge myself and build it with Claude Code instead. I studied HTML, CSS, Java, and JavaScript at university, so I wasn't starting from zero — but Claude introduced a completely different way of building software. I won't lie, at first I mostly knew how to click \"Accept\" over and over again.",
         },
       ],
       gallery: [
@@ -79,8 +79,8 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
         { caption: "Contact — a simple, focused way to reach out" },
       ],
       outcome: [
-        "The result is a portfolio that reads as designed for both languages, not translated between them — with a visual system consistent enough that adding a new project or rewriting a headline never breaks the design.",
-        "It was designed by hand in Figma and refined screen by screen with Claude Code, from the first sketch to the smallest spacing detail.",
+        "I'm incredibly happy with how everything turned out. It was a fun project, I learned a lot throughout the process, and it gave me the chance to combine design and development in a way I hadn't done before.",
+        "It's exactly what I set out to build — clean, considered, and equally at home in English and Arabic.",
       ],
     },
   },
@@ -89,34 +89,34 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
       title: "تصميم الملف الشخصي",
       category: "مشروع شخصي",
       summary:
-        "موقع شخصي ثنائي اللغة، صُمم في Figma وأُخرج إلى الواقع باستخدام Claude Code — كل تفصيلة فُكِّر فيها مرتين، مرة بالإنجليزية ومرة بالعربية.",
+        "الأحمر والأسود والأبيض — موقع شخصي بُني على فكرة أن التصميم الرائع لا يحتاج إلى لوحة ألوان كبيرة. صُمم ونُمذج بالكامل في Figma، ثم بُني يدويًا باستخدام Claude Code.",
       role: "تصميم UX/UI والإشراف",
       tools: "Figma، Claude Code",
       year: "2026",
       overview: [
-        "كان الهدف موقعًا يبدو أصيلًا بالتساوي في اللغتين الإنجليزية والعربية — لا تخطيطًا معكوسًا كفكرة لاحقة، بل تصميمًا رُوعي فيه مقياس الخطوط والتباعد والتكوين لكلا اتجاهي القراءة منذ أول رسم أولي.",
-        "كل قسم — الرئيسية، نبذة عني، الخبرة العملية، التعليم، الموارد، والتواصل — بدأ كقرار تصميمي في Figma أولًا: لوحة ألوان داكنة وتحريرية يحملها لون أحمر واحد، وأرقام كبيرة مفرغة تُميّز كل قسم، ووزن Barlow Condensed الثقيل للعناوين الإنجليزية، مقترنًا بخط Cairo للعربية بحيث يحمل نفس الحضور الجريء والواثق في كلا اللغتين.",
+        "كانت الفكرة إنشاء شيء خاص بي تمامًا، باستخدام ألواني الثلاثة المفضلة: الأحمر والأسود والأبيض. أردت موقعًا نظيفًا ومتجاوبًا ومتاحًا باللغتين الإنجليزية ولغتي الأم العربية — وحافظت على كل شيء بسيطًا ومرتبًا عن قصد. لطالما آمنت أنك لست بحاجة إلى تنوع ألوان مبالغ فيه أو تصميم معقّد لتثبت أنك قادر على صنع شيء رائع.",
+        "صُمم كل شيء ونُمذج أوليًا في Figma أولًا. وبمجرد اكتمال نظام التصميم، جربت التجربة الكاملة — التنقل والتفاعلات وكلا التخطيطين — للتحقق من مسار المستخدم والتأكد من أنها تبدو مصقولة قبل أن تبدأ مرحلة التطوير.",
       ],
       highlights: [
         {
-          title: "صُمم بيدي، وأُخرج إلى الواقع باستخدام Claude Code",
+          title: "مبني على المتغيرات، لا على شاشات منفصلة",
           description:
-            "توليت كل قرار بصري وتخطيطي في Figma — التباعد، مقياس الخطوط، الألوان، التسلسل الهرمي — وعملت مع Claude Code شاشة بشاشة لإخراجها كما صُممت تمامًا، مع مراجعة وتنقيح كل شاشة حتى تطابقت.",
+            "ميزتي المفضلة في Figma هي المتغيرات، لذا بنيت نظام التصميم بالكامل عليها: مجموعة أرقام بقيم قابلة لإعادة الاستخدام وغير مقيدة بنطاق معين، ومجموعة طباعة تبدّل بين أنماط الخطوط الإنجليزية والعربية بنقرة واحدة، ومجموعة إصدارات للتبديل بين تخطيطي سطح المكتب والتجاوب، ومجموعة تنقل شغّلت نموذج التنقل الأولي دون الحاجة لبناء كل حالة يدويًا، ومجموعة محتوى تولّت مبدّل اللغة وكل جزء من المحتوى المترجم.",
         },
         {
-          title: "تصميم ثنائي اللغة، لا ترجمة",
+          title: "نُمذج قبل أن يُكتب أي سطر كود",
           description:
-            "العربية ليست انعكاسًا كفكرة لاحقة. الحدود والأيقونات والمحاذاة تنعكس بقصد، ويتحول الخط إلى Cairo بحيث تحمل العناوين العربية نفس الثقل والثقة التي تحملها العناوين الإنجليزية.",
+            "جرّبت التجربة الكاملة في Figma قبل الانتقال إلى التطوير، بحيث كان التنقل والتفاعلات قد تحققت منها بالفعل، وكان الموقع يبدو مصقولاً بالفعل عبر تخطيطي سطح المكتب والتجاوب.",
         },
         {
-          title: "محتوى لا يقف في طريق التصميم",
+          title: "مجموعة واحدة من المكونات، بلغتين",
           description:
-            "المرئيات منفصلة عن الكلمات — فإضافة مشروع جديد، أو إعادة كتابة عنوان، أو إضافة مهارة لا يمسّ التصميم أبدًا، ولا يخاطر بكسره.",
+            "بدلاً من بناء مكونات مترجمة منفصلة، تكتفي النسخة العربية بتبديل التخطيط من اليسار إلى اليمين (LTR) إلى اليمين إلى اليسار (RTL). بمجرد اختيار مجموعة المتغيرات المناسبة، يُطبَّق كل ما بنيته تلقائيًا.",
         },
         {
-          title: "لغة بصرية واحدة، في كل مكان",
+          title: "صممته بنفسي، وبنيته باستخدام Claude Code",
           description:
-            "كل بطاقة ورقم وعنوان قسم يتبع نفس القواعد في أنحاء الموقع، بحيث تبدو الصفحات الجديدة — كهذه الصفحة — وكأنها كانت جزءًا من التصميم الأصلي منذ اليوم الأول.",
+            "كانت خطتي الأصلية نشر الموقع عبر Framer، لكنني قررت تحدي نفسي وبنائه باستخدام Claude Code بدلاً من ذلك. درست HTML وCSS وJava وJavaScript في الجامعة، فلم أكن أبدأ من الصفر — لكن Claude قدّم لي طريقة مختلفة تمامًا لبناء البرمجيات. لن أكذب، في البداية كنت أعرف بالأساس كيفية الضغط على \"قبول\" مرارًا وتكرارًا.",
         },
       ],
       gallery: [
@@ -125,8 +125,8 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
         { caption: "تواصل — طريقة بسيطة ومركّزة للتواصل" },
       ],
       outcome: [
-        "النتيجة موقع يبدو مصممًا لكلا اللغتين، لا مترجمًا بينهما — بنظام بصري متسق بما يكفي بحيث لا تكسر إضافة مشروع جديد أو إعادة كتابة عنوان التصميم أبدًا.",
-        "صُمم يدويًا في Figma ونُقّح شاشة بشاشة باستخدام Claude Code، من أول رسم أولي إلى أدق تفاصيل التباعد.",
+        "أنا سعيدة جدًا بالنتيجة النهائية. كان مشروعًا ممتعًا، تعلمت الكثير خلال العملية، ومنحني فرصة الجمع بين التصميم والتطوير بطريقة لم أختبرها من قبل.",
+        "إنه بالضبط ما أردت بناءه — نظيف ومدروس ومريح بالتساوي في الإنجليزية والعربية.",
       ],
     },
   },
