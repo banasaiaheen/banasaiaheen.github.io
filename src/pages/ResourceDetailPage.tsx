@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import type { Language } from "../types/language";
 import { getTranslations } from "../i18n/translations";
 import { CASE_STUDIES } from "../data/caseStudies";
 import { SITE_PROFILE, LOCATION_FLAG_IMAGE, COPYRIGHT_YEAR } from "../data/siteProfile";
 import { getNavPages, getNavSocialLinks } from "../lib/navChrome";
 import Navigation from "../components/layout/Navigation";
-import Breadcrumb from "../components/layout/Breadcrumb";
 import Button from "../components/ui/Button";
+import ChevronDownIcon from "../components/ui/ChevronDownIcon";
 
 export interface ResourceDetailPageProps {
   language: Language;
@@ -22,7 +22,7 @@ export interface ResourceDetailPageProps {
  *
  * Uses the same site-wide <Navigation> as the homepage (kept identical on
  * purpose, rather than a separate nav pattern) with "Resources" shown as the
- * active item, plus a Home / Resources / [title] breadcrumb above the title.
+ * active item, plus a "‹ Resources" link above the title.
  */
 export default function ResourceDetailPage({ language, onLanguageChange }: ResourceDetailPageProps) {
   const { slug = "" } = useParams();
@@ -32,6 +32,9 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
   const pages = getNavPages(language, "resources");
   const socialLinks = getNavSocialLinks(language);
   const caseStudy = CASE_STUDIES[language][slug];
+  // Chevron points "back" toward the start of reading direction — left in
+  // LTR, right in RTL — same rotation logic as Pagination's previous control.
+  const backRotation = isArabic ? "-rotate-90" : "rotate-90";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,19 +75,22 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
     </>
   );
 
+  const backLink = (
+    <Link
+      to="/#resources"
+      className="flex w-fit items-center gap-2 font-barlow text-[14px] text-[#7a7a7a] transition-colors duration-150 hover:text-[#d42b2b]"
+    >
+      <ChevronDownIcon size={12} className={`shrink-0 ${backRotation}`} />
+      {t.nav.resources}
+    </Link>
+  );
+
   if (!caseStudy) {
     return (
       <div dir={isArabic ? "rtl" : "ltr"} className="flex min-h-screen flex-col bg-[#0d0d0d] lg:flex-row">
         {navBars}
         <main className="flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 px-5 py-24 text-center lg:min-w-[1184px]">
-          <Breadcrumb
-            language={language}
-            items={[
-              { label: t.nav.home, href: "/" },
-              { label: t.nav.resources, href: "/#resources" },
-              { label: t.caseStudy.notFoundTitle },
-            ]}
-          />
+          {backLink}
           <h1 className="font-barlow text-[32px] font-black text-[#f7f4f0]">{t.caseStudy.notFoundTitle}</h1>
           <p className="max-w-[420px] font-barlow text-[16px] font-light text-[#9e9e9e]">
             {t.caseStudy.notFoundMessage}
@@ -101,14 +107,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
       <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">
         <div className="mx-auto flex w-full max-w-[860px] flex-col gap-16 px-5 py-14 lg:px-8 lg:py-24">
           <header className="flex flex-col gap-5">
-            <Breadcrumb
-              language={language}
-              items={[
-                { label: t.nav.home, href: "/" },
-                { label: t.nav.resources, href: "/#resources" },
-                { label: caseStudy.title },
-              ]}
-            />
+            {backLink}
             <p className="font-barlow text-[12px] tracking-[3px] text-[#d42b2b] lg:text-[13px] lg:tracking-[4px]">
               {caseStudy.category.toUpperCase()}
             </p>
