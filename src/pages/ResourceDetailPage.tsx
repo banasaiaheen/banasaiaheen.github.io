@@ -154,7 +154,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
                   <span className="font-barlow text-[14px] text-[#d42b2b]">{String(i).padStart(2, "0")}</span>
                   <div className="flex flex-col gap-2">
                     <p className="font-barlow text-[16px] font-bold text-[#f7f4f0]">{item.title}</p>
-                    <p className="font-barlow text-[15px] font-medium leading-relaxed text-[#b8b8b8] lg:text-[16px]">
+                    <p className="font-barlow text-[20px] font-medium leading-relaxed text-[#b8b8b8]">
                       {item.description}
                     </p>
                   </div>
