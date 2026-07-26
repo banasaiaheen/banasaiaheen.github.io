@@ -92,7 +92,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
         <main className="flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 px-5 py-24 text-center lg:min-w-[1184px]">
           {backLink}
           <h1 className="font-barlow text-[32px] font-black text-[#f7f4f0]">{t.caseStudy.notFoundTitle}</h1>
-          <p className="max-w-[420px] font-barlow text-[16px] font-light text-[#9e9e9e]">
+          <p className="max-w-[420px] font-barlow text-[16px] font-normal text-[#9e9e9e]">
             {t.caseStudy.notFoundMessage}
           </p>
         </main>
@@ -114,7 +114,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
             <h1 className="font-barlow text-[36px] font-black uppercase leading-[1.05] text-[#f7f4f0] lg:text-[56px]">
               {caseStudy.title}
             </h1>
-            <p className="max-w-[560px] font-barlow text-[16px] font-light text-[#9e9e9e] lg:text-[20px]">
+            <p className="max-w-[560px] font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
               {caseStudy.summary}
             </p>
             <div className="flex flex-wrap gap-x-10 gap-y-4 border-t-[0.8px] border-[#2a2a2a] pt-6">
@@ -137,7 +137,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
             <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[28px]">
               {t.caseStudy.overviewTitle}
             </h2>
-            <div className="flex flex-col gap-4 font-barlow text-[16px] font-light text-[#9e9e9e] lg:text-[18px]">
+            <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[18px]">
               {caseStudy.overview.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -154,7 +154,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
                   <span className="font-barlow text-[14px] text-[#d42b2b]">{String(i).padStart(2, "0")}</span>
                   <div className="flex flex-col gap-1">
                     <p className="font-barlow text-[16px] font-bold text-[#f7f4f0]">{item.title}</p>
-                    <p className="font-barlow text-[14px] font-light text-[#9e9e9e] lg:text-[15px]">
+                    <p className="font-barlow text-[14px] font-normal text-[#9e9e9e] lg:text-[15px]">
                       {item.description}
                     </p>
                   </div>
@@ -173,7 +173,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
                   <div className="flex aspect-[4/3] w-full items-center justify-center border border-[#2a2a2a] bg-[#1c1c1c]">
                     <span className="font-barlow text-[13px] text-[#3a3a3a]">{isArabic ? "معاينة" : "PREVIEW"}</span>
                   </div>
-                  <p className="font-barlow text-[13px] font-light text-[#7a7a7a]">{item.caption}</p>
+                  <p className="font-barlow text-[13px] font-normal text-[#7a7a7a]">{item.caption}</p>
                 </div>
               ))}
             </div>
@@ -183,7 +183,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
             <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[28px]">
               {t.caseStudy.outcomeTitle}
             </h2>
-            <div className="flex flex-col gap-4 font-barlow text-[16px] font-light text-[#9e9e9e] lg:text-[18px]">
+            <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[18px]">
               {caseStudy.outcome.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
