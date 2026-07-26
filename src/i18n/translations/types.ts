@@ -78,4 +78,19 @@ export interface Translations {
       message: string;
     };
   };
+  /** Chrome for resource sub-pages (e.g. src/pages/ResourceDetailPage.tsx). The case study content itself lives in src/data/caseStudies.ts. */
+  caseStudy: {
+    backToResources: string;
+    overviewTitle: string;
+    highlightsTitle: string;
+    galleryTitle: string;
+    outcomeTitle: string;
+    roleLabel: string;
+    toolsLabel: string;
+    yearLabel: string;
+    ctaTitle: string;
+    ctaButton: string;
+    notFoundTitle: string;
+    notFoundMessage: string;
+  };
 }

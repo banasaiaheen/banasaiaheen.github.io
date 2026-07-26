@@ -78,6 +78,20 @@ const ar: Translations = {
       message: "يرجى إدخال رسالة (10 أحرف على الأقل).",
     },
   },
+  caseStudy: {
+    backToResources: "العودة إلى الموارد",
+    overviewTitle: "نظرة عامة",
+    highlightsTitle: "ماذا فعلت",
+    galleryTitle: "شاشات مختارة",
+    outcomeTitle: "النتيجة",
+    roleLabel: "الدور",
+    toolsLabel: "الأدوات",
+    yearLabel: "السنة",
+    ctaTitle: "لديك مشروع في بالك؟",
+    ctaButton: "لنتحدث",
+    notFoundTitle: "المشروع غير موجود.",
+    notFoundMessage: "دراسة الحالة هذه غير متوفرة بعد — عد إلى الموارد لرؤية ما هو متاح.",
+  },
 };
 
 export default ar;

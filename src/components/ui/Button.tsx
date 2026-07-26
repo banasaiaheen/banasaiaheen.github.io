@@ -1,4 +1,5 @@
 import type { MouseEventHandler } from "react";
+import { Link } from "react-router-dom";
 import type { Language } from "../../types/language";
 import { cn } from "../../utils/cn";
 import IconNewWindow from "./IconNewWindow";
@@ -89,6 +90,17 @@ export default function Button({
   );
 
   if (href && !disabled) {
+    // Internal routes (including same-page hashes on another route, e.g.
+    // "/#contact") use client-side navigation; everything else (external
+    // links, mailto:, same-page "#anchor") is a plain link.
+    if (href.startsWith("/")) {
+      return (
+        <Link to={href} dir={language === "arabic" ? "rtl" : "ltr"} onClick={onClick} className={sharedClassName}>
+          {content}
+        </Link>
+      );
+    }
+
     return (
       <a
         href={href}

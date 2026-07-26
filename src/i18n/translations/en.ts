@@ -79,6 +79,20 @@ const en: Translations = {
       message: "Please enter a message (at least 10 characters).",
     },
   },
+  caseStudy: {
+    backToResources: "Back to Resources",
+    overviewTitle: "Overview",
+    highlightsTitle: "What I Did",
+    galleryTitle: "Selected Screens",
+    outcomeTitle: "Outcome",
+    roleLabel: "Role",
+    toolsLabel: "Tools",
+    yearLabel: "Year",
+    ctaTitle: "Have a project in mind?",
+    ctaButton: "Let's Talk",
+    notFoundTitle: "Project not found.",
+    notFoundMessage: "This case study doesn't exist yet — head back to Resources to see what's available.",
+  },
 };
 
 export default en;

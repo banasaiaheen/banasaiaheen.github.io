@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import type { Language } from "./types/language";
 import { getTranslations } from "./i18n/translations";
 import { SITE_PROFILE, LOCATION_FLAG_IMAGE, COPYRIGHT_YEAR } from "./data/siteProfile";
 import { NAV_ITEMS, getSectionNumber } from "./data/navigation";
 import { SOCIAL_LINKS } from "./data/socialLinks";
 import { useActiveSection } from "./hooks/useActiveSection";
+import { useScrollToHash } from "./hooks/useScrollToHash";
 import Navigation, { type NavigationPage, type NavigationSocialLink } from "./components/layout/Navigation";
 import HeroSection from "./sections/HeroSection";
 import AboutSection from "./sections/AboutSection";
@@ -31,10 +31,15 @@ import ContactSection from "./sections/ContactSection";
  *   - Contact form dropdown       -> src/data/inquiryOptions.ts
  * ============================================================================
  */
-export default function HomePage() {
-  const [language, setLanguage] = useState<Language>("english");
+export interface HomePageProps {
+  language: Language;
+  onLanguageChange: (language: Language) => void;
+}
+
+export default function HomePage({ language, onLanguageChange }: HomePageProps) {
   const isArabic = language === "arabic";
   const activeSection = useActiveSection();
+  useScrollToHash();
   const t = getTranslations(language);
   const profile = SITE_PROFILE[language];
 
@@ -52,13 +57,6 @@ export default function HomePage() {
     rel: link.rel,
   }));
 
-  // Keeps native browser behavior (spellcheck, form validation bubbles, default
-  // fonts/quotes) correctly RTL-aware in addition to our own layout classes.
-  useEffect(() => {
-    document.documentElement.dir = isArabic ? "rtl" : "ltr";
-    document.documentElement.lang = isArabic ? "ar" : "en";
-  }, [isArabic]);
-
   return (
     <div dir={isArabic ? "rtl" : "ltr"} className="flex min-h-screen flex-col bg-[#0d0d0d] lg:flex-row">
       <Navigation
@@ -73,7 +71,7 @@ export default function HomePage() {
         switchToLabel={t.nav.switchTo}
         rightsLabel={t.footer.rights}
         copyrightYear={COPYRIGHT_YEAR}
-        onLanguageChange={setLanguage}
+        onLanguageChange={onLanguageChange}
         className="flex lg:hidden"
       />
       <Navigation
@@ -88,7 +86,7 @@ export default function HomePage() {
         switchToLabel={t.nav.switchTo}
         rightsLabel={t.footer.rights}
         copyrightYear={COPYRIGHT_YEAR}
-        onLanguageChange={setLanguage}
+        onLanguageChange={onLanguageChange}
         className="hidden lg:flex"
       />
 

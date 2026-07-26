@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Language } from "../../types/language";
 import { cn } from "../../utils/cn";
 import IconArrow from "../ui/IconArrow";
@@ -95,6 +96,16 @@ export default function ResourcesCard({
       <div dir={dir} className={sharedClassName}>
         {content}
       </div>
+    );
+  }
+
+  // Internal routes (sub-pages like /resources/portfolio-design) use client-side
+  // navigation; everything else (external links, "#" placeholders) is a plain link.
+  if (href.startsWith("/")) {
+    return (
+      <Link to={href} dir={dir} className={sharedClassName}>
+        {content}
+      </Link>
     );
   }
 
