@@ -30,7 +30,8 @@ export interface CaseStudyContent {
   summary: string;
   role: string;
   tools: string;
-  year: string;
+  /** Link to the public Figma file for this project, shown next to the title. */
+  figmaHref: string;
   overview: string[];
   highlights: CaseStudyHighlight[];
   gallery: CaseStudyGalleryItem[];
@@ -46,7 +47,7 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
         "Red, black, and white — a portfolio built on the idea that great design doesn't need a big palette. Designed and prototyped entirely in Figma, then built by hand with Claude Code.",
       role: "UX/UI Design & Direction",
       tools: "Figma, Claude Code",
-      year: "2026",
+      figmaHref: "#",
       overview: [
         "The idea was to create something entirely my own, using my three favourite colours: red, black, and white. I wanted a clean, responsive site available in both English and my native language, Arabic — and I kept everything neat and simple on purpose. I've always believed you don't need an overwhelming variety of colours or complex design to prove you can create something great.",
         "Everything was first designed and prototyped in Figma. Once the design system was in place, I prototyped the entire experience — navigation, interactions, both layouts — to validate the user flow and make sure it felt polished before development ever started.",
@@ -92,7 +93,7 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
         "الأحمر والأسود والأبيض — موقع شخصي بُني على فكرة أن التصميم الرائع لا يحتاج إلى لوحة ألوان كبيرة. صُمم ونُمذج بالكامل في Figma، ثم بُني يدويًا باستخدام Claude Code.",
       role: "تصميم UX/UI والإشراف",
       tools: "Figma، Claude Code",
-      year: "2026",
+      figmaHref: "#",
       overview: [
         "كانت الفكرة إنشاء شيء خاص بي تمامًا، باستخدام ألواني الثلاثة المفضلة: الأحمر والأسود والأبيض. أردت موقعًا نظيفًا ومتجاوبًا ومتاحًا باللغتين الإنجليزية ولغتي الأم العربية — وحافظت على كل شيء بسيطًا ومرتبًا عن قصد. لطالما آمنت أنك لست بحاجة إلى تنوع ألوان مبالغ فيه أو تصميم معقّد لتثبت أنك قادر على صنع شيء رائع.",
         "صُمم كل شيء ونُمذج أوليًا في Figma أولًا. وبمجرد اكتمال نظام التصميم، جربت التجربة الكاملة — التنقل والتفاعلات وكلا التخطيطين — للتحقق من مسار المستخدم والتأكد من أنها تبدو مصقولة قبل أن تبدأ مرحلة التطوير.",

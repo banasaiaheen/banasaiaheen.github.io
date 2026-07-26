@@ -3,11 +3,13 @@ import { useParams, Link } from "react-router-dom";
 import type { Language } from "../types/language";
 import { getTranslations } from "../i18n/translations";
 import { CASE_STUDIES } from "../data/caseStudies";
+import { RESOURCES } from "../data/resources";
 import { SITE_PROFILE, LOCATION_FLAG_IMAGE, COPYRIGHT_YEAR } from "../data/siteProfile";
 import { getNavPages, getNavSocialLinks } from "../lib/navChrome";
 import Navigation from "../components/layout/Navigation";
 import Button from "../components/ui/Button";
-import ChevronDownIcon from "../components/ui/ChevronDownIcon";
+import IconArrow from "../components/ui/IconArrow";
+import StrokeNumber from "../components/ui/StrokeNumber";
 
 export interface ResourceDetailPageProps {
   language: Language;
@@ -20,21 +22,22 @@ export interface ResourceDetailPageProps {
  * `caseStudy` namespace in src/i18n/translations. Add a new sub-page by
  * adding entries to both — see the comment at the top of caseStudies.ts.
  *
- * Uses the same site-wide <Navigation> as the homepage (kept identical on
- * purpose, rather than a separate nav pattern) with "Resources" shown as the
- * active item, plus a "‹ Resources" link above the title.
+ * Uses the same site-wide <Navigation> as the homepage, but with no page
+ * marked as active — this is a sub-page, not one of the anchor sections, so
+ * nothing in the nav should read as "selected" (matches the Figma spec).
  */
 export default function ResourceDetailPage({ language, onLanguageChange }: ResourceDetailPageProps) {
   const { slug = "" } = useParams();
   const isArabic = language === "arabic";
   const t = getTranslations(language);
   const profile = SITE_PROFILE[language];
-  const pages = getNavPages(language, "resources");
+  const pages = getNavPages(language, "");
   const socialLinks = getNavSocialLinks(language);
   const caseStudy = CASE_STUDIES[language][slug];
-  // Chevron points "back" toward the start of reading direction — left in
-  // LTR, right in RTL — same rotation logic as Pagination's previous control.
-  const backRotation = isArabic ? "-rotate-90" : "rotate-90";
+  // The ghost numeral reuses this resource's own position in the Resources
+  // grid (e.g. "00" for the first card), matching the number on its card.
+  const resourceIndex = RESOURCES[language].findIndex((r) => r.slug === slug);
+  const resourceNumber = String(Math.max(resourceIndex, 0)).padStart(2, "0");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -78,9 +81,12 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
   const backLink = (
     <Link
       to="/#resources"
-      className="flex w-fit items-center gap-2 font-barlow text-[14px] text-[#7a7a7a] transition-colors duration-150 hover:text-[#d42b2b]"
+      className="flex w-fit items-center gap-2 font-barlow text-[14px] text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b]"
     >
-      <ChevronDownIcon size={12} className={`shrink-0 ${backRotation}`} />
+      {/* IconArrow points "forward" (right in LTR); mirror it in English to point
+          back, and leave it unmirrored in Arabic so it points right — "back"
+          toward the start of RTL reading direction. */}
+      <IconArrow size={14} className={isArabic ? "" : "-scale-x-100"} />
       {t.nav.resources}
     </Link>
   );
@@ -105,39 +111,42 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
       {navBars}
 
       <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">
-        <div className="mx-auto flex w-full max-w-[860px] flex-col gap-16 px-5 py-14 lg:px-8 lg:py-24">
-          <header className="flex flex-col gap-5">
-            {backLink}
-            <p className="font-barlow text-[12px] tracking-[3px] text-[#d42b2b] lg:text-[13px] lg:tracking-[4px]">
-              {caseStudy.category.toUpperCase()}
-            </p>
-            <h1 className="font-barlow text-[36px] font-black uppercase leading-[1.05] text-[#f7f4f0] lg:text-[56px]">
+        <header className="relative flex flex-col gap-5 overflow-hidden bg-[#1c1c1c] px-5 py-8 lg:px-8">
+          <StrokeNumber
+            value={resourceNumber}
+            size={90}
+            strokeColor="#3a3a3a"
+            strokeWidth={2}
+            className={`pointer-events-none absolute top-4 lg:top-6 ${isArabic ? "left-4 lg:left-8" : "right-4 lg:right-8"}`}
+          />
+          {backLink}
+          <div className="flex flex-wrap items-center gap-x-[6px] gap-y-1 font-barlow text-[14px] text-[#d42b2b]">
+            <span>{caseStudy.tools}</span>
+            <span>·</span>
+            <span>{caseStudy.category}</span>
+            <span>·</span>
+            <span>{caseStudy.role}</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h1 className="font-barlow text-[36px] font-black uppercase leading-[1.05] tracking-[1.68px] text-[#f7f4f0] lg:text-[56px]">
               {caseStudy.title}
             </h1>
-            <p className="max-w-[560px] font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
-              {caseStudy.summary}
-            </p>
-            <div className="flex flex-wrap gap-x-10 gap-y-4 border-t-[0.8px] border-[#2a2a2a] pt-6">
-              <div className="flex flex-col gap-1">
-                <p className="font-barlow text-[12px] text-[#7a7a7a]">{t.caseStudy.roleLabel}</p>
-                <p className="font-barlow text-[14px] text-[#f7f4f0]">{caseStudy.role}</p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="font-barlow text-[12px] text-[#7a7a7a]">{t.caseStudy.toolsLabel}</p>
-                <p className="font-barlow text-[14px] text-[#f7f4f0]">{caseStudy.tools}</p>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="font-barlow text-[12px] text-[#7a7a7a]">{t.caseStudy.yearLabel}</p>
-                <p className="font-barlow text-[14px] text-[#f7f4f0]">{caseStudy.year}</p>
-              </div>
-            </div>
-          </header>
+            <a
+              href={caseStudy.figmaHref}
+              className="font-barlow text-[14px] text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b]"
+            >
+              {t.caseStudy.figmaLinkLabel}
+            </a>
+          </div>
+          <p className="font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">{caseStudy.summary}</p>
+        </header>
 
-          <section className="flex flex-col gap-4">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[28px]">
+        <div className="flex flex-col gap-12 px-5 py-10 lg:gap-[62px] lg:px-8 lg:py-8">
+          <section className="flex flex-col gap-6">
+            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
               {t.caseStudy.overviewTitle}
             </h2>
-            <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[18px]">
+            <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
               {caseStudy.overview.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -145,32 +154,32 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
           </section>
 
           <section className="flex flex-col gap-6">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[28px]">
+            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
               {t.caseStudy.highlightsTitle}
             </h2>
             <div className="flex flex-col gap-6">
               {caseStudy.highlights.map((item, i) => (
-                <div key={item.title} className="flex gap-4 border-t-[0.8px] border-[#2a2a2a] pt-6 first:border-t-0 first:pt-0">
-                  <span className="font-barlow text-[14px] text-[#d42b2b]">{String(i).padStart(2, "0")}</span>
-                  <div className="flex flex-col gap-2">
-                    <p className="font-barlow text-[24px] font-bold text-[#f7f4f0]">{item.title}</p>
-                    <p className="font-barlow text-[20px] font-medium leading-relaxed text-[#b8b8b8]">
-                      {item.description}
-                    </p>
+                <div key={item.title} className="flex flex-col gap-4 border-b border-[#2a2a2a] pb-6">
+                  <div className="flex items-center gap-4">
+                    <span className="font-barlow text-[16px] text-[#e53737]">{String(i).padStart(2, "0")}</span>
+                    <span className="font-barlow text-[20px] font-bold text-[#f7f4f0]">{item.title}</span>
                   </div>
+                  <p className="ps-[30px] font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
+                    {item.description}
+                  </p>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="flex flex-col gap-4">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[28px]">
+          <section className="flex flex-col gap-6">
+            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
               {t.caseStudy.galleryTitle}
             </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               {caseStudy.gallery.map((item) => (
                 <div key={item.caption} className="flex flex-col gap-2">
-                  <div className="flex aspect-[4/3] w-full items-center justify-center border border-[#2a2a2a] bg-[#1c1c1c]">
+                  <div className="flex aspect-[2/1] w-full items-center justify-center border border-[#2a2a2a] bg-[#1c1c1c]">
                     <span className="font-barlow text-[13px] text-[#3a3a3a]">{isArabic ? "معاينة" : "PREVIEW"}</span>
                   </div>
                   <p className="font-barlow text-[13px] font-normal text-[#7a7a7a]">{item.caption}</p>
@@ -179,23 +188,21 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
             </div>
           </section>
 
-          <section className="flex flex-col gap-4">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[28px]">
+          <section className="flex flex-col gap-6">
+            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
               {t.caseStudy.outcomeTitle}
             </h2>
-            <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[18px]">
+            <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
               {caseStudy.outcome.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
           </section>
+        </div>
 
-          <section className="flex flex-col items-start gap-5 border-t-[0.8px] border-[#2a2a2a] pt-12">
-            <h2 className="font-barlow text-[26px] font-black text-[#f7f4f0] lg:text-[32px]">
-              {t.caseStudy.ctaTitle}
-            </h2>
-            <Button variant="primary" cta={t.caseStudy.ctaButton} language={language} href="/#contact" />
-          </section>
+        <div className="sticky bottom-0 z-10 flex flex-wrap items-center justify-center gap-5 bg-[#f7f4f0] px-5 py-3 lg:px-8">
+          <h2 className="font-barlow text-[22px] font-black text-[#1e1e1e] lg:text-[32px]">{t.caseStudy.ctaTitle}</h2>
+          <Button variant="primary" cta={t.caseStudy.ctaButton} language={language} href="/#contact" />
         </div>
       </main>
     </div>

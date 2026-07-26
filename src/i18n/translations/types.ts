@@ -84,9 +84,7 @@ export interface Translations {
     highlightsTitle: string;
     galleryTitle: string;
     outcomeTitle: string;
-    roleLabel: string;
-    toolsLabel: string;
-    yearLabel: string;
+    figmaLinkLabel: string;
     ctaTitle: string;
     ctaButton: string;
     notFoundTitle: string;
