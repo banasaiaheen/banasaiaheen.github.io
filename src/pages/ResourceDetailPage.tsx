@@ -6,6 +6,7 @@ import { CASE_STUDIES } from "../data/caseStudies";
 import { RESOURCES } from "../data/resources";
 import { SITE_PROFILE, LOCATION_FLAG_IMAGE, COPYRIGHT_YEAR } from "../data/siteProfile";
 import { getNavPages, getNavSocialLinks } from "../lib/navChrome";
+import { cn } from "../utils/cn";
 import Navigation from "../components/layout/Navigation";
 import Button from "../components/ui/Button";
 import IconArrow from "../components/ui/IconArrow";
@@ -39,7 +40,9 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
   const resourceIndex = RESOURCES[language].findIndex((r) => r.slug === slug);
   const resourceNumber = String(Math.max(resourceIndex, 0)).padStart(2, "0");
   // Once the page has scrolled, the sticky header collapses to just the back
-  // link + title so it doesn't eat scroll real estate on a long page.
+  // link + title so it doesn't eat scroll real estate on a long page — mobile
+  // only (space is the reason), desktop always shows the full header via the
+  // lg: overrides below regardless of this state.
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -122,45 +125,62 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
 
       <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">
         <header
-          className={`sticky top-[101px] z-10 flex flex-col overflow-hidden bg-[#1c1c1c] px-5 lg:top-0 lg:px-8 ${
-            isScrolled ? "gap-2 py-4" : "gap-5 py-8"
-          }`}
+          className={cn(
+            "sticky top-[101px] z-10 flex flex-col overflow-hidden bg-[#1c1c1c] px-5 lg:top-0 lg:gap-5 lg:px-8 lg:py-8",
+            isScrolled ? "gap-2 py-4" : "gap-5 py-8",
+          )}
         >
-          {!isScrolled && (
-            <StrokeNumber
-              value={resourceNumber}
-              size={90}
-              strokeColor="#3a3a3a"
-              strokeWidth={2}
-              className={`pointer-events-none absolute top-4 lg:top-6 ${isArabic ? "left-4 lg:left-8" : "right-4 lg:right-8"}`}
-            />
-          )}
+          <StrokeNumber
+            value={resourceNumber}
+            size={90}
+            strokeColor="#3a3a3a"
+            strokeWidth={2}
+            className={cn(
+              "pointer-events-none absolute top-4 lg:top-6 lg:block",
+              isArabic ? "left-4 lg:left-8" : "right-4 lg:right-8",
+              isScrolled && "hidden",
+            )}
+          />
           {backLink}
-          {!isScrolled && (
-            <div className="flex flex-wrap items-center gap-x-[6px] gap-y-1 pe-28 font-barlow text-[14px] text-[#d42b2b] lg:pe-0">
-              <span>{caseStudy.tools}</span>
-              <span>·</span>
-              <span>{caseStudy.category}</span>
-              <span>·</span>
-              <span>{caseStudy.role}</span>
-            </div>
-          )}
+          <div
+            className={cn(
+              "flex-wrap items-center gap-x-[6px] gap-y-1 pe-28 font-barlow text-[14px] text-[#d42b2b] lg:flex lg:pe-0",
+              isScrolled ? "hidden" : "flex",
+            )}
+          >
+            <span>{caseStudy.tools}</span>
+            <span>·</span>
+            <span>{caseStudy.category}</span>
+            <span>·</span>
+            <span>{caseStudy.role}</span>
+          </div>
           <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
-            <h1 className="font-barlow text-[36px] font-black uppercase leading-[1.05] tracking-[1.68px] text-[#f7f4f0] lg:text-[56px]">
+            <h1
+              className={cn(
+                "font-barlow uppercase leading-[1.05] tracking-[1.68px] text-[#f7f4f0] lg:text-[56px] lg:font-black",
+                isScrolled ? "text-[22px] font-bold" : "text-[36px] font-black",
+              )}
+            >
               {caseStudy.title}
             </h1>
-            {!isScrolled && (
-              <a
-                href={caseStudy.figmaHref}
-                className="font-barlow text-[14px] text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b]"
-              >
-                {t.caseStudy.figmaLinkLabel}
-              </a>
-            )}
+            <a
+              href={caseStudy.figmaHref}
+              className={cn(
+                "font-barlow text-[14px] text-[#f7f4f0] transition-colors duration-150 hover:text-[#d42b2b] lg:inline",
+                isScrolled && "hidden",
+              )}
+            >
+              {t.caseStudy.figmaLinkLabel}
+            </a>
           </div>
-          {!isScrolled && (
-            <p className="font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">{caseStudy.summary}</p>
-          )}
+          <p
+            className={cn(
+              "font-barlow text-[16px] font-normal text-[#9e9e9e] lg:block lg:text-[20px]",
+              isScrolled && "hidden",
+            )}
+          >
+            {caseStudy.summary}
+          </p>
         </header>
 
         <div className="flex flex-col gap-12 px-5 py-10 lg:gap-[62px] lg:px-8 lg:py-8">
