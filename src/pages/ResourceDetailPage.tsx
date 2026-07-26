@@ -198,11 +198,13 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
               ))}
             </div>
           </section>
-        </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-5 bg-[#f7f4f0] px-5 py-3 lg:px-8">
-          <h2 className="font-barlow text-[22px] font-black text-[#1e1e1e] lg:text-[32px]">{t.caseStudy.ctaTitle}</h2>
-          <Button variant="primary" cta={t.caseStudy.ctaButton} language={language} href="/#contact" />
+          <div className="flex w-full flex-wrap items-center justify-center gap-5 bg-[#f7f4f0] px-5 py-3 lg:px-8">
+            <h2 className="font-barlow text-[22px] font-black text-[#1e1e1e] lg:text-[32px]">
+              {t.caseStudy.ctaTitle}
+            </h2>
+            <Button variant="primary" cta={t.caseStudy.ctaButton} language={language} href="/#contact" />
+          </div>
         </div>
       </main>
     </div>
