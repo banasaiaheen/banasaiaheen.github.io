@@ -120,7 +120,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
             className={`pointer-events-none absolute top-4 lg:top-6 ${isArabic ? "left-4 lg:left-8" : "right-4 lg:right-8"}`}
           />
           {backLink}
-          <div className="flex flex-wrap items-center gap-x-[6px] gap-y-1 font-barlow text-[14px] text-[#d42b2b]">
+          <div className="flex flex-wrap items-center gap-x-[6px] gap-y-1 pe-28 font-barlow text-[14px] text-[#d42b2b] lg:pe-0">
             <span>{caseStudy.tools}</span>
             <span>·</span>
             <span>{caseStudy.category}</span>
@@ -199,11 +199,17 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
             </div>
           </section>
 
-          <div className="flex w-full flex-wrap items-center justify-center gap-5 bg-[#f7f4f0] px-5 py-3 lg:px-8">
-            <h2 className="font-barlow text-[22px] font-black text-[#1e1e1e] lg:text-[32px]">
+          <div className="flex w-full flex-col items-stretch gap-4 bg-[#f7f4f0] px-5 py-6 lg:flex-row lg:items-center lg:justify-center lg:gap-5 lg:px-8 lg:py-3">
+            <h2 className="text-center font-barlow text-[22px] font-black text-[#1e1e1e] lg:text-[32px]">
               {t.caseStudy.ctaTitle}
             </h2>
-            <Button variant="primary" cta={t.caseStudy.ctaButton} language={language} href="/#contact" />
+            <Button
+              variant="primary"
+              cta={t.caseStudy.ctaButton}
+              language={language}
+              href="/#contact"
+              className="w-full lg:w-auto"
+            />
           </div>
         </div>
       </main>
