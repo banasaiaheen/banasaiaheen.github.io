@@ -42,19 +42,20 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
     "portfolio-design": {
       title: "Portfolio Design",
       category: "Personal Project",
-      summary: "A bilingual, pixel-accurate portfolio built from Figma, refactored for real-world editability.",
-      role: "UX/UI Design & Front-End Development",
-      tools: "Figma, React, TypeScript, Tailwind CSS",
+      summary:
+        "A bilingual, pixel-accurate portfolio designed in Figma and built with Claude Code — refactored into a system I can maintain myself.",
+      role: "UX/UI Design, Direction & Front-End Development",
+      tools: "Figma, React, TypeScript, Tailwind CSS, Claude Code",
       year: "2026",
       overview: [
         "The goal was to turn a Figma design system into a real, production bilingual site (English/Arabic) with pixel-accurate right-to-left mirroring — not just a translated copy of an English layout.",
-        "The scope covers every section: hero, about, work experience, education, resources, and contact — each built to match the Figma spec exactly, including hover states, spacing, and responsive breakpoints.",
+        "I designed every screen in Figma, then built it with Claude Code, Anthropic's coding agent — translating each component from spec to production-ready React and Tailwind, including hover states, spacing, and responsive breakpoints, while I directed the design decisions and reviewed every screen against the source file.",
       ],
       highlights: [
         {
-          title: "Figma-to-code, pixel by pixel",
+          title: "Designed by me, built with Claude Code",
           description:
-            "Pulled exact component specs — spacing, typography, color — straight from Figma's dev-mode tools instead of eyeballing screenshots, keeping the build faithful to the source design.",
+            "I led every design decision in Figma; Claude Code handled the implementation — reading the Figma spec directly, writing the component code, and iterating with me screen by screen until it matched pixel-for-pixel.",
         },
         {
           title: "Bilingual from day one",
@@ -78,7 +79,8 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
         { caption: "Contact — validated form with EmailJS" },
       ],
       outcome: [
-        "The result is a site its owner can update herself — swapping in a new project, translating a headline, or reordering the nav — without writing code, while still matching the original Figma design pixel-for-pixel in both languages and at every breakpoint.",
+        "The result is a site I can update myself — swapping in a new project, translating a headline, or reordering the nav — without writing code, while still matching the original Figma design pixel-for-pixel in both languages and at every breakpoint.",
+        "It was designed by hand and built through iterative pairing with Claude Code, from the first component to the final refactor.",
       ],
     },
   },
@@ -86,19 +88,20 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
     "portfolio-design": {
       title: "تصميم الملف الشخصي",
       category: "مشروع شخصي",
-      summary: "موقع شخصي ثنائي اللغة ودقيق التفاصيل مبني من Figma، أُعيدت هيكلته ليكون قابلاً للتعديل فعليًا.",
-      role: "تصميم UX/UI وتطوير الواجهة الأمامية",
-      tools: "Figma، React، TypeScript، Tailwind CSS",
+      summary:
+        "موقع شخصي ثنائي اللغة ودقيق التفاصيل، صُمم في Figma وبُني باستخدام Claude Code — أُعيد هيكلته ليكون نظامًا أستطيع صيانته بنفسي.",
+      role: "تصميم UX/UI، الإشراف، وتطوير الواجهة الأمامية",
+      tools: "Figma، React، TypeScript، Tailwind CSS، Claude Code",
       year: "2026",
       overview: [
         "كان الهدف تحويل نظام تصميم من Figma إلى موقع فعلي ثنائي اللغة (عربي/إنجليزي) بمحاذاة دقيقة للتخطيط من اليمين إلى اليسار — لا مجرد نسخة مترجمة من تخطيط إنجليزي.",
-        "يغطي النطاق كل قسم: الرئيسية، نبذة عني، الخبرة العملية، التعليم، الموارد، والتواصل — كلها مبنية لتطابق مواصفات Figma تمامًا، بما في ذلك حالات التحويم والتباعد ونقاط الاستجابة.",
+        "صممت كل شاشة في Figma، ثم بنيتها باستخدام Claude Code، أداة الذكاء الاصطناعي البرمجية من Anthropic — التي حوّلت كل مكون من المواصفات إلى كود React وTailwind جاهز للإنتاج، بما في ذلك حالات التحويم والتباعد ونقاط الاستجابة، بينما توليت أنا قرارات التصميم وراجعت كل شاشة مقارنةً بالملف الأصلي.",
       ],
       highlights: [
         {
-          title: "من Figma إلى الكود، بكسل ببكسل",
+          title: "صُمم بيدي، وبُني باستخدام Claude Code",
           description:
-            "سحبت المواصفات الدقيقة للمكونات — التباعد والطباعة والألوان — مباشرة من أدوات وضع المطورين في Figma بدلاً من الاعتماد على لقطات الشاشة، للحفاظ على أمانة التصميم الأصلي.",
+            "توليت كل قرار تصميمي في Figma؛ تولى Claude Code التنفيذ — بقراءة مواصفات Figma مباشرة، وكتابة كود المكونات، والتكرار معي شاشة بشاشة حتى تطابقت بكسل ببكسل.",
         },
         {
           title: "ثنائي اللغة منذ البداية",
@@ -122,7 +125,8 @@ export const CASE_STUDIES: Record<Language, Record<string, CaseStudyContent>> = 
         { caption: "تواصل — نموذج تحقق متكامل عبر EmailJS" },
       ],
       outcome: [
-        "النتيجة موقع يمكن لصاحبته تحديثه بنفسها — بإضافة مشروع جديد، أو ترجمة عنوان، أو إعادة ترتيب التنقل — دون كتابة كود، مع الحفاظ على مطابقة تصميم Figma الأصلي بكسل ببكسل في كلا اللغتين وفي كل نقطة استجابة.",
+        "النتيجة موقع أستطيع تحديثه بنفسي — بإضافة مشروع جديد، أو ترجمة عنوان، أو إعادة ترتيب التنقل — دون كتابة كود، مع الحفاظ على مطابقة تصميم Figma الأصلي بكسل ببكسل في كلا اللغتين وفي كل نقطة استجابة.",
+        "صُمم يدويًا وبُني عبر تعاون تكراري مع Claude Code، من أول مكون حتى إعادة الهيكلة الأخيرة.",
       ],
     },
   },
