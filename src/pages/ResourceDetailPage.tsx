@@ -17,6 +17,13 @@ export interface ResourceDetailPageProps {
   onLanguageChange: (language: Language) => void;
 }
 
+/** Shared "OVERVIEW" / "WHAT I DID" style heading used by every content section on this page. */
+function SectionHeading({ children }: { children: string }) {
+  return (
+    <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">{children}</h2>
+  );
+}
+
 /**
  * A resource/project case study page (e.g. /resources/portfolio-design).
  * Content comes from src/data/caseStudies.ts, page chrome from the
@@ -124,6 +131,9 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
       {navBars}
 
       <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">
+        {/* top-[101px] sits this below the mobile nav bar (also sticky top-0) so the
+            two don't stack on top of each other once both are scrolled-pinned; desktop's
+            nav is a left sidebar, not a top bar, so top-0 is correct there. */}
         <header
           className={cn(
             "sticky top-[101px] z-10 flex flex-col overflow-hidden bg-[#1c1c1c] px-5 lg:top-0 lg:gap-5 lg:px-8 lg:py-8",
@@ -185,9 +195,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
 
         <div className="flex flex-col gap-12 px-5 pb-10 pt-6 lg:gap-[62px] lg:px-8 lg:py-8">
           <section className="flex flex-col gap-6">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
-              {t.caseStudy.overviewTitle}
-            </h2>
+            <SectionHeading>{t.caseStudy.overviewTitle}</SectionHeading>
             <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
               {caseStudy.overview.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
@@ -196,9 +204,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
           </section>
 
           <section className="flex flex-col gap-6">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
-              {t.caseStudy.highlightsTitle}
-            </h2>
+            <SectionHeading>{t.caseStudy.highlightsTitle}</SectionHeading>
             <div className="flex flex-col gap-6">
               {caseStudy.highlights.map((item, i) => (
                 <div key={item.title} className="flex flex-col gap-4 border-b border-[#2a2a2a] pb-6">
@@ -215,9 +221,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
           </section>
 
           <section className="flex flex-col gap-6">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
-              {t.caseStudy.galleryTitle}
-            </h2>
+            <SectionHeading>{t.caseStudy.galleryTitle}</SectionHeading>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
               {caseStudy.gallery.map((item) => (
                 <div key={item.caption} className="flex flex-col gap-2">
@@ -231,9 +235,7 @@ export default function ResourceDetailPage({ language, onLanguageChange }: Resou
           </section>
 
           <section className="flex flex-col gap-6">
-            <h2 className="font-barlow text-[22px] font-black uppercase text-[#f7f4f0] lg:text-[32px]">
-              {t.caseStudy.outcomeTitle}
-            </h2>
+            <SectionHeading>{t.caseStudy.outcomeTitle}</SectionHeading>
             <div className="flex flex-col gap-4 font-barlow text-[16px] font-normal text-[#9e9e9e] lg:text-[20px]">
               {caseStudy.outcome.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
