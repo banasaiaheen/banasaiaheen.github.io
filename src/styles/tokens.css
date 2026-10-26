@@ -1,0 +1,252 @@
+/*
+ * ============================================================================
+ *  DESIGN TOKENS — mirrors the Figma variables (kcDOoECGUtLG0KRMrZZfru).
+ *  Change a value here and every component that uses the token updates.
+ *
+ *  Figma variable            ->  Tailwind utility
+ *  brand/ink                 ->  bg-brand-ink  text-brand-ink  border-brand-ink
+ *  neutral/48                ->  text-neutral-48 ...
+ *  Text styles (weight/size) ->  text-regular-16, text-bold-20, text-black-56 ...
+ *
+ *  Language-dependent values (font, line-heights, tracking) live in plain CSS
+ *  variables at the bottom and switch with the page direction: English pages
+ *  are dir="ltr", Arabic pages are dir="rtl" (see "Direction and language" in
+ *  the Figma Read Me).
+ * ============================================================================
+ */
+
+/* `static` keeps every token available as a CSS variable even when no utility uses it yet. */
+@theme static {
+  /* ---- colors: brand/* ---- */
+  --color-brand-ink: #0d0d0d;
+  --color-brand-panel: #1c1c1c;
+  --color-brand-cream: #f7f4f0;
+  --color-brand-white: #ffffff;
+  --color-brand-red: #d42b2b;
+  --color-brand-red-bright: #e53737;
+  /* Hover state of the primary button. */
+  --color-brand-red-dark: #a22222;
+  /* Small red text on ink/panel backgrounds (WCAG AA). brand/red is for large text and light backgrounds. */
+  --color-brand-red-on-dark: #f05252;
+
+  /* ---- colors: neutral/* (named by their Figma step) ---- */
+  --color-neutral-16: #2a2a2a;
+  /* Focused / hovered / open field background. */
+  --color-neutral-20: #343434;
+  --color-neutral-32: #525252;
+  --color-neutral-37: #5f5f5f;
+  --color-neutral-48: #7a7a7a;
+  --color-neutral-52: #848484;
+  --color-neutral-62: #9e9e9e;
+  --color-neutral-68: #aeaeae;
+  --color-neutral-80: #cccccc;
+  --color-neutral-87: #dddddd;
+
+  /* ---- colors: accent/* and alpha/* ---- */
+  --color-accent-green: #22c55e;
+  --color-accent-orange: #d4612b;
+  --color-alpha-green-28: rgb(34 197 94 / 0.28);
+  /* Disabled state of the primary button. */
+  --color-alpha-red-40: rgb(212 43 43 / 0.4);
+
+  /* ---- typography: font families ---- */
+  --font-en: "Barlow Condensed", system-ui, sans-serif;
+  /* Cairo: Arabic/Latin superfamily with a true Black weight, matched to Barlow Condensed's heavy display weight. */
+  --font-ar: "Cairo", system-ui, sans-serif;
+
+  /* ---- motion: status dot (icon/ status-dot), 2.2s loop from the Figma motion data ---- */
+  --animate-status-glow: status-glow 2.2s ease-in-out infinite;
+  --animate-status-dot: status-dot 2.2s ease-in-out infinite;
+
+  @keyframes status-glow {
+    0% {
+      opacity: 0.5;
+      scale: 0.85;
+    }
+    50% {
+      opacity: 0.18;
+      scale: 1.15;
+    }
+    100% {
+      opacity: 0.479;
+      scale: 0.87;
+    }
+  }
+
+  @keyframes status-dot {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+    100% {
+      opacity: 0.956;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Language-dependent variables (Figma `content` collection modes).
+ * `--font` is the "font" variable: Barlow Condensed in English, Cairo in Arabic.
+ * Numerals and decorative numbers always use --font-en (Figma `en-font`).
+ * ------------------------------------------------------------------------- */
+:root,
+[dir="ltr"] {
+  --font: var(--font-en);
+  --line-height-black-56: 56px;
+  --line-height-black-60: 60px;
+  --line-height-black-88: 80.96px;
+  --letter-spacing-light-12: 4px;
+  /* Black display styles are tracked in slightly (-1%). */
+  --letter-spacing-black: -0.01em;
+}
+
+/* Arabic: Cairo's taller letters need more line-height on the tight display
+ * styles, and tracking is 0 so Arabic letters stay joined. */
+[dir="rtl"] {
+  --font: var(--font-ar);
+  --line-height-black-56: 90px;
+  --line-height-black-60: 96px;
+  --line-height-black-88: 141px;
+  --letter-spacing-light-12: 0;
+  --letter-spacing-black: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Text styles — named exactly like the Figma styles ("weight/size" -> weight-size).
+ * ------------------------------------------------------------------------- */
+@utility text-light-12 {
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: var(--letter-spacing-light-12);
+}
+@utility text-light-14 {
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 14px;
+}
+@utility text-light-18 {
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 18px;
+}
+
+@utility text-regular-12 {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 12px;
+}
+@utility text-regular-14 {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 14px;
+}
+@utility text-regular-16 {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 16px;
+}
+@utility text-regular-18 {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 18px;
+}
+@utility text-regular-20 {
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 20px;
+}
+
+@utility text-bold-12 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 12px;
+}
+@utility text-bold-16 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 16px;
+}
+@utility text-bold-20 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 20px;
+}
+@utility text-bold-24 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 24px;
+}
+@utility text-bold-32 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 32px;
+}
+
+@utility text-black-24 {
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 24px;
+}
+@utility text-black-32 {
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 32px;
+}
+@utility text-black-56 {
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 56px;
+  line-height: var(--line-height-black-56);
+  letter-spacing: var(--letter-spacing-black);
+}
+@utility text-black-60 {
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 60px;
+  line-height: var(--line-height-black-60);
+  letter-spacing: var(--letter-spacing-black);
+}
+@utility text-black-88 {
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 88px;
+  line-height: var(--line-height-black-88);
+  letter-spacing: var(--letter-spacing-black);
+}
+
+/* Decorative numbers: always Barlow Condensed (en-font), also in Arabic. */
+@utility text-numbers-64 {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 64px;
+  line-height: 64px;
+}
+@utility text-numbers-100 {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 100px;
+  line-height: 0.89;
+  letter-spacing: -0.01em;
+}
+@utility text-numbers-144 {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 144px;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+}
+@utility text-numbers-150 {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 150px;
+  line-height: 224px;
+}
+@utility text-numbers-224 {
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 224px;
+  line-height: 1;
+}
