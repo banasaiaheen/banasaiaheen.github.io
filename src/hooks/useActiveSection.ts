@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { SECTION_IDS } from "../data/navigation";
+import { SECTION_IDS, type SectionId } from "../data/navigation";
 
 /** Tracks which page section is currently centered in the viewport, for nav highlighting. */
-export function useActiveSection(): string {
-  const [activeSection, setActiveSection] = useState(SECTION_IDS[0]);
+export function useActiveSection(): SectionId {
+  const [activeSection, setActiveSection] = useState<SectionId>(SECTION_IDS[0]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            setActiveSection(entry.target.id as SectionId);
           }
         }
       },

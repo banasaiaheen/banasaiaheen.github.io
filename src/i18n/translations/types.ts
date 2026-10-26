@@ -1,93 +1,117 @@
 /**
- * Shape of every piece of translatable UI text on the site (nav labels,
- * section titles, buttons, form copy, etc). Both src/i18n/translations/en.ts
- * and ar.ts must satisfy this exactly, so adding a new field here forces you
- * to fill it in for both languages.
+ * Shape of every piece of translatable UI text on the site. The groups mirror
+ * the Figma `content` variable collection (nav/*, home/*, about/*, ...), so a
+ * Figma variable `contact/form/title` lives at `contact.form.title` here.
+ * Both src/i18n/translations/en.ts and ar.ts must satisfy this exactly, so
+ * adding a field here forces you to fill it in for both languages.
  *
- * This does NOT include repeatable content (work history, education entries,
- * resources/projects, skills) — that lives in src/data/ instead, since it's
- * naturally structured as lists rather than one-off UI strings.
+ * This does NOT include repeatable content (work history, projects,
+ * certificates, skills) — that lives in src/data/ since it is naturally
+ * structured as lists rather than one-off UI strings.
  */
 export interface Translations {
+  /** Figma: nav/* */
   nav: {
-    /** Keyed by the nav item `id` from src/data/navigation.ts. */
-    home: string;
-    about: string;
-    work: string;
-    education: string;
-    resources: string;
-    contact: string;
+    name: string;
+    position: string;
+    location: string;
+    /** Full copyright line. */
+    copyRight: string;
     /** Label on the button that switches to the *other* language. */
     switchTo: string;
-  };
-  social: {
     email: string;
     linkedin: string;
     figma: string;
-  };
-  footer: {
-    rights: string;
-  };
-  hero: {
-    portfolioLabel: string;
-    subtext: string;
-    contactMe: string;
-    tagline: string;
-  };
-  about: {
-    title: string;
-    bio: string[];
-  };
-  work: {
-    headingLine1: string;
-    headingLine2: string;
-    experienceLetter: string;
-  };
-  education: {
-    title: string;
-  };
-  resources: {
-    title: string;
-    subtext: string;
-    comingSoon: string;
-  };
-  contact: {
-    line1: string;
-    line2: string;
-    line3: string;
-    line4: string;
-    subtext1: string;
-    subtext2: string;
-    directEmailLabel: string;
-    formTitle: string;
-    formSubtext: string;
-  };
-  form: {
-    namePlaceholder: string;
-    emailPlaceholder: string;
-    messagePlaceholder: string;
-    inquiryPlaceholder: string;
-    send: string;
-    sending: string;
-    success: string;
-    error: string;
-    errors: {
-      name: string;
-      email: string;
-      inquiry: string;
-      message: string;
+    openMenu: string;
+    closeMenu: string;
+    /** Keyed by the nav item `id` from src/data/navigation.ts. */
+    tabs: {
+      home: string;
+      about: string;
+      experience: string;
+      education: string;
+      projects: string;
+      contact: string;
     };
   };
-  /** Chrome for resource sub-pages (e.g. src/pages/ResourceDetailPage.tsx). The case study content itself lives in src/data/caseStudies.ts. */
-  caseStudy: {
-    overviewTitle: string;
-    highlightsTitle: string;
-    galleryTitle: string;
-    outcomeTitle: string;
-    figmaLinkLabel: string;
-    ctaTitle: string;
-    ctaButton: string;
-    notFoundTitle: string;
-    notFoundMessage: string;
+  /** Figma: home/* */
+  home: {
+    portfolio: string;
+    year: string;
+    subText: string;
+    tagline: string;
+    contactMe: string;
+  };
+  /** Figma: about/* */
+  about: {
+    title: string;
+    paragraphs: [string, string];
+  };
+  /** Figma: experience/* — the title is set on two lines. */
+  experience: {
+    title: [string, string];
+  };
+  /** Figma: education/* */
+  education: {
+    title: string;
+    degree: {
+      year: string;
+      degree: string;
+      uni: string;
+    };
+    certificatesLabel: string;
+    pageLabel: string;
+  };
+  /** Figma: projects/* */
+  projects: {
+    title: string;
+    subText: string;
+    badge: string;
+  };
+  /** Figma: contact/* */
+  contact: {
+    /** The three lines of the headline; the middle one is red. */
+    title: [string, string, string];
+    subText: string;
+    label: string;
+    form: {
+      title: string;
+      subText: string;
+      placeholders: {
+        name: string;
+        email: string;
+        inquiry: string;
+        message: string;
+      };
+      /** The "Type of inquiry" dropdown options (contact/inquiry/option-*). */
+      inquiryOptions: string[];
+      send: string;
+      sending: string;
+      required: string;
+      invalidEmail: string;
+      /** Confirmation that replaces the form once the message is sent. */
+      sent: {
+        title: string;
+        text: string;
+        again: string;
+      };
+      /** Notice (the `message` component) shown when sending fails. */
+      error: {
+        title: string;
+        text: string;
+      };
+    };
+  };
+  /** Figma: not-found/* — the 404 page. */
+  notFound: {
+    label: string;
+    title: string;
+    subText: string;
+    tagline: string;
+    backHome: string;
+  };
+  /** Chrome of project (child) pages. The project content itself lives in src/data/projectPages.ts. */
+  childPage: {
+    figmaLink: string;
   };
 }

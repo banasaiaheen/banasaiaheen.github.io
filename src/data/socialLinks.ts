@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  *  SOCIAL / CONTACT LINKS — shown in the site navigation (email, LinkedIn,
- *  Figma). `id` must match a key under `social` in
+ *  Figma). `id` must match a key under `nav` in
  *  src/i18n/translations/{en,ar}.ts, which supplies the button label.
  *
  *  TODO: these hrefs are placeholders carried over from the original design —
@@ -9,7 +9,7 @@
  * ============================================================================
  */
 export interface SocialLink {
-  id: string;
+  id: "email" | "linkedin" | "figma";
   href: string;
   target?: string;
   rel?: string;

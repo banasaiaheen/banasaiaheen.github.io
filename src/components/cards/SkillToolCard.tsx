@@ -1,28 +1,26 @@
-import type { Language } from "../../types/language";
+import type { Direction } from "../../types/language";
+import { cn } from "../../utils/cn";
+import { useDirection } from "../../i18n/useLanguage";
 
+/**
+ * Figma: skillVtool-card (68:8304). Numbered skill or tool tile in About.
+ *  number      the tile number (always Latin digits)
+ *  skillTool   the skill or tool name — pass the translated string
+ *  direction   ltr | rtl (defaults to the page direction)
+ */
 export interface SkillToolCardProps {
+  number: string;
+  skillTool: string;
+  direction?: Direction;
   className?: string;
-  language?: Language;
-  number?: string;
-  skillTool?: string;
 }
 
-/** Presentational only — content comes from src/data/skills.ts. */
-export default function SkillToolCard({
-  className,
-  language = "english",
-  number = "00",
-  skillTool = "PROTOTYPING",
-}: SkillToolCardProps) {
-  const isArabic = language === "arabic";
-
+export default function SkillToolCard({ number, skillTool, direction, className }: SkillToolCardProps) {
+  const dir = useDirection(direction);
   return (
-    <div
-      dir={isArabic ? "rtl" : "ltr"}
-      className={["flex w-[262px] flex-col items-start gap-2 py-3", className ?? ""].join(" ")}
-    >
-      <span className="w-full font-barlow text-[12px] text-[#e53737]">{number}</span>
-      <span className="w-full whitespace-nowrap font-barlow text-[16px] font-bold text-[#f7f4f0]">{skillTool}</span>
+    <div dir={dir} className={cn("flex flex-col items-start gap-2 py-3 text-start", className)}>
+      <span className="w-full text-regular-12 text-brand-red-bright">{number}</span>
+      <span className="w-full text-bold-16 text-brand-cream">{skillTool}</span>
     </div>
   );
 }

@@ -1,26 +1,9 @@
 @import "tailwindcss";
 @import "./styles/tokens.css";
 
-@theme {
-  /* Legacy font aliases, used by components not yet migrated to the design-system text styles. */
-  --font-barlow: "Barlow Condensed", system-ui, sans-serif;
-  --font-cairo: "Cairo", system-ui, sans-serif;
-}
-
+/* Design tokens, fonts and the Figma text styles live in styles/tokens.css. */
 body {
   margin: 0;
   font-family: var(--font);
   background-color: var(--color-brand-ink);
-}
-
-/* Legacy: Barlow Condensed has no Arabic glyphs, so every `font-barlow` element
-   swaps to Cairo inside the Arabic (RTL) page. Elements explicitly marked
-   dir="ltr" (decorative numbers, the email address) opt back out. New
-   components use the text-* styles from tokens.css instead. */
-[dir="rtl"] .font-barlow {
-  font-family: var(--font-cairo);
-}
-
-[dir="rtl"] [dir="ltr"].font-barlow {
-  font-family: var(--font-barlow);
 }

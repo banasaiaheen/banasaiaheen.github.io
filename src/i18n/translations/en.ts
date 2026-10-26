@@ -3,92 +3,102 @@ import type { Translations } from "./types";
 /**
  * ============================================================================
  *  ENGLISH SITE TEXT — edit anything below to change what's shown on the
- *  English version of the site. Every key here has a matching key in ar.ts;
- *  if you add one, add it there too (TypeScript will warn you if you don't).
+ *  English version of the site. Groups match the Figma content variables.
+ *  Every key here has a matching key in ar.ts; if you add one, add it there
+ *  too (TypeScript will warn you if you don't).
  * ============================================================================
  */
 const en: Translations = {
   nav: {
-    home: "HOME",
-    about: "ABOUT",
-    work: "EXPERIENCE",
-    education: "EDUCATION",
-    resources: "RESOURCES",
-    contact: "CONTACT",
+    name: "Bana Saiaheen",
+    position: "UX/UI DESIGNER",
+    location: "Amman, Jordan",
+    copyRight: "© 2026 — BANA SAIAHEEN · ALL RIGHTS RESERVED",
     switchTo: "العربية",
-  },
-  social: {
     email: "EMAIL",
     linkedin: "LINKEDIN",
     figma: "FIGMA",
-  },
-  footer: {
-    rights: "ALL RIGHTS RESERVED",
-  },
-  hero: {
-    portfolioLabel: "PORTFOLIO",
-    subtext:
-      "Crafting digital experiences that bridge human intuition with purposeful design — one pixel at a time.",
-    contactMe: "Contact Me",
-    tagline: "Design with Purpose.",
-  },
-  about: {
-    title: "About Me.",
-    bio: [
-      "I'm a UX/UI designer passionate about turning complex problems into elegant, user-centred solutions. With a sharp eye for detail and a research-first mindset, I design interfaces that feel intuitive from the very first interaction.",
-      "My work lives at the intersection of visual design, usability, and human behaviour — always asking: how can this experience serve the person using it better?",
-    ],
-  },
-  work: {
-    headingLine1: "WORK",
-    headingLine2: "EXPERIENCE.",
-    experienceLetter: "Experience Letter",
-  },
-  education: {
-    title: "Education.",
-  },
-  resources: {
-    title: "Resources.",
-    subtext: "Tools, kits, and templates I've designed and curated — freely available for the design community.",
-    comingSoon: "Coming Soon!",
-  },
-  contact: {
-    line1: "LET'S",
-    line2: "MAKE",
-    line3: "SOMETHING",
-    line4: "GREAT.",
-    subtext1: "Have a project in mind? I'd love to hear about it.",
-    subtext2: "Drop me a message or reach out directly.",
-    directEmailLabel: "DIRECT EMAIL",
-    formTitle: "SEND A MESSAGE",
-    formSubtext: "I'll get back to you shortly",
-  },
-  form: {
-    namePlaceholder: "Your name",
-    emailPlaceholder: "Your email",
-    messagePlaceholder: "Tell me about your project...",
-    inquiryPlaceholder: "Type of inquiry...",
-    send: "SEND MESSAGE",
-    sending: "SENDING...",
-    success: "Your message has been sent. I'll get back to you shortly.",
-    error: "Something went wrong sending your message. Please try again.",
-    errors: {
-      name: "Please enter your name.",
-      email: "Please enter a valid email address.",
-      inquiry: "Please select a type of inquiry.",
-      message: "Please enter a message (at least 10 characters).",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    tabs: {
+      home: "HOME",
+      about: "ABOUT",
+      experience: "EXPERIENCE",
+      education: "EDUCATION",
+      projects: "PROJECTS",
+      contact: "CONTACT",
     },
   },
-  caseStudy: {
-    overviewTitle: "Overview",
-    highlightsTitle: "What I Did",
-    galleryTitle: "Selected Screens",
-    outcomeTitle: "Outcome",
-    figmaLinkLabel: "FIGMA Link",
-    ctaTitle: "Have a project in mind?",
-    ctaButton: "Let's Talk",
-    notFoundTitle: "Project not found.",
-    notFoundMessage: "This case study doesn't exist yet — head back to Resources to see what's available.",
+  home: {
+    portfolio: "PORTFOLIO",
+    year: "2026",
+    subText: "Crafting digital experiences that bridge human intuition and purposeful design, one pixel at a time.",
+    tagline: "Design with Purpose.",
+    contactMe: "Contact Me",
+  },
+  about: {
+    title: "ABOUT ME.",
+    paragraphs: [
+      "I'm a self-taught UX/UI designer with a background in 3D art and digital fashion design. My interest in UX began during a university course that challenged the way I approached learning. Instead of searching for the right answer, I learned to question, explore, and embrace different ways of solving problems. Today, I see design as more than aesthetics; it's about understanding people, simplifying complexity, and creating experiences that make a difference. I'm naturally curious, detail-oriented, and always eager to learn and put new knowledge into practice.",
+      "Throughout my career, I've learned to value accountability, genuine teamwork, and mutual respect. I appreciate experiences that have challenged my expectations because they've helped me understand the kind of professional I want to be. I believe titles matter less than the ability to contribute, solve problems, and take responsibility. For me, good work means learning continuously, delivering on commitments, and working with people who respect one another. I want to grow in an environment where integrity matters and where success never comes at the expense of dignity or personal values.",
+    ],
+  },
+  experience: {
+    title: ["WORK", "EXPERIENCE."],
+  },
+  education: {
+    title: "EDUCATION.",
+    degree: {
+      year: "2016 — 2022",
+      degree: "BACHELOR'S IN COMPUTER GRAPHICS & ANIMATION",
+      uni: "Princess Sumaya University for Technology",
+    },
+    certificatesLabel: "Certificates",
+    pageLabel: "Page",
+  },
+  projects: {
+    title: "PROJECTS.",
+    subText: "A collection of projects that showcase how I think, solve problems, and grow through design.",
+    badge: "Coming Soon!",
+  },
+  contact: {
+    title: ["LET'S MAKE", "SOMETHING", "GREAT."],
+    subText: "Have a project in mind? I'd love to hear about it. Drop me a message or reach out directly.",
+    label: "DIRECT EMAIL",
+    form: {
+      title: "SEND A MESSAGE",
+      subText: "I'll get back to you shortly",
+      placeholders: {
+        name: "Your name",
+        email: "Your email",
+        inquiry: "Type of inquiry...",
+        message: "Tell me more about it...",
+      },
+      inquiryOptions: ["Job Opportunity", "Freelance Project", "Design System Project", "Other"],
+      send: "SEND MESSAGE",
+      sending: "SENDING...",
+      required: "Required",
+      invalidEmail: "Invalid email",
+      sent: {
+        title: "MESSAGE SENT.",
+        text: "Thanks for reaching out. I’ll get back to you within a couple of days.",
+        again: "SEND ANOTHER MESSAGE",
+      },
+      error: {
+        title: "Message not sent",
+        text: "Something went wrong sending your message. Please try again.",
+      },
+    },
+  },
+  notFound: {
+    label: "ERROR",
+    title: "PAGE NOT FOUND.",
+    subText: "The page you're looking for doesn't exist or has moved. Let's get you back on track.",
+    tagline: "Let's find our way back.",
+    backHome: "BACK TO HOME",
+  },
+  childPage: {
+    figmaLink: "FIGMA Link",
   },
 };
 

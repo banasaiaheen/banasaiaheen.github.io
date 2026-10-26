@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import type { Language } from "./types/language";
-import HomePage from "./HomePage";
-import ResourceDetailPage from "./pages/ResourceDetailPage";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import LanguageProvider from "./i18n/LanguageProvider";
+import HomePage from "./pages/HomePage";
+import ProjectPage from "./pages/ProjectPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
+/** Old /resources/:slug links keep working: they land on the project page. */
+function ResourceRedirect() {
+  const { slug = "" } = useParams();
+  return <Navigate to={`/projects/${slug}`} replace />;
+}
+
+/**
+ * Routes: the one-page home, a page per project, and the 404 page. The
+ * language provider sits above the router so the chosen language survives
+ * navigation between pages.
+ */
 function App() {
-  // Lives here (above the router) rather than inside HomePage so it survives
-  // navigation to sub-pages instead of resetting to English every time.
-  const [language, setLanguage] = useState<Language>("english");
-  const isArabic = language === "arabic";
-
-  // Keeps native browser behavior (spellcheck, form validation bubbles, default
-  // fonts/quotes) correctly RTL-aware in addition to our own layout classes.
-  useEffect(() => {
-    document.documentElement.dir = isArabic ? "rtl" : "ltr";
-    document.documentElement.lang = isArabic ? "ar" : "en";
-  }, [isArabic]);
-
   return (
-    <Routes>
-      <Route path="/" element={<HomePage language={language} onLanguageChange={setLanguage} />} />
-      <Route
-        path="/resources/:slug"
-        element={<ResourceDetailPage language={language} onLanguageChange={setLanguage} />}
-      />
-    </Routes>
+    <LanguageProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects/:slug" element={<ProjectPage />} />
+        <Route path="/resources/:slug" element={<ResourceRedirect />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </LanguageProvider>
   );
 }
 

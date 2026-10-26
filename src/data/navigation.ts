@@ -6,31 +6,33 @@
  *  automatically, so reordering here keeps everything in sync.
  *
  *  Each `id` must match:
- *   - a translation key under `nav` in src/i18n/translations/{en,ar}.ts
- *   - the `id="..."` on the matching <section> in src/sections/
+ *   - a key under `nav.tabs` in src/i18n/translations/{en,ar}.ts
+ *   - the `id="..."` on the matching section in src/components/sections/
  * ============================================================================
  */
+export type SectionId = "home" | "about" | "experience" | "education" | "projects" | "contact";
+
 export interface NavItem {
-  id: string;
+  id: SectionId;
   href: string;
 }
 
 export const NAV_ITEMS: NavItem[] = [
   { id: "home", href: "#home" },
   { id: "about", href: "#about" },
-  { id: "work", href: "#work" },
+  { id: "experience", href: "#experience" },
   { id: "education", href: "#education" },
-  { id: "resources", href: "#resources" },
+  { id: "projects", href: "#projects" },
   { id: "contact", href: "#contact" },
 ];
 
-export const SECTION_IDS = NAV_ITEMS.map((item) => item.id);
+export const SECTION_IDS: SectionId[] = NAV_ITEMS.map((item) => item.id);
 
 /**
- * Zero-padded position of a section in NAV_ITEMS, e.g. getSectionNumber("work") -> "02".
+ * Zero-padded position of a section in NAV_ITEMS, e.g. getSectionNumber("experience") -> "02".
  * Used for both the nav row number and each section's decorative ghost number.
  */
-export function getSectionNumber(id: string): string {
+export function getSectionNumber(id: SectionId): string {
   const index = NAV_ITEMS.findIndex((item) => item.id === id);
   return String(Math.max(index, 0)).padStart(2, "0");
 }
