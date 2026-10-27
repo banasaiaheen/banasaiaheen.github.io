@@ -12,7 +12,8 @@ export type EducationCardType = "main" | "sub";
  *  year / name / source   the three lines of text — pass translated strings
  *  direction  ltr | rtl (defaults to the page direction)
  *
- * The responsive layout (below `lg`) uses tighter padding.
+ * Certificates (sub) have no side padding, so their text lines up with the grid edge; the
+ * degree (main) card is inset. The responsive layout (below `lg`) uses tighter padding.
  */
 export interface EducationCardProps {
   type?: EducationCardType;
@@ -34,7 +35,7 @@ export default function EducationCard({ type = "sub", year, name, source, direct
         "flex flex-col items-start justify-center text-start",
         isMain
           ? "gap-2 bg-brand-panel p-4 lg:px-8 lg:py-10"
-          : "gap-1 border-b border-neutral-37 py-4 lg:gap-2 lg:px-8 lg:py-10",
+          : "gap-1 border-b border-neutral-37 py-4 lg:gap-2 lg:py-6",
         className,
       )}
     >

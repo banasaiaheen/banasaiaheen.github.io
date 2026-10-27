@@ -19,7 +19,7 @@ export type ProjectCardState = "default" | "hover" | "disabled";
  *  href        child page path, e.g. "/projects/portfolio-design"
  *  direction   ltr | rtl (defaults to the page direction)
  *
- * The responsive layout (below `lg`) has no side padding and tighter gaps.
+ * The responsive layout (below `lg`) has tighter gaps and padding.
  */
 export interface ProjectCardProps {
   number: string;
@@ -52,9 +52,11 @@ export default function ProjectCard({
 
   const classes = cn(
     "group flex w-full flex-col items-start gap-[10px] border-b border-neutral-87 py-4 text-start transition-[background-color,padding] duration-150",
-    "lg:gap-5 lg:px-5 lg:py-8",
-    // Responsive cards gain 8px of side padding in the hover state (desktop keeps its 20px).
-    isHover ? "bg-brand-red px-2" : "bg-brand-cream",
+    "lg:gap-5 lg:py-8",
+    // No side padding by default; the hover state gains 8px (responsive) or 20px (desktop).
+    isHover ? "bg-brand-red px-2 lg:px-5" : "bg-brand-cream",
+    // A project that isn't live yet keeps the row height of the other cards.
+    isDisabled && "lg:min-h-[231px]",
     !isDisabled && !isHover && "[&:hover]:bg-brand-red [&:hover]:px-2 lg:[&:hover]:px-5",
     !isDisabled && "cursor-pointer",
     className,
