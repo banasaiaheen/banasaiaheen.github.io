@@ -49,7 +49,11 @@ export default function ToggleMenu({
       className={cn(
         "flex h-[30.5px] w-[28px] shrink-0 cursor-pointer flex-col transition-colors duration-150",
         isRtl ? "items-end" : "items-start",
-        state === "hover" ? "text-brand-red" : "text-brand-cream hover:text-brand-red",
+        // Hover colour only where there is a real pointer: on touch screens :hover sticks after a tap and
+        // would leave the icon red after the menu closes. It flashes red while pressed instead.
+        state === "hover"
+          ? "text-brand-red"
+          : "text-brand-cream active:text-brand-red [@media(hover:hover)]:hover:text-brand-red",
         className,
       )}
     >
