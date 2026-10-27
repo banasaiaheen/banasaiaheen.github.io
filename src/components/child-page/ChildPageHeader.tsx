@@ -15,11 +15,10 @@ import GhostNumber from "../sections/GhostNumber";
  *  backHref / backLabel     the back link (to the Projects section)
  *  direction                ltr | rtl (defaults to the page direction)
  *
- * On desktop the header stays pinned in full while the page scrolls. On
- * responsive it scrolls away like normal content and a compact bar (back link +
- * title) takes its place at the top. The bar is only faded in and out and never
- * changes the page height, so scrolling slowly near the switch can't make the
- * layout jump back and forth.
+ * The header scrolls away like normal content and a compact bar (back link +
+ * title) takes its place at the top of the page, on desktop and responsive. The
+ * bar is only faded in and out and never changes the page height, so scrolling
+ * slowly near the switch can't make the layout jump back and forth.
  *
  * Render it inside a wrapper that also holds the page content: that wrapper is
  * what the pinned header and the compact bar stay in.
@@ -37,8 +36,10 @@ export interface ChildPageHeaderProps {
   direction?: Direction;
 }
 
-/** Height of the responsive nav bar the header and the compact bar sit under. */
+/** Height of the responsive nav bar the compact bar sits under (the desktop nav is a side bar, so there it is 0). */
 const NAV_BAR_HEIGHT = 94.5;
+/** Same breakpoint as Tailwind's `lg:`, where the navigation turns into a sidebar. */
+const DESKTOP_QUERY = "(min-width: 1024px)";
 
 export default function ChildPageHeader({
   number,
@@ -60,12 +61,24 @@ export default function ChildPageHeader({
   useEffect(() => {
     const el = headerRef.current;
     if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => setShowBar(!entry.isIntersecting), {
-      // Treat the nav bar's strip as outside the viewport.
-      rootMargin: `-${NAV_BAR_HEIGHT}px 0px 0px 0px`,
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
+    const query = window.matchMedia(DESKTOP_QUERY);
+    let observer: IntersectionObserver | undefined;
+
+    // (Re)start watching the header; the strip taken by the responsive nav bar counts as outside the viewport.
+    const watch = () => {
+      observer?.disconnect();
+      observer = new IntersectionObserver(([entry]) => setShowBar(!entry.isIntersecting), {
+        rootMargin: `-${query.matches ? 0 : NAV_BAR_HEIGHT}px 0px 0px 0px`,
+      });
+      observer.observe(el);
+    };
+
+    watch();
+    query.addEventListener("change", watch);
+    return () => {
+      query.removeEventListener("change", watch);
+      observer?.disconnect();
+    };
   }, []);
 
   return (
@@ -73,7 +86,7 @@ export default function ChildPageHeader({
       <header
         ref={headerRef}
         dir={dir}
-        className="relative z-10 flex flex-col gap-4 overflow-hidden bg-brand-panel px-4 pb-8 pt-6 text-start lg:sticky lg:top-0 lg:gap-5 lg:p-8"
+        className="relative z-10 flex flex-col gap-4 overflow-hidden bg-brand-panel px-4 pb-8 pt-6 text-start lg:gap-5 lg:p-8"
       >
         <GhostNumber
           value={number}
@@ -100,13 +113,13 @@ export default function ChildPageHeader({
         <p className="text-regular-18 text-neutral-62 lg:text-regular-20">{description}</p>
       </header>
 
-      {/* Responsive only. A zero-height sticky anchor holds the bar, so it takes no space in the page. */}
-      <div className="sticky top-[94.5px] z-10 h-0 lg:hidden">
+      {/* A zero-height sticky anchor holds the bar, so it takes no space in the page. */}
+      <div className="sticky top-[94.5px] z-10 h-0 lg:top-0">
         <div
           dir={dir}
           aria-hidden={!showBar}
           className={cn(
-            "absolute inset-x-0 top-0 flex flex-col gap-2 bg-brand-panel px-4 py-4 text-start transition-opacity duration-150",
+            "absolute inset-x-0 top-0 flex flex-col gap-2 bg-brand-panel px-4 py-4 text-start transition-opacity duration-150 lg:px-8",
             showBar ? "opacity-100" : "pointer-events-none invisible opacity-0",
           )}
         >
