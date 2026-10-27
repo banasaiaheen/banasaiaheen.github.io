@@ -132,7 +132,9 @@ export default function Navigation({
         e.preventDefault();
         goToSection("#home");
       }}
-      className="whitespace-nowrap text-bold-24 text-brand-cream transition-colors duration-150 hover:text-brand-red"
+      // Red on hover only where there is a real pointer: on touch screens :hover sticks after a tap, which
+      // would leave the name red once you are back on the home page. It flashes red while pressed instead.
+      className="whitespace-nowrap text-bold-24 text-brand-cream transition-colors duration-150 active:text-brand-red [@media(hover:hover)]:hover:text-brand-red"
     >
       {name}
     </a>
