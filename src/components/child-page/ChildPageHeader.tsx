@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
 import { useDirection } from "../../i18n/useLanguage";
@@ -15,9 +15,14 @@ import GhostNumber from "../sections/GhostNumber";
  *  backHref / backLabel     the back link (to the Projects section)
  *  direction                ltr | rtl (defaults to the page direction)
  *
- * The header stays pinned while the page scrolls. On responsive it collapses to
- * the back link and a smaller title once scrolled, so it doesn't eat the
- * screen; on desktop it always shows in full.
+ * On desktop the header stays pinned in full while the page scrolls. On
+ * responsive it scrolls away like normal content and a compact bar (back link +
+ * title) takes its place at the top. The bar is only faded in and out and never
+ * changes the page height, so scrolling slowly near the switch can't make the
+ * layout jump back and forth.
+ *
+ * Render it inside a wrapper that also holds the page content: that wrapper is
+ * what the pinned header and the compact bar stay in.
  */
 export interface ChildPageHeaderProps {
   number: string;
@@ -32,6 +37,9 @@ export interface ChildPageHeaderProps {
   direction?: Direction;
 }
 
+/** Height of the responsive nav bar the header and the compact bar sit under. */
+const NAV_BAR_HEIGHT = 94.5;
+
 export default function ChildPageHeader({
   number,
   title,
@@ -45,67 +53,67 @@ export default function ChildPageHeader({
   direction,
 }: ChildPageHeaderProps) {
   const dir = useDirection(direction);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  // True once the full header has scrolled out from under the nav bar.
+  const [showBar, setShowBar] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const el = headerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setShowBar(!entry.isIntersecting), {
+      // Treat the nav bar's strip as outside the viewport.
+      rootMargin: `-${NAV_BAR_HEIGHT}px 0px 0px 0px`,
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
-  // Parts that disappear when collapsed (responsive only: `lg:` always shows them).
-  const collapsible = isScrolled ? "hidden lg:flex" : "flex";
-
   return (
-    // top-[94.5px] sits this below the responsive nav bar (also sticky) so the two
-    // don't stack; the desktop nav is a side bar, so the header pins to the top there.
-    <header
-      dir={dir}
-      className={cn(
-        "sticky top-[94.5px] z-10 flex flex-col overflow-hidden bg-brand-panel px-4 text-start lg:top-0 lg:gap-5 lg:p-8",
-        isScrolled ? "gap-2 py-4" : "gap-4 pb-8 pt-6",
-      )}
-    >
-      <GhostNumber
-        value={number}
-        outline
-        className={cn(
-          "end-4 top-4 text-[64px] leading-[0.89] lg:end-8 lg:top-6 lg:block lg:text-[100px]",
-          isScrolled && "hidden",
-        )}
-      />
-      <Button
-        type="link"
-        cta={backLabel}
-        href={backHref}
-        showLeadingIcon
-        className="self-start"
-      />
-      <p className={cn("flex-wrap gap-[2px] whitespace-nowrap text-regular-14 text-brand-red-on-dark", collapsible)}>
-        <span>{software}</span>
-        <span aria-hidden="true">·</span>
-        <span>{type}</span>
-      </p>
-      <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
-        <h1 className={cn("text-brand-cream lg:text-black-56", isScrolled ? "text-bold-24" : "text-black-56")}>
-          {title}
-        </h1>
-        <a
-          href={figmaHref}
-          target="_blank"
-          rel="noreferrer"
+    <>
+      <header
+        ref={headerRef}
+        dir={dir}
+        className="relative z-10 flex flex-col gap-4 overflow-hidden bg-brand-panel px-4 pb-8 pt-6 text-start lg:sticky lg:top-0 lg:gap-5 lg:p-8"
+      >
+        <GhostNumber
+          value={number}
+          outline
+          className="end-4 top-4 text-[64px] leading-[0.89] lg:end-8 lg:top-6 lg:text-[100px]"
+        />
+        <Button type="link" cta={backLabel} href={backHref} showLeadingIcon className="self-start" />
+        <p className="flex flex-wrap gap-[2px] whitespace-nowrap text-regular-14 text-brand-red-on-dark">
+          <span>{software}</span>
+          <span aria-hidden="true">·</span>
+          <span>{type}</span>
+        </p>
+        <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
+          <h1 className="text-black-56 text-brand-cream">{title}</h1>
+          <a
+            href={figmaHref}
+            target="_blank"
+            rel="noreferrer"
+            className="py-1 text-regular-14 text-brand-cream underline decoration-from-font transition-colors duration-150 hover:text-brand-red"
+          >
+            {figmaLabel}
+          </a>
+        </div>
+        <p className="text-regular-18 text-neutral-62 lg:text-regular-20">{description}</p>
+      </header>
+
+      {/* Responsive only. A zero-height sticky anchor holds the bar, so it takes no space in the page. */}
+      <div className="sticky top-[94.5px] z-10 h-0 lg:hidden">
+        <div
+          dir={dir}
+          aria-hidden={!showBar}
           className={cn(
-            "py-1 text-regular-14 text-brand-cream underline decoration-from-font transition-colors duration-150 hover:text-brand-red",
-            isScrolled && "hidden lg:inline",
+            "absolute inset-x-0 top-0 flex flex-col gap-2 bg-brand-panel px-4 py-4 text-start transition-opacity duration-150",
+            showBar ? "opacity-100" : "pointer-events-none invisible opacity-0",
           )}
         >
-          {figmaLabel}
-        </a>
+          <Button type="link" cta={backLabel} href={backHref} showLeadingIcon className="self-start" />
+          <p className="text-bold-24 text-brand-cream">{title}</p>
+        </div>
       </div>
-      <p className={cn("text-regular-18 text-neutral-62 lg:text-regular-20", isScrolled ? "hidden lg:block" : "block")}>
-        {description}
-      </p>
-    </header>
+    </>
   );
 }
