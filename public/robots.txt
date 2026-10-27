@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://banasaiaheen.com/sitemap.xml

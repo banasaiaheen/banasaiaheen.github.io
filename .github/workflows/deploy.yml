@@ -49,10 +49,17 @@ jobs:
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
 
-      # GitHub Pages serves 404.html for unknown paths, so a refresh on /projects/medconnect
-      # loads the app (which then shows the right page) instead of GitHub's own 404.
-      - name: Single-page-app fallback
-        run: cp dist/index.html dist/404.html
+      # GitHub Pages serves 404.html for unknown paths, so a refresh on an unknown path loads the app
+      # instead of GitHub's own 404.
+      # Every project page also gets its own index.html (a copy of the app), so /projects/<slug> is a
+      # real page with a normal 200 response that search engines can index.
+      - name: Single-page-app fallback and project pages
+        run: |
+          cp dist/index.html dist/404.html
+          for slug in $(grep -o 'slug: "[^"]*"' src/data/projects.ts | sed 's/slug: "\(.*\)"/\1/' | sort -u); do
+            mkdir -p "dist/projects/$slug"
+            cp dist/index.html "dist/projects/$slug/index.html"
+          done
 
       - uses: actions/upload-pages-artifact@v3
         with:

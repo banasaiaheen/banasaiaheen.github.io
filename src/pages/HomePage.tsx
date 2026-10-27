@@ -1,5 +1,6 @@
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useScrollToHash } from "../hooks/useScrollToHash";
+import { SITE_TITLE, useDocumentTitle } from "../hooks/useDocumentTitle";
 import PageLayout from "../components/navigation/PageLayout";
 import HomeSection from "../components/sections/HomeSection";
 import AboutSection from "../components/sections/AboutSection";
@@ -26,6 +27,7 @@ import ContactSection from "../components/sections/ContactSection";
 export default function HomePage() {
   const activeSection = useActiveSection();
   useScrollToHash();
+  useDocumentTitle(SITE_TITLE);
 
   return (
     <PageLayout activeId={activeSection}>

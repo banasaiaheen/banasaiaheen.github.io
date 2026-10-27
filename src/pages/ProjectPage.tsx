@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useLanguage, useTranslations } from "../i18n/useLanguage";
 import { PROJECTS } from "../data/projects";
 import { PROJECT_PAGES } from "../data/projectPages";
+import { SITE_TITLE, useDocumentTitle } from "../hooks/useDocumentTitle";
 import PageLayout from "../components/navigation/PageLayout";
 import ChildPageHeader from "../components/child-page/ChildPageHeader";
 import ChildPageSections from "../components/child-page/ChildPageSections";
@@ -23,6 +24,8 @@ export default function ProjectPage() {
   // The header's outlined number reuses the project's position in the Projects
   // grid, matching the number on its card.
   const projectIndex = PROJECTS[language].findIndex((project) => project.slug === slug);
+
+  useDocumentTitle(page ? `${PROJECTS[language][projectIndex]?.title ?? page.title} — Bana Saiaheen` : SITE_TITLE);
 
   useEffect(() => {
     window.scrollTo(0, 0);
