@@ -1,4 +1,10 @@
 import type { Language } from "../types/language";
+import signIn from "../assets/medconnect/sign-in.png";
+import patientDashboard from "../assets/medconnect/patient-dashboard.png";
+import doctorDashboard from "../assets/medconnect/doctor-dashboard.png";
+import patientCalendar from "../assets/medconnect/patient-calendar.png";
+import doctorPatients from "../assets/medconnect/doctor-patients.png";
+import patientInbox from "../assets/medconnect/patient-inbox.png";
 
 /**
  * ============================================================================
@@ -101,6 +107,88 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
         },
       ],
     },
+    medconnect: {
+      title: "MEDCONNECT",
+      software: "FIGMA",
+      type: "Case Study",
+      description:
+        "A unified platform for doctors and patients: appointments, records, and communication. An end-to-end UX process from research to handoff.",
+      figmaHref: "https://www.figma.com/design/4JBxBQ5p8JVy0StPZub6l9/MedConnect-Case-Study",
+      sections: [
+        {
+          kind: "text",
+          title: "Overview",
+          paragraphs: [
+            "A medical application creates a connection between patients and doctors.",
+            "The patient can take appointments, access their medical information and history, ability to send a message to a doctor and reminds patients of their appointment.",
+            "On the other hand, doctors have a list of patients who visit the clinic, it shows the schedule of appointments, and the ability to upload documents and send messages to patients.",
+            "Project duration: 3 weeks.",
+          ],
+        },
+        {
+          kind: "list",
+          title: "Problem & Goal",
+          items: [
+            {
+              title: "The Problem",
+              body: "Despite wanting to monitor their health, people don't have time and are scared to visit their doctors.",
+            },
+            {
+              title: "The Goal",
+              body: "The application improves communication between patients and medical providers, as well as saving both parties time and money. Finally, it reduces medical errors by enhancing the gathering of health data.",
+            },
+          ],
+        },
+        {
+          kind: "list",
+          title: "Pain Points",
+          items: [
+            {
+              title: "Time",
+              body: "Both patients and healthcare providers take time to make an appointment. Patients must show up promptly, and when they do, they must wait until it is their turn.",
+            },
+            {
+              title: "Storing Data",
+              body: "Securing stored data takes time and money for healthcare providers. On the other hand, patients misplace essential medical records and prescriptions.",
+            },
+            {
+              title: "Medical Mistakes",
+              body: "In emergency cases, medical records are not easy to access which leads to medical mistakes.",
+            },
+            {
+              title: "Money",
+              body: "To make an appointment, both patients and healthcare providers spend money.",
+            },
+          ],
+        },
+        {
+          kind: "text",
+          title: "Assumptions",
+          paragraphs: [
+            "The app was designed around these assumptions: tracking, scheduling, notifications and reminders, a personal account, chat and communication, data storage, ratings and reviews, and geolocation.",
+          ],
+        },
+        {
+          kind: "text",
+          title: "Design Process",
+          paragraphs: [
+            "Research · Personas · User Story · User Journey · Survey · Flowchart · Information Architecture · Site Map · Paper Wireframes.",
+          ],
+        },
+        {
+          kind: "gallery",
+          title: "Selected Screens",
+          screens: [
+            { caption: "Sign in", src: signIn },
+            { caption: "Patient dashboard", src: patientDashboard },
+            { caption: "Doctor dashboard", src: doctorDashboard },
+            { caption: "Patient calendar", src: patientCalendar },
+            { caption: "Doctor's patients", src: doctorPatients },
+            { caption: "Patient inbox", src: patientInbox },
+          ],
+        },
+      ],
+    },
   },
   arabic: {
     "portfolio-design": {
@@ -147,6 +235,88 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
           paragraphs: [
             "أنا سعيدة بالنتيجة. صنعته ببساطة لأنني أردت ملف أعمال خاصًا بي، وهذا بالضبط ما هو عليه.",
             "ثلاثة ألوان، لغتان، وملف أعمال واحد.",
+          ],
+        },
+      ],
+    },
+    medconnect: {
+      title: "MEDCONNECT",
+      software: "FIGMA",
+      type: "دراسة حالة",
+      description:
+        "منصة موحّدة للأطباء والمرضى: المواعيد والسجلات والتواصل. عملية تصميم تجربة مستخدم متكاملة من البحث إلى التسليم.",
+      figmaHref: "https://www.figma.com/design/4JBxBQ5p8JVy0StPZub6l9/MedConnect-Case-Study",
+      sections: [
+        {
+          kind: "text",
+          title: "نظرة عامة",
+          paragraphs: [
+            "يربط هذا التطبيق الطبي بين المرضى والأطباء.",
+            "يستطيع المريض حجز المواعيد، والاطّلاع على معلوماته وتاريخه الطبي، وإرسال رسالة إلى الطبيب، كما يذكّره التطبيق بمواعيده.",
+            "وفي المقابل، يملك الأطباء قائمة بالمرضى الذين يزورون العيادة، وجدولًا بالمواعيد، وإمكانية رفع المستندات وإرسال الرسائل إلى المرضى.",
+            "مدة المشروع: ثلاثة أسابيع.",
+          ],
+        },
+        {
+          kind: "list",
+          title: "المشكلة والهدف",
+          items: [
+            {
+              title: "المشكلة",
+              body: "رغم رغبة الناس في متابعة صحتهم، لا يملكون الوقت ويخافون من زيارة أطبائهم.",
+            },
+            {
+              title: "الهدف",
+              body: "يحسّن التطبيق التواصل بين المرضى ومقدّمي الرعاية الصحية، ويوفّر الوقت والمال على الطرفين. وأخيرًا يقلّل الأخطاء الطبية بتحسين جمع البيانات الصحية.",
+            },
+          ],
+        },
+        {
+          kind: "list",
+          title: "نقاط الألم",
+          items: [
+            {
+              title: "الوقت",
+              body: "يستغرق حجز الموعد وقتًا من المرضى ومقدّمي الرعاية معًا. على المريض أن يحضر في الموعد تمامًا، وعند وصوله عليه أن ينتظر حتى يحين دوره.",
+            },
+            {
+              title: "تخزين البيانات",
+              body: "يكلّف تأمين البيانات المخزّنة مقدّمي الرعاية وقتًا ومالًا، بينما يضيّع المرضى سجلاتهم ووصفاتهم الطبية المهمة.",
+            },
+            {
+              title: "الأخطاء الطبية",
+              body: "في حالات الطوارئ يصعب الوصول إلى السجلات الطبية، ما يؤدي إلى أخطاء طبية.",
+            },
+            {
+              title: "المال",
+              body: "حجز الموعد يكلّف المرضى ومقدّمي الرعاية مالًا.",
+            },
+          ],
+        },
+        {
+          kind: "text",
+          title: "الافتراضات",
+          paragraphs: [
+            "بُني التطبيق على افتراضات منها: التتبّع، والجدولة، والإشعارات والتذكيرات، والحساب الشخصي، والمحادثة والتواصل، وتخزين البيانات، والتقييمات والمراجعات، وتحديد الموقع الجغرافي.",
+          ],
+        },
+        {
+          kind: "text",
+          title: "عملية التصميم",
+          paragraphs: [
+            "البحث · الشخصيات · قصة المستخدم · رحلة المستخدم · الاستبيان · مخطط التدفق · هيكلة المعلومات · خريطة الموقع · النماذج الورقية.",
+          ],
+        },
+        {
+          kind: "gallery",
+          title: "شاشات مختارة",
+          screens: [
+            { caption: "تسجيل الدخول", src: signIn },
+            { caption: "لوحة تحكم المريض", src: patientDashboard },
+            { caption: "لوحة تحكم الطبيب", src: doctorDashboard },
+            { caption: "تقويم المريض", src: patientCalendar },
+            { caption: "مرضى الطبيب", src: doctorPatients },
+            { caption: "صندوق وارد المريض", src: patientInbox },
           ],
         },
       ],

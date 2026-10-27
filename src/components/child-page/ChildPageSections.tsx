@@ -69,9 +69,14 @@ function GalleryLayout({ title, screens }: GallerySection) {
         {screens.map((screen) => (
           <figure key={screen.caption} className="flex flex-col gap-2">
             {screen.src ? (
-              <img src={screen.src} alt={screen.caption} className="aspect-[2/1] w-full border border-neutral-16 object-cover" />
+              <img
+                src={screen.src}
+                alt={screen.caption}
+                loading="lazy"
+                className="aspect-[1440/1024] w-full border border-neutral-16 object-cover"
+              />
             ) : (
-              <div aria-hidden="true" className="aspect-[2/1] w-full border border-neutral-16 bg-brand-panel" />
+              <div aria-hidden="true" className="aspect-[1440/1024] w-full border border-neutral-16 bg-brand-panel" />
             )}
             <figcaption className="text-regular-14 text-neutral-48">{screen.caption}</figcaption>
           </figure>
