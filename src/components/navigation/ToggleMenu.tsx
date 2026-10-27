@@ -60,10 +60,18 @@ export default function ToggleMenu({
           <span className={cn(line, "w-[22px] opacity-70")} />
         </span>
       ) : (
-        // Open: the lines cross into an X, centred in a 20.86px box.
-        <span className="relative flex h-[20.86px] w-[28px] items-center justify-center">
-          <span className={cn(line, "absolute w-[28px] rotate-45")} />
-          <span className={cn(line, "absolute w-[28px] -rotate-45")} />
+        // Open: two 28px lines cross into an X. The offsets are the exact Figma
+        // coordinates (the second line sits 3.38px lower, and the pair shifts
+        // to the right in rtl), each line turned about its top-left corner.
+        <span className="relative block h-full w-full" aria-hidden="true">
+          <span
+            className={cn(line, "absolute w-[28px] origin-top-left -rotate-45")}
+            style={{ left: isRtl ? 6.96 : 0.18, top: 19.8 }}
+          />
+          <span
+            className={cn(line, "absolute w-[28px] origin-top-left rotate-45")}
+            style={{ left: isRtl ? 8.02 : 1.24, top: 3.38 }}
+          />
         </span>
       )}
     </button>
