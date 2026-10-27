@@ -113,7 +113,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
       type: "Case Study",
       description:
         "A unified platform for doctors and patients: appointments, records, and communication. An end-to-end UX process from research to handoff.",
-      figmaHref: "https://www.figma.com/design/4JBxBQ5p8JVy0StPZub6l9/MedConnect-Case-Study",
+      figmaHref: "https://www.figma.com/community/file/1691801641903978805/medconnect-case-study",
       sections: [
         {
           kind: "text",
@@ -245,7 +245,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
       type: "دراسة حالة",
       description:
         "منصة موحّدة للأطباء والمرضى: المواعيد والسجلات والتواصل. عملية تصميم تجربة مستخدم متكاملة من البحث إلى التسليم.",
-      figmaHref: "https://www.figma.com/design/4JBxBQ5p8JVy0StPZub6l9/MedConnect-Case-Study",
+      figmaHref: "https://www.figma.com/community/file/1691801641903978805/medconnect-case-study",
       sections: [
         {
           kind: "text",
