@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, type TouchEvent } from "react";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
 import { useDirection } from "../../i18n/useLanguage";
@@ -24,7 +24,15 @@ export interface Certificate {
  *
  * The indicator always shows `Math.ceil(certificates / perPage)` squares, so
  * adding certificates to src/data adds pages automatically.
+ *
+ * On touch screens the pages can also be swiped: swipe towards the start of the
+ * reading direction for the next page (left in English, right in Arabic), the
+ * other way to go back. Vertical scrolling still works as usual.
  */
+
+/** A swipe must travel at least this far sideways, and mostly sideways, to count. */
+const SWIPE_MIN_DISTANCE = 50;
+const SWIPE_DIRECTION_RATIO = 1.5;
 export interface CertificatesCardsProps {
   certificates: Certificate[];
   perPage?: number;
@@ -54,14 +62,52 @@ export default function CertificatesCards({
   const page = Math.min(Math.max(pageProp ?? internalPage, 1), totalPages);
   const visible = certificates.slice((page - 1) * perPage, page * perPage);
 
+  // Which way the page change came from, so the new page can slide in from that side.
+  const [slideFrom, setSlideFrom] = useState(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
   const selectPage = (next: number) => {
-    setInternalPage(next);
-    onPageChange?.(next);
+    const target = Math.min(Math.max(next, 1), totalPages);
+    if (target === page) return;
+    // Going forward slides in from the end side: right in English, left in Arabic.
+    const forward = target > page;
+    setSlideFrom(forward === (dir === "ltr") ? 16 : -16);
+    setInternalPage(target);
+    onPageChange?.(target);
+  };
+
+  const handleTouchStart = (e: TouchEvent) => {
+    const touch = e.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dx) < Math.abs(dy) * SWIPE_DIRECTION_RATIO) return;
+    // Swiping against the reading direction (left in English, right in Arabic) goes forward.
+    const forward = dir === "ltr" ? dx < 0 : dx > 0;
+    selectPage(forward ? page + 1 : page - 1);
   };
 
   return (
-    <div dir={dir} className={cn("flex w-full flex-col items-center gap-6", className)}>
-      <div className="grid w-full grid-cols-1 gap-x-6 gap-y-4 lg:grid-cols-2 lg:gap-y-6">
+    <div
+      dir={dir}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={() => (touchStart.current = null)}
+      // pan-y keeps vertical page scrolling while the sideways swipe is ours.
+      className={cn("flex w-full touch-pan-y flex-col items-center gap-6", className)}
+    >
+      <div
+        key={page}
+        style={{ "--slide-from": `${slideFrom}px` } as React.CSSProperties}
+        className="grid w-full animate-page-in grid-cols-1 gap-x-6 gap-y-4 motion-reduce:animate-none lg:grid-cols-2 lg:gap-y-6"
+      >
         {visible.map((certificate) => (
           <EducationCard
             key={`${certificate.name}-${certificate.year}`}

@@ -57,6 +57,8 @@
   /* ---- motion: status dot (icon/ status-dot), 2.2s loop from the Figma motion data ---- */
   --animate-status-glow: status-glow 2.2s ease-in-out infinite;
   --animate-status-dot: status-dot 2.2s ease-in-out infinite;
+  /* A new page of cards (certificates pager) fades in while sliding from --slide-from. */
+  --animate-page-in: page-in 0.2s ease-out;
 
   @keyframes status-glow {
     0% {
@@ -70,6 +72,17 @@
     100% {
       opacity: 0.479;
       scale: 0.87;
+    }
+  }
+
+  @keyframes page-in {
+    from {
+      opacity: 0.3;
+      translate: var(--slide-from, 0px) 0;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
     }
   }
 
