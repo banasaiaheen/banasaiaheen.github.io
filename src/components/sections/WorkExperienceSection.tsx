@@ -16,7 +16,7 @@ export default function WorkExperienceSection() {
 
   return (
     <section id="experience" className="flex w-full flex-col bg-brand-cream lg:min-h-[970px] lg:flex-row">
-      <div className="relative flex min-h-[172px] flex-col justify-center overflow-hidden bg-brand-red px-4 py-14 text-brand-cream lg:min-w-[580px] lg:flex-1 lg:justify-end lg:p-10">
+      <div className="relative flex min-h-[172px] flex-col justify-center overflow-hidden bg-brand-red px-4 py-14 text-brand-cream lg:flex-[580_1_0%] lg:justify-end lg:p-10">
         <h2 className="relative flex flex-col text-black-32 lg:text-black-56">
           <span>{t.experience.title[0]}</span>
           <span>{t.experience.title[1]}</span>
@@ -27,7 +27,7 @@ export default function WorkExperienceSection() {
         />
       </div>
 
-      <div className="flex flex-col justify-center px-4 lg:min-w-[604px] lg:flex-1 lg:ps-6 lg:pe-8">
+      <div className="flex flex-col justify-center px-4 lg:flex-[604_1_0%] lg:ps-6 lg:pe-8">
         {entries.map((entry) => (
           <WorkCard
             key={`${entry.from}-${entry.title}`}

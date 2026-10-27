@@ -19,9 +19,9 @@ export default function EducationSection() {
       id="education"
       className="flex flex-col gap-6 bg-brand-ink px-4 py-8 lg:min-h-[970px] lg:justify-center lg:gap-[46px] lg:px-8 lg:py-0"
     >
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-center">
-        <SectionTitle number={getSectionNumber("education")} title={t.education.title} className="lg:min-w-[548px] lg:flex-1" />
-        <EducationCard type="main" year={degree.year} name={degree.degree} source={degree.uni} className="lg:min-w-[548px] lg:flex-1" />
+      <div className="flex flex-col gap-6 lg:flex-row lg:flex-wrap lg:items-center">
+        <SectionTitle number={getSectionNumber("education")} title={t.education.title} className="lg:flex-[1_1_548px]" />
+        <EducationCard type="main" year={degree.year} name={degree.degree} source={degree.uni} className="lg:flex-[1_1_548px]" />
       </div>
       <CertificatesCards certificates={CERTIFICATES} indicatorLabel={t.education.certificatesLabel} />
     </section>

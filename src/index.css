@@ -4,6 +4,8 @@
 /* Design tokens, fonts and the Figma text styles live in styles/tokens.css. */
 body {
   margin: 0;
+  /* Figma text styles use line-height "normal" (leading-[normal] in its code); Tailwind's default is 1.5. */
+  line-height: normal;
   font-family: var(--font);
   background-color: var(--color-brand-ink);
 }

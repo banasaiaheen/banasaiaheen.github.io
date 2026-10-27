@@ -42,7 +42,7 @@ export interface InputProps {
   className?: string;
 }
 
-const boxClasses = "flex w-full items-center border border-transparent px-5 py-4 transition-colors duration-150";
+const boxClasses = "flex w-full items-center border px-5 py-4 transition-colors duration-150";
 
 export default function Input({
   textarea = false,
@@ -69,8 +69,8 @@ export default function Input({
     isError
       ? "border-brand-red-on-dark bg-brand-panel"
       : isOpen || state === "focused"
-        ? "bg-neutral-20"
-        : "bg-brand-panel focus-within:bg-neutral-20",
+        ? "border-transparent bg-neutral-20"
+        : "border-transparent bg-brand-panel focus-within:bg-neutral-20",
     textarea && "h-[115px] items-start",
   );
 

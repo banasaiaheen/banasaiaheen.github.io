@@ -38,17 +38,20 @@ export default function ProjectPage() {
 
   return (
     <PageLayout>
-      <ChildPageHeader
-        number={String(Math.max(projectIndex, 0)).padStart(2, "0")}
-        title={page.title}
-        software={page.software}
-        type={page.type}
-        description={page.description}
-        figmaHref={page.figmaHref}
-        figmaLabel={t.childPage.figmaLink}
-        backLabel={t.nav.tabs.projects}
-      />
-      <ChildPageSections sections={page.sections} />
+      {/* The header pins only within this wrapper, so it scrolls away before the Contact section. */}
+      <div>
+        <ChildPageHeader
+          number={String(Math.max(projectIndex, 0)).padStart(2, "0")}
+          title={page.title}
+          software={page.software}
+          type={page.type}
+          description={page.description}
+          figmaHref={page.figmaHref}
+          figmaLabel={t.childPage.figmaLink}
+          backLabel={t.nav.tabs.projects}
+        />
+        <ChildPageSections sections={page.sections} />
+      </div>
       <ContactSection />
     </PageLayout>
   );

@@ -6,33 +6,59 @@ You don't need to touch any component code to update what's on the site. Everyth
 
 | What you want to change | Where to edit |
 | --- | --- |
-| Any English or Arabic text (nav labels, buttons, headings, form copy) | `src/i18n/translations/en.ts` and `src/i18n/translations/ar.ts` |
-| Your name, title, location, email | `src/data/siteProfile.ts` |
-| Nav items / page section order | `src/data/navigation.ts` — reordering here also renumbers every section's decorative number automatically |
+| Any English or Arabic text (nav labels, headings, form copy, 404) | `src/i18n/translations/en.ts` and `ar.ts` — grouped like the Figma content variables (`nav`, `home`, `about`, `contact.form`, ...) |
+| Email address | `src/data/siteProfile.ts` |
+| Nav items / page section order | `src/data/navigation.ts` — reordering renumbers every section automatically |
 | Social links (email, LinkedIn, Figma) | `src/data/socialLinks.ts` |
 | Work experience entries | `src/data/workExperience.ts` |
-| Education (degree + course cards) | `src/data/education.ts` |
-| Resources / project cards (links, badges, categories) | `src/data/resources.ts` |
+| Certificates (4 per page, the pager grows by itself) | `src/data/certificates.ts` |
+| Project cards | `src/data/projects.ts` |
+| A project's own page | `src/data/projectPages.ts` |
 | Skills list | `src/data/skills.ts` |
-| Contact form "type of inquiry" options | `src/data/inquiryOptions.ts` |
 
-Each file under `src/data/` and `src/i18n/translations/` has a comment block at the top explaining its shape. Adding, removing, or reordering entries in any list (work history, education cards, resources, skills, nav items) is safe — cards render however many entries exist, and the Education/Resources sections automatically paginate 4-per-page once you add a 5th item.
+Each file under `src/data/` and `src/i18n/translations/` has a comment block at the top explaining its shape.
 
-The `src/components/`, `src/sections/`, and `src/HomePage.tsx` files are UI/layout code — you shouldn't need to edit these to update content.
+## Design system
+
+The code mirrors the Figma file (kcDOoECGUtLG0KRMrZZfru): every Figma component has a React component with the same name and the same properties, and the Figma variables are Tailwind tokens. Build new UI from these pieces so the code and the Figma file stay in step.
+
+### Figma component → code
+
+| Figma component | Code |
+| --- | --- |
+| icons (`icon/ forward`, `backward`, `new-window`, `down`, `status-dot`, `flag-jordan`) | `src/components/icons/` |
+| `button` (primary, link, link-xl) | `src/components/button/Button.tsx` |
+| `input`, `dropdown-menu`, `dropdown-option` | `src/components/input/` |
+| `navigation`, `pages`, `toggle-menu` | `src/components/navigation/` (`SiteNavigation` fills it with the site content, `PageLayout` is the frame every page uses) |
+| `work-card`, `education-card`, `certificates-cards`, `carousel-indicator`, `skillVtool-card`, `projects-card`, `message` | `src/components/cards/` |
+| `sections` (home, about, work-experience, education, projects, contact, not-found) | `src/components/sections/` |
+| `child-page-header`, `child-page-sections` (text, list, gallery) | `src/components/child-page/` |
+
+Each component's header comment names its Figma node and lists its properties. Figma properties map straight to props: `direction` (ltr / rtl, defaults to the page direction), `state`, `type`, text properties (`cta`, `title`, ...) and `show-*` toggles. The Figma `version` property (desktop / responsive) is handled with responsive CSS (`lg:`), not duplicated components.
+
+### Tokens and text styles
+
+`src/styles/tokens.css` holds the Figma variables: `brand/ink` → `bg-brand-ink`, `neutral/48` → `text-neutral-48`, and so on. Text styles keep their Figma names: `text-regular-16`, `text-bold-20`, `text-black-56`, `text-numbers-144`. Never hardcode a hex value or font size in a component; add or change the token instead.
+
+Language-dependent values (font, line-heights, letter-spacing) switch with the page direction: English pages are `dir="ltr"` (Barlow Condensed), Arabic pages `dir="rtl"` (Cairo). Use logical classes (`ps-`, `pe-`, `start-`, `text-start`) so layouts mirror for free.
+
+### Adding a project and its page
+
+1. Add the project to `src/data/projects.ts` for both languages (give it a `slug` if it gets a page, or `disabled: true` for "Coming soon").
+2. Add the same slug to `src/data/projectPages.ts` for both languages: a header (title, software, type, description, Figma link) and a list of `sections` (`text`, `list` or `gallery`).
+3. Done — the card links to `/projects/<slug>`, the page is built from the child-page components and ends with the Contact section.
 
 ## Project structure
 
 ```
 src/
-  i18n/translations/   English + Arabic UI copy
-  data/                 Repeatable content (work, education, resources, skills, nav, links)
-  components/ui/        Generic reusable UI primitives (Button, Input, Pagination, ...)
-  components/cards/      Reusable card components (WorkCard, EducationCard, ...)
-  components/layout/     Navigation + nav links
-  components/forms/      Contact form + its pieces
-  sections/               One file per homepage section, composing components + data + i18n
-  hooks/, utils/, lib/    Supporting logic
-  HomePage.tsx            Composition root — wires language state and renders the sections in order
+  styles/tokens.css       Figma variables + text styles
+  i18n/                   LanguageProvider, useLanguage/useDirection, translations/{en,ar}.ts
+  data/                   Repeatable content (work, certificates, projects, project pages, skills, nav, links)
+  components/             The design-system components (see the table above)
+  pages/                  Routes: HomePage, ProjectPage (/projects/:slug), NotFoundPage
+  hooks/, utils/, lib/    Supporting logic (active section, scroll to hash, cn, EmailJS)
+  App.tsx                 Language provider + routes
 ```
 
 ---

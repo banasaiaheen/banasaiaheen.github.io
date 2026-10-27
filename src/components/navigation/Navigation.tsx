@@ -123,9 +123,9 @@ export default function Navigation({
 
   const nameEl = <span className="whitespace-nowrap text-bold-24 text-brand-cream">{name}</span>;
 
-  const profile = (
+  // Role and location; the name sits above it on desktop and in the bar on responsive.
+  const profileDetails = (
     <div className="flex w-full flex-col items-start gap-4">
-      {nameEl}
       <div className="flex w-full items-center gap-2">
         <span className="flex items-center pe-1">
           <IconStatusDot />
@@ -201,7 +201,7 @@ export default function Navigation({
               className="fixed inset-x-0 z-40 flex flex-col items-center gap-4 overflow-y-auto bg-brand-ink px-4 pb-4"
               style={{ top: barHeight, maxHeight: `calc(100vh - ${barHeight}px)` }}
             >
-              {profile}
+              {profileDetails}
               {divider}
               {pageList}
               {divider}
@@ -227,7 +227,8 @@ export default function Navigation({
       )}
     >
       <div className="flex w-full flex-col items-start gap-4">
-        {profile}
+        {nameEl}
+        {profileDetails}
         {divider}
       </div>
 

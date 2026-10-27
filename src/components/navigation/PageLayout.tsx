@@ -19,7 +19,7 @@ export default function PageLayout({ activeId, children }: PageLayoutProps) {
   return (
     <div dir={direction} className="flex min-h-screen flex-col bg-brand-ink lg:flex-row">
       <SiteNavigation activeId={activeId} />
-      <main className="flex w-full min-w-0 flex-1 flex-col lg:min-w-[1184px]">{children}</main>
+      <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
     </div>
   );
 }
