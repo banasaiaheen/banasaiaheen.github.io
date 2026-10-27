@@ -43,7 +43,7 @@ export const WORK_EXPERIENCE: Record<Language, WorkExperienceEntry[]> = {
       title: "عمل حر",
       from: "2026",
       to: "حتى الآن",
-      subText: "لحظة راحة بين وحدات البكسل.",
+      subText: "ألمس العشب بين البكسلات.",
     },
     {
       title: "مصممة تجربة المستخدم وواجهة المستخدم",
