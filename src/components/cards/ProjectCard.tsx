@@ -55,12 +55,14 @@ export default function ProjectCard({
     "lg:gap-5 lg:px-5 lg:py-8",
     // Responsive cards gain 8px of side padding in the hover state (desktop keeps its 20px).
     isHover ? "bg-brand-red px-2" : "bg-brand-cream",
-    !isDisabled && !isHover && "hover:bg-brand-red hover:px-2 lg:hover:px-5",
+    !isDisabled && !isHover && "[&:hover]:bg-brand-red [&:hover]:px-2 lg:[&:hover]:px-5",
     !isDisabled && "cursor-pointer",
     className,
   );
 
   // Text turns white on the red hover state (forced, or live through the `group` hover).
+  // Unlike the rest of the site (hover only with a real pointer), the card uses plain :hover, so a
+  // tap shows its red hover look on touch screens; the tap then opens the project page.
   const live = !isDisabled && !isHover;
 
   const content = (
@@ -77,7 +79,7 @@ export default function ProjectCard({
                 ? "text-brand-white"
                 : cn(
                     "text-transparent [-webkit-text-stroke:1.5px_var(--color-neutral-87)]",
-                    !isDisabled && "group-hover:text-brand-white group-hover:[-webkit-text-stroke:0]",
+                    !isDisabled && "group-[:hover]:text-brand-white group-[:hover]:[-webkit-text-stroke:0]",
                   ),
             )}
           >
@@ -93,7 +95,7 @@ export default function ProjectCard({
               className={cn(
                 "shrink-0 transition-colors duration-150",
                 isHover ? "text-brand-white" : "text-neutral-80",
-                live && "group-hover:text-brand-white",
+                live && "group-[:hover]:text-brand-white",
               )}
             />
           )}
@@ -102,7 +104,7 @@ export default function ProjectCard({
           className={cn(
             "flex gap-[2px] whitespace-nowrap text-regular-14",
             isHover ? "text-brand-white" : "text-brand-red",
-            live && "group-hover:text-brand-white",
+            live && "group-[:hover]:text-brand-white",
           )}
         >
           <span>{software}</span>
@@ -114,7 +116,7 @@ export default function ProjectCard({
         className={cn(
           "whitespace-nowrap text-black-24",
           isHover ? "text-brand-white" : "text-brand-ink",
-          live && "group-hover:text-brand-white",
+          live && "group-[:hover]:text-brand-white",
         )}
       >
         {title}
@@ -124,7 +126,7 @@ export default function ProjectCard({
           className={cn(
             "w-full truncate text-regular-14",
             isHover ? "text-brand-white" : "text-neutral-37",
-            live && "group-hover:text-brand-white",
+            live && "group-[:hover]:text-brand-white",
           )}
         >
           {subText}
