@@ -23,7 +23,7 @@ export default function AboutSection() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:gap-6">
           {/* photo placeholder: panel with a big "B" and a red corner at the bottom start */}
-          <div className="relative h-[323px] w-full shrink-0 lg:size-[323px]">
+          <div className="relative h-[347px] w-full shrink-0 lg:size-[323px]">
             <div className="flex size-full items-center justify-center border border-neutral-16 bg-brand-panel">
               <span className="font-[family-name:var(--font-en)] text-[80px] font-black tracking-[4px] text-neutral-16">
                 B

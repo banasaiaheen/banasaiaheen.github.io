@@ -51,10 +51,11 @@ export default function ProjectCard({
   const isHover = state === "hover";
 
   const classes = cn(
-    "group flex w-full flex-col items-start gap-[10px] border-b border-neutral-87 py-4 text-start transition-colors duration-150",
+    "group flex w-full flex-col items-start gap-[10px] border-b border-neutral-87 py-4 text-start transition-[background-color,padding] duration-150",
     "lg:gap-5 lg:px-5 lg:py-8",
-    isHover ? "bg-brand-red" : "bg-brand-cream",
-    !isDisabled && !isHover && "hover:bg-brand-red",
+    // Responsive cards gain 8px of side padding in the hover state (desktop keeps its 20px).
+    isHover ? "bg-brand-red px-2" : "bg-brand-cream",
+    !isDisabled && !isHover && "hover:bg-brand-red hover:px-2 lg:hover:px-5",
     !isDisabled && "cursor-pointer",
     className,
   );

@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "./styles/tokens.css";
 
+/* Tailwind v4 only applies `hover:` on devices that report hover support, so a tap
+   on a phone would never show the hover state (project cards, buttons, nav rows).
+   Plain :hover makes a tap trigger it, as the Figma hover states intend. */
+@custom-variant hover (&:hover);
+@custom-variant group-hover (&:is(:where(.group):hover *));
+
 /* Design tokens, fonts and the Figma text styles live in styles/tokens.css. */
 body {
   margin: 0;
