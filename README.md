@@ -55,7 +55,9 @@ Language-dependent values (font, line-heights, letter-spacing) switch with the p
 1. **Settings → Pages → Source: GitHub Actions.**
 2. **Settings → Secrets and variables → Actions → New repository secret**, three times, with the values from your EmailJS dashboard (the same ones as in your local `.env`): `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`.
 
-A repository named `<user>.github.io` is served from the root; any other repository from `/<repository>/` (the workflow sets the base path for you). `404.html` is a copy of the app, so refreshing a page like `/projects/medconnect` still works.
+The site uses the custom domain **banasaiaheen.com** (the `public/CNAME` file, which is copied into every deployment) and is served from the root. Without a `CNAME` file, a repository named `<user>.github.io` is also served from the root and any other repository from `/<repository>/`; the workflow sets the base path for you.
+
+Domain setup (at your registrar and under **Settings → Pages → Custom domain**): four `A` records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, plus a `CNAME` record for `www` pointing to `<user>.github.io`. Then tick **Enforce HTTPS** once GitHub has issued the certificate. `404.html` is a copy of the app, so refreshing a page like `/projects/medconnect` still works.
 
 The contact form sends through EmailJS: the recipient (your email) is set in the EmailJS email template (**To Email**), not in the code.
 

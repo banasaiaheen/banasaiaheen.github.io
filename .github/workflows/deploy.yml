@@ -36,11 +36,12 @@ jobs:
 
       - run: npm run lint
 
-      # A repository named <user>.github.io is served from "/", any other repository from "/<name>/".
+      # With a custom domain (public/CNAME) or a <user>.github.io repository the site is served
+      # from "/"; any other repository is served from "/<name>/".
       - name: Work out the base path
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
-          if [[ "$REPO" == *.github.io ]]; then echo "BASE_PATH=/" >> "$GITHUB_ENV"; else echo "BASE_PATH=/$REPO/" >> "$GITHUB_ENV"; fi
+          if [ -f public/CNAME ] || [[ "$REPO" == *.github.io ]]; then echo "BASE_PATH=/" >> "$GITHUB_ENV"; else echo "BASE_PATH=/$REPO/" >> "$GITHUB_ENV"; fi
 
       - run: npm run build
         env:
