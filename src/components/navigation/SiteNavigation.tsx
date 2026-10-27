@@ -4,7 +4,7 @@ import { SOCIAL_LINKS } from "../../data/socialLinks";
 import Navigation from "./Navigation";
 
 /**
- * The site navigation wired to the site content: both Navigation versions
+ * The site navigation wired to the site content: both Navigation breakpoints
  * (responsive top bar and desktop sidebar, shown per breakpoint) filled from
  * src/i18n, src/data/navigation.ts and src/data/socialLinks.ts.
  *
@@ -46,8 +46,8 @@ export default function SiteNavigation({ activeId }: SiteNavigationProps) {
 
   return (
     <>
-      <Navigation version="responsive" className="lg:hidden" {...shared} />
-      <Navigation version="desktop" className="hidden lg:flex" {...shared} />
+      <Navigation breakpoint="responsive" className="lg:hidden" {...shared} />
+      <Navigation breakpoint="desktop" className="hidden lg:flex" {...shared} />
     </>
   );
 }

@@ -34,7 +34,7 @@ The code mirrors the Figma file (kcDOoECGUtLG0KRMrZZfru): every Figma component 
 | `sections` (home, about, work-experience, education, projects, contact, not-found) | `src/components/sections/` |
 | `child-page-header`, `child-page-sections` (text, list, gallery) | `src/components/child-page/` |
 
-Each component's header comment names its Figma node and lists its properties. Figma properties map straight to props: `direction` (ltr / rtl, defaults to the page direction), `state`, `type`, text properties (`cta`, `title`, ...) and `show-*` toggles. The Figma `version` property (desktop / responsive) is handled with responsive CSS (`lg:`), not duplicated components.
+Each component's header comment names its Figma node and lists its properties. Figma properties map straight to props: `direction` (ltr / rtl, defaults to the page direction), `state`, `type`, text properties (`cta`, `title`, ...) and `show-*` toggles. The Figma `breakpoint` property (desktop / responsive) is handled with responsive CSS (`lg:`), not duplicated components.
 
 ### Tokens and text styles
 

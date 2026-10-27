@@ -9,7 +9,7 @@ import IconStatusDot from "../icons/IconStatusDot";
 import NavigationPage, { type NavigationPageState } from "./NavigationPage";
 import ToggleMenu from "./ToggleMenu";
 
-export type NavigationVersion = "desktop" | "responsive";
+export type NavigationBreakpoint = "desktop" | "responsive";
 
 export interface NavigationPageItem {
   number: string;
@@ -32,8 +32,8 @@ export interface NavigationLinkItem {
  * links and copyright. Responsive is the top bar with a toggle-menu that opens
  * the same content as a panel.
  *
- *  version    desktop | responsive. The page renders one Navigation per
- *             version and shows the right one with its breakpoint classes
+ *  breakpoint desktop | responsive. The page renders one Navigation per
+ *             breakpoint and shows the right one with its breakpoint classes
  *             (see `className`), so there is a single set of content.
  *  direction  ltr | rtl (defaults to the page direction). rtl mirrors the layout;
  *             on desktop the sidebar sits on the right.
@@ -42,7 +42,7 @@ export interface NavigationLinkItem {
  * src/i18n. The language switch uses the language context.
  */
 export interface NavigationProps {
-  version?: NavigationVersion;
+  breakpoint?: NavigationBreakpoint;
   direction?: Direction;
   name: string;
   /** Job title next to the status dot. */
@@ -64,7 +64,7 @@ export interface NavigationProps {
 const divider = <div className="h-px w-full shrink-0 bg-neutral-37" />;
 
 export default function Navigation({
-  version = "desktop",
+  breakpoint = "desktop",
   direction,
   name,
   title,
@@ -184,7 +184,7 @@ export default function Navigation({
 
   const copyrightEl = <p className="w-full text-regular-12 text-neutral-52">{copyright}</p>;
 
-  if (version === "responsive") {
+  if (breakpoint === "responsive") {
     return (
       <>
         <nav
