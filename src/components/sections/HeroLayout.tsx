@@ -62,7 +62,7 @@ export default function HeroLayout({
         {ghostCorner && (
           <GhostNumber
             value={ghostCorner}
-            className="bottom-0 end-20 translate-x-full translate-y-1/2 text-[150px] text-brand-cream rtl:-translate-x-full lg:bottom-[112px] lg:end-[184px] lg:text-[224px]"
+            className="-bottom-[5px] -end-3 text-[100px] leading-[0.89]! text-brand-cream lg:leading-none! lg:bottom-[112px] lg:end-[184px] lg:translate-x-full lg:translate-y-1/2 lg:text-[224px] lg:rtl:-translate-x-full"
           />
         )}
       </div>
