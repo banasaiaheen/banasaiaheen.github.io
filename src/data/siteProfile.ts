@@ -6,7 +6,7 @@
  */
 import photo from "../assets/bana-photo.jpg";
 
-export const SITE_EMAIL = "banasaiaheen@gmail.com";
+export const SITE_EMAIL = "hello@banasaiaheen.com";
 
 /** The portrait in the About section. Replace src/assets/bana-photo.jpg (or change this import) to swap it. */
 export const PROFILE_PHOTO = photo;
