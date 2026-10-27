@@ -1,4 +1,4 @@
-import { useRef, useState, type TouchEvent } from "react";
+import { useRef, useState, type CSSProperties, type TouchEvent } from "react";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
 import { useDirection } from "../../i18n/useLanguage";
@@ -61,7 +61,7 @@ export default function CertificatesCards({
   const totalPages = Math.max(1, Math.ceil(certificates.length / perPage));
   // Clamp so a shrinking list can never leave the carousel on a page that no longer exists.
   const page = Math.min(Math.max(pageProp ?? internalPage, 1), totalPages);
-  const visible = certificates.slice((page - 1) * perPage, page * perPage);
+  const pages = Array.from({ length: totalPages }, (_, i) => certificates.slice(i * perPage, (i + 1) * perPage));
 
   // Which way the page change came from, so the new page can slide in from that side.
   const [slideFrom, setSlideFrom] = useState(0);
@@ -106,20 +106,34 @@ export default function CertificatesCards({
       // pan-y keeps vertical page scrolling while the sideways swipe is ours.
       className={cn("flex w-full touch-pan-y flex-col items-center gap-6", className)}
     >
-      <div
-        key={page}
-        style={{ "--slide-from": `${slideFrom}px` } as React.CSSProperties}
-        className="grid w-full animate-page-in grid-cols-1 gap-x-6 gap-y-4 motion-reduce:animate-none lg:grid-cols-2 lg:gap-y-6"
-      >
-        {visible.map((certificate) => (
-          <EducationCard
-            key={`${certificate.name}-${certificate.year}`}
-            type="sub"
-            year={certificate.year}
-            name={certificate.name}
-            source={certificate.source}
-          />
-        ))}
+      {/* Every page sits in the same grid cell and only the current one is visible, so the block
+          always keeps the height of the tallest page: a last page with a single card doesn't
+          shrink the section or move the pager. */}
+      <div className="grid w-full">
+        {pages.map((items, i) => {
+          const isCurrent = i + 1 === page;
+          return (
+            <div
+              key={i}
+              aria-hidden={!isCurrent}
+              style={{ "--slide-from": `${slideFrom}px` } as CSSProperties}
+              className={cn(
+                "col-start-1 row-start-1 grid grid-cols-1 content-start gap-x-6 gap-y-4 lg:grid-cols-2 lg:gap-y-6",
+                isCurrent ? "animate-page-in motion-reduce:animate-none" : "invisible",
+              )}
+            >
+              {items.map((certificate) => (
+                <EducationCard
+                  key={`${certificate.name}-${certificate.year}`}
+                  type="sub"
+                  year={certificate.year}
+                  name={certificate.name}
+                  source={certificate.source}
+                />
+              ))}
+            </div>
+          );
+        })}
       </div>
       {totalPages > 1 && (
         <CarouselIndicator
