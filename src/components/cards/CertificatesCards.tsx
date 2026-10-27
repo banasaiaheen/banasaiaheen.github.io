@@ -31,6 +31,8 @@ export interface CertificatesCardsProps {
   page?: number;
   onPageChange?: (page: number) => void;
   indicatorLabel?: string;
+  /** Word before the page number in each square's accessible name, e.g. "Page". */
+  pageLabel?: string;
   direction?: Direction;
   className?: string;
 }
@@ -41,6 +43,7 @@ export default function CertificatesCards({
   page: pageProp,
   onPageChange,
   indicatorLabel,
+  pageLabel = "Page",
   direction,
   className,
 }: CertificatesCardsProps) {
@@ -70,7 +73,13 @@ export default function CertificatesCards({
         ))}
       </div>
       {totalPages > 1 && (
-        <CarouselIndicator count={totalPages} active={page} onSelect={selectPage} label={indicatorLabel} />
+        <CarouselIndicator
+          count={totalPages}
+          active={page}
+          onSelect={selectPage}
+          label={indicatorLabel}
+          pageLabel={(n) => `${pageLabel} ${n}`}
+        />
       )}
     </div>
   );

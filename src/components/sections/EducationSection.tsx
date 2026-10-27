@@ -23,7 +23,7 @@ export default function EducationSection() {
         <SectionTitle number={getSectionNumber("education")} title={t.education.title} className="lg:flex-[1_1_548px]" />
         <EducationCard type="main" year={degree.year} name={degree.degree} source={degree.uni} className="lg:flex-[1_1_548px]" />
       </div>
-      <CertificatesCards certificates={CERTIFICATES} indicatorLabel={t.education.certificatesLabel} />
+      <CertificatesCards certificates={CERTIFICATES} indicatorLabel={t.education.certificatesLabel} pageLabel={t.education.pageLabel} />
     </section>
   );
 }

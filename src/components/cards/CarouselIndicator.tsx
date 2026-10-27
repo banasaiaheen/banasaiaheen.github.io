@@ -1,4 +1,6 @@
+import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
+import { useDirection } from "../../i18n/useLanguage";
 
 /**
  * Figma: carousel-indicator (265:612). Three-square pager for a carousel,
@@ -9,7 +11,7 @@ import { cn } from "../../utils/cn";
  *  onSelect   called with the page number when a square is clicked
  *  label      accessible name of the pager; pageLabel names each square
  *
- * Figma keeps the squares left-to-right in Arabic too, so the row is forced to ltr.
+ *  direction  ltr | rtl (defaults to the page direction); rtl puts page 1 on the right
  */
 export interface CarouselIndicatorProps {
   count?: number;
@@ -17,6 +19,7 @@ export interface CarouselIndicatorProps {
   onSelect?: (page: number) => void;
   label?: string;
   pageLabel?: (page: number) => string;
+  direction?: Direction;
   className?: string;
 }
 
@@ -26,10 +29,12 @@ export default function CarouselIndicator({
   onSelect,
   label = "Pages",
   pageLabel = (page) => `Page ${page}`,
+  direction,
   className,
 }: CarouselIndicatorProps) {
+  const dir = useDirection(direction);
   return (
-    <div dir="ltr" role="group" aria-label={label} className={cn("flex items-center gap-2", className)}>
+    <div dir={dir} role="group" aria-label={label} className={cn("flex items-center gap-2", className)}>
       {Array.from({ length: count }, (_, i) => {
         const page = i + 1;
         const isActive = page === active;
