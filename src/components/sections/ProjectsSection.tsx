@@ -24,7 +24,7 @@ export default function ProjectsSection() {
         <p className="text-regular-18 text-neutral-37 lg:w-[450px]">{t.projects.subText}</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
         {projects.map((project, i) => (
           <ProjectCard
             key={project.title}
