@@ -65,7 +65,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
       type: "Personal",
       description:
         "A behind-the-scenes look at how this portfolio was designed from concept to final product. Red, black, and white — a portfolio built on the idea that a small palette is enough. Designed and prototyped entirely in Figma, then built with Claude Code.",
-      figmaHref: "#",
+      figmaHref: "https://www.figma.com/community/file/1696876249789704241",
       sections: [
         {
           kind: "text",
@@ -176,7 +176,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
       type: "مشروع شخصي",
       description:
         "نظرة من وراء الكواليس على كيفية تصميم ملف الأعمال هذا من الفكرة إلى المنتج النهائي. الأحمر والأسود والأبيض — ملف أعمال مبني على فكرة أن لوحة ألوان صغيرة تكفي. صُمّم ونُفّذ نموذجه الأولي بالكامل في Figma، ثم بُني باستخدام Claude Code.",
-      figmaHref: "#",
+      figmaHref: "https://www.figma.com/community/file/1696876249789704241",
       sections: [
         {
           kind: "text",
