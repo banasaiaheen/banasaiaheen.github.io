@@ -27,7 +27,8 @@ export interface Certificate {
  *
  * On touch screens the pages can also be swiped: swipe towards the start of the
  * reading direction for the next page (left in English, right in Arabic), the
- * other way to go back. Vertical scrolling still works as usual.
+ * other way to go back. Swiping past the last page wraps to the first, and back
+ * from the first to the last. Vertical scrolling still works as usual.
  */
 
 /** A swipe must travel at least this far sideways, and mostly sideways, to count. */
@@ -66,11 +67,11 @@ export default function CertificatesCards({
   const [slideFrom, setSlideFrom] = useState(0);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
-  const selectPage = (next: number) => {
+  /** `forward` says which way the new page slides in from; it defaults to "later page" (a wrap-around passes it). */
+  const selectPage = (next: number, forward = next > page) => {
     const target = Math.min(Math.max(next, 1), totalPages);
     if (target === page) return;
     // Going forward slides in from the end side: right in English, left in Arabic.
-    const forward = target > page;
     setSlideFrom(forward === (dir === "ltr") ? 16 : -16);
     setInternalPage(target);
     onPageChange?.(target);
@@ -91,7 +92,9 @@ export default function CertificatesCards({
     if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dx) < Math.abs(dy) * SWIPE_DIRECTION_RATIO) return;
     // Swiping against the reading direction (left in English, right in Arabic) goes forward.
     const forward = dir === "ltr" ? dx < 0 : dx > 0;
-    selectPage(forward ? page + 1 : page - 1);
+    // Wrap around: forward from the last page goes to the first, back from the first goes to the last.
+    const next = forward ? (page % totalPages) + 1 : page === 1 ? totalPages : page - 1;
+    selectPage(next, forward);
   };
 
   return (
