@@ -30,6 +30,7 @@ const en: Translations = {
     },
   },
   home: {
+    name: "Bana Khaldoon Saiaheen",
     portfolio: "PORTFOLIO",
     year: "2026",
     subText: "Crafting digital experiences that bridge human intuition and purposeful design, one pixel at a time.",

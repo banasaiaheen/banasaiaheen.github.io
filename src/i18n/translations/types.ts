@@ -36,6 +36,8 @@ export interface Translations {
   };
   /** Figma: home/* */
   home: {
+    /** Full name shown as the home section title (nav.name is the short form). */
+    name: string;
     portfolio: string;
     year: string;
     subText: string;

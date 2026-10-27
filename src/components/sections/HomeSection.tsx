@@ -5,7 +5,7 @@ import HeroLayout from "./HeroLayout";
 /**
  * Figma: sections / section-name=home. The landing section with the name,
  * sub-text, "Contact Me" button and tagline. Edit the copy in src/i18n
- * (home.*, nav.name).
+ * (home.*).
  */
 export default function HomeSection() {
   const t = useTranslations();
@@ -14,7 +14,7 @@ export default function HomeSection() {
     <HeroLayout
       id="home"
       label={t.home.portfolio}
-      title={t.nav.name}
+      title={t.home.name}
       subText={t.home.subText}
       action={
         <Button
