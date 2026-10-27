@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
 import { useDirection } from "../../i18n/useLanguage";
@@ -61,6 +62,39 @@ function ListLayout({ title, items }: ListSection) {
   );
 }
 
+const MAX_IMAGE_RETRIES = 3;
+
+/**
+ * A gallery screen. It loads straight away (no lazy loading, which can leave
+ * images unrequested when the page is long or the connection hiccups) and, if the
+ * request fails, retries a few times with a short delay before giving up. The
+ * panel behind it shows while the image loads.
+ */
+function GalleryImage({ src, alt }: { src: string; alt: string }) {
+  const [attempt, setAttempt] = useState(0);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    if (!failed || attempt >= MAX_IMAGE_RETRIES) return;
+    const timer = setTimeout(() => {
+      setFailed(false);
+      setAttempt((n) => n + 1);
+    }, 800 * (attempt + 1));
+    return () => clearTimeout(timer);
+  }, [failed, attempt]);
+
+  return (
+    <img
+      // A changed URL makes the browser request the file again instead of reusing the failed one.
+      src={attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}retry=${attempt}`}
+      alt={alt}
+      decoding="async"
+      onError={() => setFailed(true)}
+      className="aspect-[1440/1024] w-full border border-neutral-16 bg-brand-panel object-cover"
+    />
+  );
+}
+
 function GalleryLayout({ title, screens }: GallerySection) {
   return (
     <>
@@ -69,12 +103,7 @@ function GalleryLayout({ title, screens }: GallerySection) {
         {screens.map((screen) => (
           <figure key={screen.caption} className="flex flex-col gap-2">
             {screen.src ? (
-              <img
-                src={screen.src}
-                alt={screen.caption}
-                loading="lazy"
-                className="aspect-[1440/1024] w-full border border-neutral-16 object-cover"
-              />
+              <GalleryImage src={screen.src} alt={screen.caption} />
             ) : (
               <div aria-hidden="true" className="aspect-[1440/1024] w-full border border-neutral-16 bg-brand-panel" />
             )}
