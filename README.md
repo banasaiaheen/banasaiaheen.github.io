@@ -48,6 +48,17 @@ Language-dependent values (font, line-heights, letter-spacing) switch with the p
 2. Add the same slug to `src/data/projectPages.ts` for both languages: a header (title, software, type, description, Figma link) and a list of `sections` (`text`, `list` or `gallery`).
 3. Done — the card links to `/projects/<slug>`, the page is built from the child-page components and ends with the Contact section.
 
+## Publishing on GitHub Pages
+
+`.github/workflows/deploy.yml` builds the site and publishes it on every push to `main` (or `master`). One-time setup in the repository on GitHub:
+
+1. **Settings → Pages → Source: GitHub Actions.**
+2. **Settings → Secrets and variables → Actions → New repository secret**, three times, with the values from your EmailJS dashboard (the same ones as in your local `.env`): `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`.
+
+A repository named `<user>.github.io` is served from the root; any other repository from `/<repository>/` (the workflow sets the base path for you). `404.html` is a copy of the app, so refreshing a page like `/projects/medconnect` still works.
+
+The contact form sends through EmailJS: the recipient (your email) is set in the EmailJS email template (**To Email**), not in the code.
+
 ## Project structure
 
 ```
