@@ -1,11 +1,10 @@
+import { SITE_EMAIL } from "./siteProfile";
+
 /**
  * ============================================================================
  *  SOCIAL / CONTACT LINKS — shown in the site navigation (email, LinkedIn,
  *  Figma). `id` must match a key under `nav` in
  *  src/i18n/translations/{en,ar}.ts, which supplies the button label.
- *
- *  TODO: these hrefs are placeholders carried over from the original design —
- *  replace them with your real profile links.
  * ============================================================================
  */
 export interface SocialLink {
@@ -16,7 +15,7 @@ export interface SocialLink {
 }
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { id: "email", href: "mailto:hello@example.com" },
-  { id: "linkedin", href: "https://linkedin.com", target: "_blank", rel: "noreferrer" },
-  { id: "figma", href: "https://figma.com", target: "_blank", rel: "noreferrer" },
+  { id: "email", href: `mailto:${SITE_EMAIL}` },
+  { id: "linkedin", href: "https://www.linkedin.com/in/bana-saiaheen", target: "_blank", rel: "noreferrer" },
+  { id: "figma", href: "https://www.figma.com/@banasaiaheen", target: "_blank", rel: "noreferrer" },
 ];
