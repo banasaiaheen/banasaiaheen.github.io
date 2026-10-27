@@ -7,6 +7,11 @@ export function useScrollToHash() {
 
   useEffect(() => {
     if (!hash) return;
+    // "#home" is the top of the page: go all the way up, not just to the section under the nav bar.
+    if (hash === "#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     const el = document.querySelector(hash);
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [hash]);

@@ -113,7 +113,10 @@ export default function Navigation({
   const goToSection = (href: string) => {
     setExpanded(false);
     const target = document.querySelector(href);
-    if (target) {
+    if (target && href === "#home") {
+      // Home is the top of the page: go all the way up, not just to the section under the nav bar.
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       // Not on the home page (e.g. a project page): the home page scrolls to the hash itself.
@@ -121,7 +124,19 @@ export default function Navigation({
     }
   };
 
-  const nameEl = <span className="whitespace-nowrap text-bold-24 text-brand-cream">{name}</span>;
+  // The name is the home link: it scrolls to the top on the home page, and goes there from other pages.
+  const nameEl = (
+    <a
+      href="/"
+      onClick={(e) => {
+        e.preventDefault();
+        goToSection("#home");
+      }}
+      className="whitespace-nowrap text-bold-24 text-brand-cream transition-colors duration-150 hover:text-brand-red"
+    >
+      {name}
+    </a>
+  );
 
   // Role and location; the name sits above it on desktop and in the bar on responsive.
   const profileDetails = (
