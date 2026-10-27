@@ -26,7 +26,8 @@ const EMPTY_VALUES: ContactValues = { name: "", email: "", inquiry: null, messag
  * The "Send a message" form of the Contact section, following the Figma form
  * states: empty fields turn red with a "Required" label on submit, the inquiry
  * field opens a dropdown, and a sent message is replaced by a confirmation with
- * a "Send another message" link. A failed send shows the `message` notice.
+ * a "Send another message" link (the form title goes with the form). A failed
+ * send shows the `message` notice.
  * Sending goes through src/lib/emailjs.ts; copy comes from src/i18n
  * (contact.form.*).
  */
@@ -120,69 +121,76 @@ export default function ContactForm() {
   const isSending = status === "sending";
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex w-full flex-col gap-[2px]">
-      <div className="flex w-full flex-col gap-[2px] lg:flex-row">
-        <Input
-          name="name"
-          placeholder={copy.placeholders.name}
-          value={values.name}
-          state={fieldError("name")}
-          errorLabel={errorLabel("name")}
-          onChange={(value) => setField("name", value)}
-          className="lg:flex-1"
-        />
-        <Input
-          name="email"
-          type="email"
-          placeholder={copy.placeholders.email}
-          value={values.email}
-          state={fieldError("email")}
-          errorLabel={errorLabel("email")}
-          onChange={(value) => setField("email", value)}
-          className="lg:flex-1"
-        />
+    <>
+      {/* The title and sub-text belong to the form, so they go away with it once the message is sent. */}
+      <div className="flex flex-col gap-[2px] text-start">
+        <h3 className="text-black-32 text-brand-cream">{copy.title}</h3>
+        <p className="text-regular-16 text-neutral-48">{copy.subText}</p>
       </div>
+      <form onSubmit={handleSubmit} noValidate className="flex w-full flex-col gap-[2px]">
+        <div className="flex w-full flex-col gap-[2px] lg:flex-row">
+          <Input
+            name="name"
+            placeholder={copy.placeholders.name}
+            value={values.name}
+            state={fieldError("name")}
+            errorLabel={errorLabel("name")}
+            onChange={(value) => setField("name", value)}
+            className="lg:flex-1"
+          />
+          <Input
+            name="email"
+            type="email"
+            placeholder={copy.placeholders.email}
+            value={values.email}
+            state={fieldError("email")}
+            errorLabel={errorLabel("email")}
+            onChange={(value) => setField("email", value)}
+            className="lg:flex-1"
+          />
+        </div>
 
-      <div ref={inquiryRef}>
+        <div ref={inquiryRef}>
+          <Input
+            showDropDownIcon
+            placeholder={copy.placeholders.inquiry}
+            value={values.inquiry === null ? "" : copy.inquiryOptions[values.inquiry]}
+            state={menuOpen ? "open" : fieldError("inquiry")}
+            errorLabel={errorLabel("inquiry")}
+            onClick={() => setMenuOpen((open) => !open)}
+            menu={
+              <DropdownMenu
+                options={copy.inquiryOptions}
+                value={values.inquiry === null ? undefined : copy.inquiryOptions[values.inquiry]}
+                onSelect={(option) => {
+                  setField("inquiry", copy.inquiryOptions.indexOf(option));
+                  setMenuOpen(false);
+                }}
+              />
+            }
+          />
+        </div>
+
         <Input
-          showDropDownIcon
-          placeholder={copy.placeholders.inquiry}
-          value={values.inquiry === null ? "" : copy.inquiryOptions[values.inquiry]}
-          state={menuOpen ? "open" : fieldError("inquiry")}
-          errorLabel={errorLabel("inquiry")}
-          onClick={() => setMenuOpen((open) => !open)}
-          menu={
-            <DropdownMenu
-              options={copy.inquiryOptions}
-              value={values.inquiry === null ? undefined : copy.inquiryOptions[values.inquiry]}
-              onSelect={(option) => {
-                setField("inquiry", copy.inquiryOptions.indexOf(option));
-                setMenuOpen(false);
-              }}
-            />
-          }
+          textarea
+          name="message"
+          placeholder={copy.placeholders.message}
+          value={values.message}
+          state={fieldError("message")}
+          errorLabel={errorLabel("message")}
+          onChange={(value) => setField("message", value)}
         />
-      </div>
 
-      <Input
-        textarea
-        name="message"
-        placeholder={copy.placeholders.message}
-        value={values.message}
-        state={fieldError("message")}
-        errorLabel={errorLabel("message")}
-        onChange={(value) => setField("message", value)}
-      />
+        <Button
+          type="primary"
+          buttonType="submit"
+          cta={isSending ? copy.sending : copy.send}
+          disabled={isSending}
+          className="w-full"
+        />
 
-      <Button
-        type="primary"
-        buttonType="submit"
-        cta={isSending ? copy.sending : copy.send}
-        disabled={isSending}
-        className="w-full"
-      />
-
-      {status === "error" && <Message title={copy.error.title} message={copy.error.text} className="mt-2" />}
-    </form>
+        {status === "error" && <Message title={copy.error.title} message={copy.error.text} className="mt-2" />}
+      </form>
+    </>
   );
 }

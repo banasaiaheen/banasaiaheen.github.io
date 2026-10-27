@@ -42,10 +42,6 @@ export default function ContactSection() {
 
       {/* right: the message form */}
       <div className="flex flex-col justify-center gap-5 px-4 py-8 lg:flex-[604_1_0%] lg:ps-6 lg:pe-8 lg:py-0">
-        <div className="flex flex-col gap-[2px] text-start">
-          <h3 className="text-black-32 text-brand-cream">{contact.form.title}</h3>
-          <p className="text-regular-16 text-neutral-48">{contact.form.subText}</p>
-        </div>
         <ContactForm />
       </div>
     </section>
