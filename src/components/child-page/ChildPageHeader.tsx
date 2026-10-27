@@ -64,14 +64,14 @@ export default function ChildPageHeader({
       dir={dir}
       className={cn(
         "sticky top-[94.5px] z-10 flex flex-col overflow-hidden bg-brand-panel px-4 text-start lg:top-0 lg:gap-5 lg:p-8",
-        isScrolled ? "gap-2 py-4" : "gap-5 py-8",
+        isScrolled ? "gap-2 py-4" : "gap-4 pb-8 pt-6",
       )}
     >
       <GhostNumber
         value={number}
         outline
         className={cn(
-          "end-4 top-4 text-[100px] leading-[0.89] lg:end-8 lg:top-6 lg:block",
+          "end-4 top-4 text-[64px] leading-[0.89] lg:end-8 lg:top-6 lg:block lg:text-[100px]",
           isScrolled && "hidden",
         )}
       />
@@ -103,7 +103,9 @@ export default function ChildPageHeader({
           {figmaLabel}
         </a>
       </div>
-      <p className={cn("text-regular-20 text-neutral-62", isScrolled ? "hidden lg:block" : "block")}>{description}</p>
+      <p className={cn("text-regular-18 text-neutral-62 lg:text-regular-20", isScrolled ? "hidden lg:block" : "block")}>
+        {description}
+      </p>
     </header>
   );
 }

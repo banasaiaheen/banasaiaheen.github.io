@@ -21,10 +21,11 @@ export interface ChildPageSectionsProps {
   className?: string;
 }
 
-const bodyText = "text-regular-20 text-neutral-62";
+// Body text is regular/18 on responsive and regular/20 on desktop (Figma child-page-sections).
+const bodyText = "text-regular-18 text-neutral-62 lg:text-regular-20";
 
 function SectionHeading({ children }: { children: string }) {
-  return <h2 className="w-full text-bold-32 text-brand-cream">{children}</h2>;
+  return <h2 className="w-full text-bold-24 text-brand-cream lg:text-bold-32">{children}</h2>;
 }
 
 function TextLayout({ title, paragraphs }: TextSection) {
@@ -118,7 +119,7 @@ function GalleryLayout({ title, screens }: GallerySection) {
 export default function ChildPageSections({ sections, direction, className }: ChildPageSectionsProps) {
   const dir = useDirection(direction);
   return (
-    <div dir={dir} className={cn("flex w-full flex-col gap-[62px] bg-brand-ink p-8 text-start", className)}>
+    <div dir={dir} className={cn("flex w-full flex-col gap-10 bg-brand-ink px-4 py-8 text-start lg:gap-[62px] lg:p-8", className)}>
       {sections.map((section) => (
         <section key={section.title} className="flex w-full flex-col items-start gap-6">
           {section.kind === "text" && <TextLayout {...section} />}
