@@ -37,7 +37,7 @@ export interface ChildPageHeaderProps {
 }
 
 /** Height of the responsive nav bar the compact bar sits under (the desktop nav is a side bar, so there it is 0). */
-const NAV_BAR_HEIGHT = 94.5;
+const NAV_BAR_HEIGHT = 70;
 /** Same breakpoint as Tailwind's `lg:`, where the navigation turns into a sidebar. */
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
@@ -113,13 +113,14 @@ export default function ChildPageHeader({
         <p className="text-regular-18 text-neutral-62 lg:text-regular-20">{description}</p>
       </header>
 
-      {/* A zero-height sticky anchor holds the bar, so it takes no space in the page. */}
-      <div className="sticky top-[94.5px] z-10 h-0 lg:top-0">
+      {/* A zero-height sticky anchor holds the bar, so it takes no space in the page. On responsive it starts
+          1px under the nav bar (which sits above it) so no sliver of the page can show between the two. */}
+      <div className="sticky top-[69px] z-10 h-0 lg:top-0">
         <div
           dir={dir}
           aria-hidden={!showBar}
           className={cn(
-            "absolute inset-x-0 top-0 flex flex-col gap-2 bg-brand-panel px-4 py-4 text-start transition-opacity duration-150 lg:px-8",
+            "absolute inset-x-0 top-0 flex flex-col gap-2 bg-brand-panel px-4 pb-4 pt-[17px] text-start transition-opacity duration-150 lg:px-8 lg:pt-4",
             showBar ? "opacity-100" : "pointer-events-none invisible opacity-0",
           )}
         >

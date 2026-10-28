@@ -191,7 +191,8 @@ export default function Navigation({
           ref={barRef}
           dir={dir}
           className={cn(
-            "sticky top-0 z-50 flex w-full items-center justify-between bg-brand-ink px-4 py-8",
+            // Figma: the responsive bar is exactly 70px tall (content centred), not padding around the content.
+            "sticky top-0 z-50 flex h-[70px] w-full items-center justify-between bg-brand-ink px-4",
             className,
           )}
         >
