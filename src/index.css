@@ -10,3 +10,9 @@ body {
   font-family: var(--font);
   background-color: var(--color-brand-ink);
 }
+
+/* A visitor who chose Arabic gets the (English) built page held back until the app has switched the
+   language, instead of a flash of English: see the script in index.html. */
+html.language-pending #root {
+  visibility: hidden;
+}

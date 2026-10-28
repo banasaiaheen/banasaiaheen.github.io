@@ -10,6 +10,23 @@
     <meta name="author" content="Bana Saiaheen" />
     <meta name="theme-color" content="#0d0d0d" />
 
+    <!-- Remembered language (src/i18n/LanguageProvider.tsx): the built pages are English, so for a visitor
+         who chose Arabic, set the direction now and hold the page back until the app has switched it
+         (it removes "language-pending"; the timer is only a safety net if the script fails to load). -->
+    <script>
+      try {
+        if (localStorage.getItem("language") === "arabic") {
+          var root = document.documentElement;
+          root.lang = "ar";
+          root.dir = "rtl";
+          root.classList.add("language-pending");
+          setTimeout(function () {
+            root.classList.remove("language-pending");
+          }, 3000);
+        }
+      } catch (e) {}
+    </script>
+
     <!-- Each built page gets its own title (below is the dev-server default), description, canonical URL,
          link-preview tags and structured data in place of the marker below: see src/data/seo.ts and
          scripts/prerender.mjs. Fonts are self-hosted (src/styles/fonts.css). -->

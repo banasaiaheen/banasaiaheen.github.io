@@ -82,28 +82,29 @@ export default function Navigation({
   const { language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
-  const barRef = useRef<HTMLElement>(null);
-  const [barHeight, setBarHeight] = useState(0);
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  // Measure the responsive bar so the open panel sits right under it. Barlow
-  // loads asynchronously and reflows the bar, hence the observer.
-  useEffect(() => {
-    const el = barRef.current;
-    if (!el) return;
-    const update = () => setBarHeight(el.getBoundingClientRect().height);
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // Lock page scroll while the responsive menu is open.
+  // Lock page scroll while the responsive menu is open. `overflow: hidden` alone is not enough on iPhones
+  // (the page behind still scrolls with a finger), so touch moves outside the menu are cancelled too.
+  // Only <html> is locked: with <body> locked as well it would become a scroll container of its own and
+  // the sticky bar would stop sticking.
   useEffect(() => {
     if (!expanded) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const html = document.documentElement;
+    const previousOverflow = html.style.overflow;
+    html.style.overflow = "hidden";
+
+    const onTouchMove = (event: TouchEvent) => {
+      const panel = panelRef.current;
+      // Only the open menu may scroll, and only when it is taller than the screen.
+      if (panel && panel.contains(event.target as Node) && panel.scrollHeight > panel.clientHeight) return;
+      event.preventDefault();
+    };
+    document.addEventListener("touchmove", onTouchMove, { passive: false });
+
     return () => {
-      document.body.style.overflow = previous;
+      document.removeEventListener("touchmove", onTouchMove);
+      html.style.overflow = previousOverflow;
     };
   }, [expanded]);
 
@@ -186,38 +187,36 @@ export default function Navigation({
 
   if (breakpoint === "responsive") {
     return (
-      <>
-        <nav
-          ref={barRef}
-          dir={dir}
-          className={cn(
-            // Figma: the responsive bar is exactly 70px tall (content centred), not padding around the content.
-            "sticky top-0 z-50 flex h-[70px] w-full items-center justify-between bg-brand-ink px-4",
-            className,
-          )}
-        >
-          {nameEl}
-          <ToggleMenu
-            collapsed={!expanded}
-            onToggle={(collapsed) => setExpanded(!collapsed)}
-            openLabel={openMenuLabel}
-            closeLabel={closeMenuLabel}
-          />
-        </nav>
+      <nav
+        dir={dir}
+        className={cn(
+          // Figma: the responsive bar is exactly 70px tall (content centred), not padding around the content.
+          "sticky top-0 z-50 flex h-[70px] w-full items-center justify-between bg-brand-ink px-4",
+          className,
+        )}
+      >
+        {nameEl}
+        <ToggleMenu
+          collapsed={!expanded}
+          onToggle={(collapsed) => setExpanded(!collapsed)}
+          openLabel={openMenuLabel}
+          closeLabel={closeMenuLabel}
+        />
 
+        {/* The open menu belongs to the bar (absolute, from its bottom edge), so it always sits flush under
+            it, however the phone moves its toolbars. The backdrop covers the page below the bar. */}
         {expanded && (
-          <div className={className}>
+          <>
             <button
               type="button"
               aria-label={closeMenuLabel}
               onClick={() => setExpanded(false)}
-              className="fixed inset-x-0 bottom-0 z-40 bg-black/60"
-              style={{ top: barHeight }}
+              className="absolute inset-x-0 top-full h-[calc(100dvh-70px)] cursor-default bg-black/60"
             />
             <div
+              ref={panelRef}
               dir={dir}
-              className="fixed inset-x-0 z-40 flex flex-col items-center gap-4 overflow-y-auto bg-brand-ink px-4 pb-4"
-              style={{ top: barHeight, maxHeight: `calc(100vh - ${barHeight}px)` }}
+              className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-70px)] flex-col items-center gap-4 overflow-y-auto overscroll-contain bg-brand-ink px-4 pb-4"
             >
               {profileDetails}
               {divider}
@@ -228,9 +227,9 @@ export default function Navigation({
               <div className="flex w-full items-center justify-between">{linkButtons}</div>
               <p className="w-full text-center text-regular-12 text-neutral-52">{copyright}</p>
             </div>
-          </div>
+          </>
         )}
-      </>
+      </nav>
     );
   }
 
