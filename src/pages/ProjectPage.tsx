@@ -4,6 +4,7 @@ import { useLanguage, useTranslations } from "../i18n/useLanguage";
 import { PROJECTS } from "../data/projects";
 import { PROJECT_PAGES } from "../data/projectPages";
 import { SITE_TITLE, useDocumentTitle } from "../hooks/useDocumentTitle";
+import { getProjectTitle } from "../data/seo";
 import PageLayout from "../components/navigation/PageLayout";
 import ChildPageHeader from "../components/child-page/ChildPageHeader";
 import ChildPageSections from "../components/child-page/ChildPageSections";
@@ -25,7 +26,11 @@ export default function ProjectPage() {
   // grid, matching the number on its card.
   const projectIndex = PROJECTS[language].findIndex((project) => project.slug === slug);
 
-  useDocumentTitle(page ? `${PROJECTS[language][projectIndex]?.title ?? page.title} — Bana Saiaheen` : SITE_TITLE);
+  // English pages use the same title search engines get (src/data/seo.ts); Arabic uses the translated project name.
+  const projectName = PROJECTS[language][projectIndex]?.title ?? page?.title;
+  useDocumentTitle(
+    page ? ((language === "english" && getProjectTitle(slug)) || `${projectName} — Bana Saiaheen`) : SITE_TITLE,
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);

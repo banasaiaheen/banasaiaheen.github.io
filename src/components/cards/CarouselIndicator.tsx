@@ -45,13 +45,19 @@ export default function CarouselIndicator({
             aria-label={pageLabel(page)}
             aria-current={isActive ? "true" : undefined}
             onClick={() => onSelect?.(page)}
-            className={cn(
-              "size-3 cursor-pointer border transition-colors duration-150",
-              isActive
-                ? "border-brand-red-bright bg-brand-red-bright"
-                : "border-neutral-37 bg-transparent hover:border-neutral-68",
-            )}
-          />
+            // A 24px tap target around the 12px square; the negative margins keep the squares 12px apart
+            // and the pager exactly as tall and wide as in the design.
+            className="group -mx-1.5 -my-1.5 flex size-6 cursor-pointer items-center justify-center"
+          >
+            <span
+              className={cn(
+                "size-3 border transition-colors duration-150",
+                isActive
+                  ? "border-brand-red-bright bg-brand-red-bright"
+                  : "border-neutral-37 bg-transparent group-hover:border-neutral-68",
+              )}
+            />
+          </button>
         );
       })}
     </div>

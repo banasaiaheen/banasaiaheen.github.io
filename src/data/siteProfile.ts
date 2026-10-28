@@ -4,7 +4,7 @@
  *  translated name, title and location live in src/i18n/translations (nav.*).
  * ============================================================================
  */
-import photo from "../assets/bana-photo.jpg";
+import photo from "../assets/bana-photo.webp";
 
 export const SITE_EMAIL = "hello@banasaiaheen.com";
 

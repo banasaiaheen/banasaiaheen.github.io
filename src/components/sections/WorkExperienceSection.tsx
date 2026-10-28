@@ -19,6 +19,8 @@ export default function WorkExperienceSection() {
       <div className="relative flex min-h-[172px] flex-col justify-center overflow-hidden bg-brand-red px-4 py-14 text-brand-cream lg:flex-[580_1_0%] lg:justify-end lg:p-10">
         <h2 className="relative flex flex-col text-black-32 lg:text-black-56">
           <span>{t.experience.title[0]}</span>
+          {/* Whitespace between the lines (ignored by the layout) keeps the heading readable as "WORK EXPERIENCE." as plain text. */}
+          {" "}
           <span>{t.experience.title[1]}</span>
         </h2>
         <GhostNumber

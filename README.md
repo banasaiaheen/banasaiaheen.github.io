@@ -15,6 +15,7 @@ You don't need to touch any component code to update what's on the site. Everyth
 | Project cards | `src/data/projects.ts` |
 | A project's own page | `src/data/projectPages.ts` |
 | Skills list | `src/data/skills.ts` |
+| What Google and link previews show (page titles, descriptions, structured data) | `src/data/seo.ts` |
 
 Each file under `src/data/` and `src/i18n/translations/` has a comment block at the top explaining its shape.
 
@@ -57,9 +58,18 @@ Language-dependent values (font, line-heights, letter-spacing) switch with the p
 
 The site uses the custom domain **banasaiaheen.com** (the `public/CNAME` file, which is copied into every deployment) and is served from the root. Without a `CNAME` file, a repository named `<user>.github.io` is also served from the root and any other repository from `/<repository>/`; the workflow sets the base path for you.
 
-Domain setup (at your registrar and under **Settings → Pages → Custom domain**): four `A` records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, plus a `CNAME` record for `www` pointing to `<user>.github.io`. Then tick **Enforce HTTPS** once GitHub has issued the certificate. `404.html` is a copy of the app, so refreshing a page like `/projects/medconnect` still works.
+Domain setup (at your registrar and under **Settings → Pages → Custom domain**): four `A` records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, plus a `CNAME` record for `www` pointing to `<user>.github.io`. Then tick **Enforce HTTPS** once GitHub has issued the certificate. `404.html` (written by the build and marked `noindex`) loads the app, so refreshing a page like `/projects/medconnect` still works.
 
 The contact form sends through EmailJS: the recipient (your email) is set in the EmailJS email template (**To Email**), not in the code.
+
+## Search engines (SEO) and speed
+
+The app renders with JavaScript, so the build also pre-renders it: `npm run build` runs `vite build`, a server build of `src/entry-server.tsx`, then `scripts/prerender.mjs`. That writes one real HTML page per route (home and every project page) with its own `<title>`, description, canonical URL, link-preview (Open Graph / X) tags, structured data (JSON-LD) and the page content, plus `404.html` and `sitemap.xml`. The browser then attaches to the same markup (hydration), so nothing changes for visitors.
+
+- **Titles, descriptions, structured data:** edit `src/data/seo.ts`. Keep titles under about 60 characters and descriptions under about 160. A new project page is added to the sitemap automatically; give it an entry in `PROJECT_SEO` for a hand-written title and description.
+- **Fonts** are self-hosted (`src/styles/fonts.css`, from the `@fontsource` packages): only the weights in use, and Arabic glyphs only download for Arabic visitors. The first-screen fonts are preloaded.
+- **Images** are WebP at their display size (`src/assets`). Convert new screenshots to WebP before adding them.
+- After a deploy, ask Google to re-read a page in Search Console (**URL inspection → Request indexing**).
 
 ## Project structure
 

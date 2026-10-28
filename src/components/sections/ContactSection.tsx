@@ -18,8 +18,8 @@ export default function ContactSection() {
       {/* left: headline + direct email */}
       <div className="relative flex flex-col justify-center gap-6 overflow-hidden border-neutral-16 bg-brand-panel px-4 py-12 lg:flex-[580_1_0%] lg:border-e-[0.8px] lg:ps-8 lg:pe-[12.8px] lg:py-0">
         <h2 className="flex flex-col gap-1 text-black-56 lg:text-black-88">
-          <span className="text-brand-cream">{contact.title[0]}</span>
-          <span className="text-brand-red">{contact.title[1]}</span>
+          <span className="text-brand-cream">{contact.title[0]}</span>{" "}
+          <span className="text-brand-red">{contact.title[1]}</span>{" "}
           <span className="text-brand-cream">{contact.title[2]}</span>
         </h2>
         <p className="border-s-2 border-neutral-16 ps-5 text-regular-18 text-neutral-52">{contact.subText}</p>

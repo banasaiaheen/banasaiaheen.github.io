@@ -1,10 +1,10 @@
 import type { Language } from "../types/language";
-import signIn from "../assets/medconnect/sign-in.png";
-import patientDashboard from "../assets/medconnect/patient-dashboard.png";
-import doctorDashboard from "../assets/medconnect/doctor-dashboard.png";
-import patientCalendar from "../assets/medconnect/patient-calendar.png";
-import doctorPatients from "../assets/medconnect/doctor-patients.png";
-import patientInbox from "../assets/medconnect/patient-inbox.png";
+import signIn from "../assets/medconnect/sign-in.webp";
+import patientDashboard from "../assets/medconnect/patient-dashboard.webp";
+import doctorDashboard from "../assets/medconnect/doctor-dashboard.webp";
+import patientCalendar from "../assets/medconnect/patient-calendar.webp";
+import doctorPatients from "../assets/medconnect/doctor-patients.webp";
+import patientInbox from "../assets/medconnect/patient-inbox.webp";
 
 /**
  * ============================================================================

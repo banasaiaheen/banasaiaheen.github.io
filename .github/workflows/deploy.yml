@@ -43,23 +43,16 @@ jobs:
           REPO="${GITHUB_REPOSITORY#*/}"
           if [ -f public/CNAME ] || [[ "$REPO" == *.github.io ]]; then echo "BASE_PATH=/" >> "$GITHUB_ENV"; else echo "BASE_PATH=/$REPO/" >> "$GITHUB_ENV"; fi
 
+      # Builds the app, pre-renders every page (title, description, structured data and content in the HTML),
+      # and writes 404.html and sitemap.xml: see scripts/prerender.mjs.
       - run: npm run build
         env:
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
 
-      # GitHub Pages serves 404.html for unknown paths, so a refresh on an unknown path loads the app
-      # instead of GitHub's own 404.
-      # Every project page also gets its own index.html (a copy of the app), so /projects/<slug> is a
-      # real page with a normal 200 response that search engines can index.
-      - name: Single-page-app fallback and project pages
-        run: |
-          cp dist/index.html dist/404.html
-          for slug in $(grep -o 'slug: "[^"]*"' src/data/projects.ts | sed 's/slug: "\(.*\)"/\1/' | sort -u); do
-            mkdir -p "dist/projects/$slug"
-            cp dist/index.html "dist/projects/$slug/index.html"
-          done
+      # (The build also writes 404.html, which GitHub Pages serves for unknown paths so a refresh on a
+      # page like /projects/medconnect still loads the app, and one real index.html per project page.)
 
       - uses: actions/upload-pages-artifact@v3
         with:

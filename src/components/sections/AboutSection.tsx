@@ -26,7 +26,15 @@ export default function AboutSection() {
           {/* portrait on a panel, with a red corner at the bottom start */}
           <div className="relative aspect-square w-[358px] max-w-full shrink-0 lg:size-[323px]">
             <div className="size-full overflow-hidden border border-neutral-16 bg-brand-panel">
-              <img src={PROFILE_PHOTO} alt={t.nav.name} className="size-full object-cover object-[50%_20%]" />
+              <img
+                src={PROFILE_PHOTO}
+                alt={t.nav.name}
+                width={720}
+                height={829}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover object-[50%_20%]"
+              />
             </div>
             <div className="pointer-events-none absolute bottom-0 start-0 h-1/2 w-1/2 border-b-[1.6px] border-s-[1.6px] border-brand-red" />
           </div>

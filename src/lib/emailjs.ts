@@ -1,5 +1,3 @@
-import emailjs from "@emailjs/browser";
-
 export interface ContactEmailParams {
   name: string;
   email: string;
@@ -24,23 +22,24 @@ function getMockSendMode(): "success" | "error" | null {
   return mode === "error" ? "error" : "success";
 }
 
-export function sendContactEmail(params: ContactEmailParams) {
+export async function sendContactEmail(params: ContactEmailParams): Promise<void> {
   const mock = getMockSendMode();
   if (mock) {
-    return new Promise<void>((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       setTimeout(() => (mock === "error" ? reject(new Error("Mock send failure")) : resolve()), 1200);
     });
+    return;
   }
 
   if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-    return Promise.reject(
-      new Error(
-        "EmailJS is not configured. Set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your .env file.",
-      ),
+    throw new Error(
+      "EmailJS is not configured. Set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your .env file.",
     );
   }
 
-  return emailjs.send(
+  // Loaded when a message is sent, so the library isn't part of the first page load.
+  const { default: emailjs } = await import("@emailjs/browser");
+  await emailjs.send(
     SERVICE_ID,
     TEMPLATE_ID,
     {
