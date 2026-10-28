@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
 import { useDirection } from "../../i18n/useLanguage";
+import { useFitText } from "../../hooks/useFitText";
 import Button from "../button/Button";
 import GhostNumber from "../sections/GhostNumber";
 
@@ -55,6 +56,9 @@ export default function ChildPageHeader({
 }: ChildPageHeaderProps) {
   const dir = useDirection(direction);
   const headerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  // A long one-word title (Latin letters are wider in Cairo, the Arabic font) shrinks to fit instead of being cut off.
+  useFitText(titleRef, `${dir}:${title}`);
   // True once the full header has scrolled out from under the nav bar.
   const [showBar, setShowBar] = useState(false);
 
@@ -100,7 +104,9 @@ export default function ChildPageHeader({
           <span>{type}</span>
         </p>
         <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
-          <h1 className="text-black-56 text-brand-cream">{title}</h1>
+          <h1 ref={titleRef} className="text-black-56 text-brand-cream">
+            {title}
+          </h1>
           <a
             href={figmaHref}
             target="_blank"
