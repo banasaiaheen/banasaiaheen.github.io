@@ -46,3 +46,31 @@ html.language-pending #root {
     transition: none !important;
   }
 }
+
+/* Home hero entrance. Pure CSS, so it plays on the built page itself, before any JavaScript, and the
+   content is still plain visible HTML for search engines and link previews. The left panel's texts and
+   button, and the red panel's label and tagline, rise in one after another; the big ghost lettering is
+   left alone. Skipped for visitors who prefer reduced motion. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #home > div > :not([aria-hidden="true"]) {
+    animation: hero-in 950ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  #home > div:first-child > :nth-child(2) {
+    animation-delay: 120ms;
+  }
+  #home > div:first-child > :nth-child(3) {
+    animation-delay: 240ms;
+  }
+  #home > div:last-child > :nth-child(1) {
+    animation-delay: 160ms;
+  }
+  #home > div:last-child > :nth-child(2) {
+    animation-delay: 280ms;
+  }
+}

@@ -70,6 +70,8 @@ The app renders with JavaScript, so the build also pre-renders it: `npm run buil
 - **Fonts** are self-hosted (`src/styles/fonts.css`, from the `@fontsource` packages): only the weights in use, and Arabic glyphs only download for Arabic visitors. The first-screen fonts are preloaded.
 - **Images** are WebP at their display size (`src/assets`). Convert new screenshots to WebP before adding them.
 - **Scroll-in animation:** content fades up as it scrolls into view from below, and again each time you scroll back down to it; scrolling up never hides or replays anything. It lives in `src/hooks/useRevealOnScroll.ts`, where the `GROUPS` list at the top sets what animates. Everything stays plain, visible HTML until the page is running, the first screen is never hidden, and it is skipped for visitors who prefer reduced motion. To switch it off, remove the `useRevealOnScroll()` call in `PageLayout`.
+- **Home hero entrance:** pure CSS in `src/index.css` (the `hero-in` block), so it plays on the built page before any JavaScript; reduced motion skips it.
+- **Refresh:** a refresh starts at the top (home) instead of where you were; a link with a `#section` still lands on that section, and back/forward still restore your position. The logic is the first script in `index.html` plus a reset in `src/main.tsx`.
 - After a deploy, ask Google to re-read a page in Search Console (**URL inspection → Request indexing**).
 
 ## Project structure

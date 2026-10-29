@@ -10,6 +10,30 @@
     <meta name="author" content="Bana Saiaheen" />
     <meta name="theme-color" content="#0d0d0d" />
 
+    <!-- A refresh starts again from the top of the page (home) instead of the browser putting the visitor back
+         where they were. Only for a refresh without a #section in the address: back/forward still restore the
+         position, and src/main.tsx hands restoration back to the browser a moment after loading.
+         Turning restoration off is not always honoured in time, so for the first 2 seconds the page also keeps
+         itself at the top, until the visitor scrolls, clicks or presses a key. -->
+    <script>
+      try {
+        var navigation = performance.getEntriesByType("navigation")[0];
+        if (navigation && navigation.type === "reload" && !location.hash) {
+          history.scrollRestoration = "manual";
+          var visitorActed = false;
+          var started = Date.now();
+          ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (name) {
+            window.addEventListener(name, function () { visitorActed = true; }, { once: true, passive: true });
+          });
+          (function keepAtTop() {
+            if (visitorActed || Date.now() - started > 2000) return;
+            if (window.scrollY) window.scrollTo(0, 0);
+            requestAnimationFrame(keepAtTop);
+          })();
+        }
+      } catch (e) {}
+    </script>
+
     <!-- Remembered language (src/i18n/LanguageProvider.tsx): the built pages are English, so for a visitor
          who chose Arabic, set the direction now and hold the page back until the app has switched it
          (it removes "language-pending"; the timer is only a safety net if the script fails to load). -->
