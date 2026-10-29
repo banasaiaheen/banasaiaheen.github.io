@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 
 /**
- * Scroll-in animation: blocks of content fade in and rise a little the first time they scroll into
- * view. Nothing is wrapped or moved in the markup; this only marks existing elements.
+ * Scroll-in animation: blocks of content fade in and rise a little as they scroll into view from the
+ * bottom of the screen. Nothing is wrapped or moved in the markup; this only marks existing elements.
+ *
+ * It plays on the way down, not on the way up: scrolling up shows content that has already been seen
+ * as it is. Once a block has gone completely off the bottom of the screen (you scrolled back up past
+ * it), it is armed again and animates again when you scroll back down to it.
  *
  * Safe by design:
  *  - The built pages are plain, fully visible HTML (search engines, link previews and slow
@@ -10,7 +14,7 @@ import { useEffect } from "react";
  *    and each block is shown again as it comes into view.
  *  - Whatever is already on screen, or above it (a link like /#contact, a refresh part-way down), is
  *    left alone, and so is the home section: the first screen is never delayed.
- *  - Only opacity and a small transform change: no layout shift. Every mark is removed once its
+ *  - Only opacity and a small transform change: no layout shift. The marks are removed as soon as an
  *    animation has played, so nothing keeps a transform (or a stacking context) afterwards.
  *  - Skipped for visitors who asked for less motion, and when the browser can't observe scrolling.
  *
@@ -36,7 +40,7 @@ const GROUPS: [selector: string, stagger: number][] = [
 
 /** The longest delay a stagger may reach, so a long list never makes the last item wait. */
 const MAX_DELAY = 300;
-/** A little longer than the animation (950ms in index.css), then the marks are cleaned up. */
+/** A little longer than the animation (950ms in index.css), then the animation mark is removed. */
 const CLEANUP_AFTER = 1400;
 
 export function useRevealOnScroll() {
@@ -44,46 +48,72 @@ export function useRevealOnScroll() {
     if (typeof IntersectionObserver === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const hidden = new Set<HTMLElement>();
-    const timers = new Set<number>();
+    const targets = new Set<HTMLElement>();
+    const timers = new Map<HTMLElement, number>();
 
-    const observer = new IntersectionObserver(
+    const stopTimer = (el: HTMLElement) => {
+      const timer = timers.get(el);
+      if (timer === undefined) return;
+      window.clearTimeout(timer);
+      timers.delete(el);
+    };
+
+    /** Hide a block (it is off screen) so that it animates in when it next arrives. */
+    const arm = (el: HTMLElement) => {
+      stopTimer(el);
+      el.dataset.reveal = "hidden";
+    };
+
+    // A block coming up into the screen from below starts its animation a little before it is fully in.
+    const enterObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
           const el = entry.target as HTMLElement;
-          observer.unobserve(el);
+          if (!entry.isIntersecting || el.dataset.reveal !== "hidden") continue;
           el.dataset.reveal = "run";
-          const timer = window.setTimeout(() => {
-            delete el.dataset.reveal;
-            el.style.removeProperty("--reveal-delay");
-            hidden.delete(el);
-            timers.delete(timer);
-          }, CLEANUP_AFTER + Number.parseInt(el.style.getPropertyValue("--reveal-delay") || "0", 10));
-          timers.add(timer);
+          stopTimer(el);
+          const delay = Number.parseInt(el.style.getPropertyValue("--reveal-delay") || "0", 10);
+          timers.set(
+            el,
+            window.setTimeout(() => {
+              delete el.dataset.reveal;
+              timers.delete(el);
+            }, CLEANUP_AFTER + delay),
+          );
         }
       },
-      // Fires a little before the block is fully in, so it is already on its way when it arrives.
       { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
 
+    // A block that has left the screen completely through the bottom (scrolled back up past it) is armed
+    // again. One that left through the top stays as it is, so scrolling up never hides or replays anything.
+    const leaveObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const el = entry.target as HTMLElement;
+        if (entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight) continue;
+        if (el.dataset.reveal !== "hidden") arm(el);
+      }
+    });
+
     for (const [selector, stagger] of GROUPS) {
       document.querySelectorAll<HTMLElement>(selector).forEach((el, index) => {
-        // Decorative lettering and anything already on screen (or above it) is left alone.
-        if (el.getAttribute("aria-hidden") === "true") return;
-        if (el.getBoundingClientRect().top < window.innerHeight) return;
-        el.dataset.reveal = "hidden";
+        // Decorative lettering is left alone.
+        if (el.getAttribute("aria-hidden") === "true" || targets.has(el)) return;
+        targets.add(el);
         el.style.setProperty("--reveal-delay", `${Math.min(index * stagger, MAX_DELAY)}ms`);
-        hidden.add(el);
-        observer.observe(el);
+        // Anything already on screen (or above it) starts out visible; the rest waits to be revealed.
+        if (el.getBoundingClientRect().top >= window.innerHeight) arm(el);
+        enterObserver.observe(el);
+        leaveObserver.observe(el);
       });
     }
 
     return () => {
-      observer.disconnect();
+      enterObserver.disconnect();
+      leaveObserver.disconnect();
       timers.forEach((timer) => window.clearTimeout(timer));
       // Never leave anything hidden (e.g. when the page unmounts or the effect restarts).
-      hidden.forEach((el) => {
+      targets.forEach((el) => {
         delete el.dataset.reveal;
         el.style.removeProperty("--reveal-delay");
       });

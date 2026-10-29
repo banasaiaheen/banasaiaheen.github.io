@@ -69,7 +69,7 @@ The app renders with JavaScript, so the build also pre-renders it: `npm run buil
 - **Titles, descriptions, structured data:** edit `src/data/seo.ts`. Keep titles under about 60 characters and descriptions under about 160. A new project page is added to the sitemap automatically; give it an entry in `PROJECT_SEO` for a hand-written title and description.
 - **Fonts** are self-hosted (`src/styles/fonts.css`, from the `@fontsource` packages): only the weights in use, and Arabic glyphs only download for Arabic visitors. The first-screen fonts are preloaded.
 - **Images** are WebP at their display size (`src/assets`). Convert new screenshots to WebP before adding them.
-- **Scroll-in animation:** content fades up the first time it scrolls into view (`src/hooks/useRevealOnScroll.ts`; what animates is the `GROUPS` list at the top of that file). Everything stays plain, visible HTML until the page is running, the first screen is never hidden, and it is skipped for visitors who prefer reduced motion. To switch it off, remove the `useRevealOnScroll()` call in `PageLayout`.
+- **Scroll-in animation:** content fades up as it scrolls into view from below, and again each time you scroll back down to it; scrolling up never hides or replays anything. It lives in `src/hooks/useRevealOnScroll.ts`, where the `GROUPS` list at the top sets what animates. Everything stays plain, visible HTML until the page is running, the first screen is never hidden, and it is skipped for visitors who prefer reduced motion. To switch it off, remove the `useRevealOnScroll()` call in `PageLayout`.
 - After a deploy, ask Google to re-read a page in Search Console (**URL inspection → Request indexing**).
 
 ## Project structure
