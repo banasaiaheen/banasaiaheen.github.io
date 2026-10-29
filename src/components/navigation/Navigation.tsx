@@ -204,7 +204,9 @@ export default function Navigation({
         />
 
         {/* The open menu belongs to the bar (absolute, from its bottom edge), so it always sits flush under
-            it, however the phone moves its toolbars. The backdrop covers the page below the bar. */}
+            it, however the phone moves its toolbars. It also starts 1px inside the bar (same colour, with 1px
+            padding to keep its content where it was): two boxes that merely touch can show a hairline of the
+            page between them on phones when the position rounds. The backdrop covers the page below the bar. */}
         {expanded && (
           <>
             <button
@@ -216,7 +218,7 @@ export default function Navigation({
             <div
               ref={panelRef}
               dir={dir}
-              className="absolute inset-x-0 top-full flex max-h-[calc(100dvh-70px)] flex-col items-center gap-4 overflow-y-auto overscroll-contain bg-brand-ink px-4 pb-4"
+              className="absolute inset-x-0 top-[calc(100%-1px)] flex max-h-[calc(100dvh-69px)] flex-col items-center gap-4 overflow-y-auto overscroll-contain bg-brand-ink px-4 pb-4 pt-px"
             >
               {profileDetails}
               {divider}
