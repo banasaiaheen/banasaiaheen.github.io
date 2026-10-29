@@ -16,3 +16,33 @@ body {
 html.language-pending #root {
   visibility: hidden;
 }
+
+/* Scroll-in animation (src/hooks/useRevealOnScroll.ts): content below the screen starts a little lower and
+   transparent, then fades up as it scrolls into view. Only the elements the hook marks are affected, and the
+   marks are removed once the animation has played. */
+:root {
+  --reveal-distance: 16px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --reveal-distance: 24px;
+  }
+}
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+}
+[data-reveal="run"] {
+  transition:
+    opacity 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+/* Reduced motion and printing: everything is simply there. */
+@media (prefers-reduced-motion: reduce), print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
