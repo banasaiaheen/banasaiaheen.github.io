@@ -36,8 +36,8 @@ const GROUPS: [selector: string, stagger: number][] = [
 
 /** The longest delay a stagger may reach, so a long list never makes the last item wait. */
 const MAX_DELAY = 300;
-/** A little longer than the animation (see index.css), then the marks are cleaned up. */
-const CLEANUP_AFTER = 1200;
+/** A little longer than the animation (950ms in index.css), then the marks are cleaned up. */
+const CLEANUP_AFTER = 1400;
 
 export function useRevealOnScroll() {
   useEffect(() => {
