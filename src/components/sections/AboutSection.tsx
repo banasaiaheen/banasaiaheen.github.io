@@ -25,7 +25,12 @@ export default function AboutSection() {
         <div className="flex flex-col gap-4 lg:flex-row lg:gap-6">
           {/* portrait on a panel, with a red corner at the bottom start */}
           <div className="relative aspect-square w-[358px] max-w-full shrink-0 lg:size-[323px]">
-            <div className="size-full overflow-hidden border border-neutral-16 bg-brand-panel">
+            {/* Discourages saving the photo: no right-click menu, drag or long-press save. A browser can
+                still reach the file, so this only stops casual copying. */}
+            <div
+              className="size-full overflow-hidden border border-neutral-16 bg-brand-panel"
+              onContextMenu={(event) => event.preventDefault()}
+            >
               <img
                 src={PROFILE_PHOTO}
                 alt={t.nav.name}
@@ -33,7 +38,8 @@ export default function AboutSection() {
                 height={829}
                 loading="lazy"
                 decoding="async"
-                className="size-full object-cover object-[50%_20%]"
+                draggable={false}
+                className="pointer-events-none size-full select-none object-cover object-[50%_20%] [-webkit-touch-callout:none] [-webkit-user-drag:none]"
               />
             </div>
             <div className="pointer-events-none absolute bottom-0 start-0 h-1/2 w-1/2 border-b-[1.6px] border-s-[1.6px] border-brand-red" />
