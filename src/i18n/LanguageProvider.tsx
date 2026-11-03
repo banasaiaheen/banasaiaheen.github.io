@@ -2,7 +2,11 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useState, type ReactN
 import { getDirection, type Language } from "../types/language";
 import { LanguageContext } from "./LanguageContext";
 
-/** Where the visitor's language choice is remembered (also read by the small script in index.html). */
+/**
+ * Where the visitor's language choice is remembered (also read by the small script in index.html). It is
+ * session storage: a refresh keeps the language, but closing the tab or browser forgets it, so every new
+ * visit starts in English.
+ */
 const STORAGE_KEY = "language";
 
 /** useLayoutEffect only exists in the browser; on the server (the build's pre-rendering) use useEffect. */
@@ -10,7 +14,7 @@ const useBrowserLayoutEffect = typeof window === "undefined" ? useEffect : useLa
 
 function readStoredLanguage(): Language | null {
   try {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = window.sessionStorage.getItem(STORAGE_KEY);
     return stored === "arabic" || stored === "english" ? stored : null;
   } catch {
     // Storage can be blocked (private mode, strict settings): the site simply starts in English.
@@ -23,7 +27,7 @@ function readStoredLanguage(): Language | null {
  * navigation to child pages) and keeps <html dir/lang> in sync so native
  * browser behavior (spellcheck, form bubbles, default quotes) is RTL-aware too.
  *
- * The choice is remembered in the browser, so a refresh (or a return visit) keeps the language. Every page
+ * The choice is remembered for the tab, so a refresh keeps the language but a new visit starts in English. Every page
  * is built in English, so the first render is always English (the markup has to match the built page);
  * a saved Arabic choice is applied right after, before the browser paints.
  */
@@ -46,7 +50,7 @@ export default function LanguageProvider({ children }: { children: ReactNode }) 
   const setLanguage = useCallback((next: Language) => {
     setLanguageState(next);
     try {
-      window.localStorage.setItem(STORAGE_KEY, next);
+      window.sessionStorage.setItem(STORAGE_KEY, next);
     } catch {
       // Not remembered, but the switch itself still works.
     }

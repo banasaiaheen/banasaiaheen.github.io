@@ -34,12 +34,13 @@
       } catch (e) {}
     </script>
 
-    <!-- Remembered language (src/i18n/LanguageProvider.tsx): the built pages are English, so for a visitor
+    <!-- Language remembered for this tab only, so a refresh keeps it and a new visit starts in English
+         (src/i18n/LanguageProvider.tsx): the built pages are English, so for a visitor
          who chose Arabic, set the direction now and hold the page back until the app has switched it
          (it removes "language-pending"; the timer is only a safety net if the script fails to load). -->
     <script>
       try {
-        if (localStorage.getItem("language") === "arabic") {
+        if (sessionStorage.getItem("language") === "arabic") {
           var root = document.documentElement;
           root.lang = "ar";
           root.dir = "rtl";
