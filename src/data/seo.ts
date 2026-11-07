@@ -19,6 +19,8 @@ import { PROJECT_PAGES } from "./projectPages";
 export const SITE_URL = "https://banasaiaheen.com";
 export const SITE_NAME = "Bana Saiaheen";
 export const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+/** The same name card as a square (1200 x 1200): the small picture beside the site in Google's results is square. */
+export const OG_IMAGE_SQUARE = `${SITE_URL}/og-square.png`;
 
 /** The home page title (also the browser tab title). */
 export const SITE_TITLE = "Bana Saiaheen — UX/UI Designer in Amman, Jordan";
@@ -62,7 +64,7 @@ const PERSON = {
   description:
     "UX/UI designer based in Amman, Jordan, with a background in 3D art and digital fashion design. Designs bilingual (English and Arabic) websites, apps and design systems.",
   url: `${SITE_URL}/`,
-  image: OG_IMAGE,
+  image: [OG_IMAGE_SQUARE, OG_IMAGE],
   email: SITE_EMAIL,
   address: { "@type": "PostalAddress", addressLocality: "Amman", addressCountry: "JO" },
   alumniOf: { "@type": "CollegeOrUniversity", name: "Princess Sumaya University for Technology" },
