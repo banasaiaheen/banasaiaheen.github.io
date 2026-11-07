@@ -17,7 +17,7 @@ const DIST = "dist";
 const BASE = process.env.BASE_PATH ?? "/";
 const SITE_URL = "https://banasaiaheen.com";
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
-const OG_IMAGE_SQUARE = `${SITE_URL}/og-square.png`;
+const SQUARE_IMAGE = `${SITE_URL}/bana-saiaheen-square.png`;
 
 const { render, getAllRoutes } = await import(pathToFileURL(resolve("dist-ssr/entry-server.js")).href);
 
@@ -57,7 +57,7 @@ function headTags(route) {
     `<meta property="og:image:height" content="630" />`,
     `<meta property="og:image:alt" content="Bana Saiaheen, UX/UI designer in Amman, Jordan" />`,
     // Link previews use the first image above; the square one is for search results.
-    `<meta property="og:image" content="${OG_IMAGE_SQUARE}" />`,
+    `<meta property="og:image" content="${SQUARE_IMAGE}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="1200" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
