@@ -35,7 +35,7 @@ export default function ProjectsSection() {
             subText={project.subText}
             state={project.disabled ? "disabled" : "default"}
             badge={t.projects.badge}
-            href={project.slug ? `/projects/${project.slug}` : "#projects"}
+            href={project.slug ? `/projects/${project.slug}/` : "#projects"}
             className="lg:self-start"
           />
         ))}
