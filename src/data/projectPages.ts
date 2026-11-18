@@ -14,6 +14,15 @@ import pdFigmaToCode from "../assets/portfolio-design/figma-to-code.webp";
 import pdFormToInbox from "../assets/portfolio-design/form-to-inbox.webp";
 import pdFinalThoughts from "../assets/portfolio-design/final-thoughts.webp";
 import pdLaunchVideo from "../assets/portfolio-design/launch-video.mp4";
+// Arabic (right-to-left) versions of the slides above, for the Arabic page.
+import pdOverviewAr from "../assets/portfolio-design/overview-ar.webp";
+import pdWhyAr from "../assets/portfolio-design/why-i-made-it-ar.webp";
+import pdSketchesAr from "../assets/portfolio-design/sketches-ar.webp";
+import pdDesignSystemAr from "../assets/portfolio-design/design-system-ar.webp";
+import pdResponsiveAr from "../assets/portfolio-design/responsive-ar.webp";
+import pdFigmaToCodeAr from "../assets/portfolio-design/figma-to-code-ar.webp";
+import pdFormToInboxAr from "../assets/portfolio-design/form-to-inbox-ar.webp";
+import pdFinalThoughtsAr from "../assets/portfolio-design/final-thoughts-ar.webp";
 
 /**
  * ============================================================================
@@ -260,7 +269,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "كانت الفكرة أن أصنع شيئًا خاصًا بي بالكامل، باستخدام ألواني الثلاثة المفضلة: الأحمر والأسود والأبيض. أردت موقعًا نظيفًا ومتجاوبًا متاحًا بالإنجليزية وبلغتي الأم العربية، وحرصت عمدًا على أن يبقى كل شيء مرتبًا وبسيطًا. لطالما آمنت بأنك لا تحتاج إلى كمٍّ هائل من الألوان أو تصميم معقّد لكي ينجح ما تصنعه.",
             "صُمّم كل شيء أولًا ونُفّذ نموذجه الأولي في Figma. وبعد اكتمال التصميم، بنيت نموذجًا أوليًا للتجربة كاملة — التنقل والتفاعلات وكلا التخطيطين — للتحقق من رحلة المستخدم والتأكد من أنها مصقولة قبل أن يبدأ التطوير.",
           ],
-          figure: { src: pdOverview, caption: "ملف الأعمال على سطح المكتب والجوال، بالإنجليزية والعربية." },
+          figure: { src: pdOverviewAr, caption: "ملف الأعمال على سطح المكتب والجوال، بالإنجليزية والعربية." },
         },
         {
           kind: "text",
@@ -270,7 +279,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "وبلا عميل ولا موعد تسليم، وضعت أهدافي بنفسي: أن أُظهر العملية والقرارات لا الشاشات النهائية فقط، وأن يعمل الموقع بالمستوى نفسه بالإنجليزية والعربية، وأن يبدو ويُشعر كهويتي الشخصية، وأن يتّسع بسهولة كلما أضفت مشاريع جديدة.",
             "كنت العميلة والمصممة والمطوّرة في آنٍ واحد، فكان أمتع مشروع عملت عليه، وأصعبه في أن أعتبره منتهيًا.",
           ],
-          figure: { src: pdWhy, caption: "العميلة والمصممة والمطوّرة: كلها أنا." },
+          figure: { src: pdWhyAr, caption: "العميلة والمصممة والمطوّرة: كلها أنا." },
         },
         {
           kind: "text",
@@ -279,7 +288,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "لم أبدأ بلوحات إلهام أو بحث. كانت الصورة الكاملة لملف الأعمال في رأسي منذ اليوم الأول، فانتقلت مباشرة إلى الورق ورسمت التخطيطات وصمّمت أثناء التقدّم.",
             "جاء الاتجاه بشكل طبيعي من هويتي الشخصية: عناوين عريضة ومكثّفة ولوحة ألوان صغيرة ومحدودة. واثق دون صخب، والأعمال دائمًا في المقدّمة.",
           ],
-          figure: { src: pdSketches, caption: "رسومات أولية: الصفحة الرئيسية وصفحة المشروع وتخطيط الجوال من اليمين إلى اليسار." },
+          figure: { src: pdSketchesAr, caption: "رسومات أولية: الصفحة الرئيسية وصفحة المشروع وتخطيط الجوال من اليمين إلى اليسار." },
         },
         {
           kind: "list",
@@ -300,17 +309,17 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             {
               title: "من تصميمي، ومبني باستخدام Claude Code",
               body: "كانت خطتي الأصلية أن أنشره عبر Framer، لكنني غيّرت رأيي وبنيته باستخدام Claude Code بدلًا من ذلك. تعلّمت بعض أساسيات البرمجة في الجامعة، فلم أبدأ من الصفر. بنيته باستخدام React وVite وTailwind CSS ضمن حلقة متكررة: أصمّم في Figma، وأبني بالكود، وأراجع في المتصفح، ثم أحسّن في Figma. تحوّلت متغيرات Figma إلى ألوان الموقع وخطوطه ومسافاته، فبقي التصميم والتنفيذ متطابقين دائمًا. ساعدني الذكاء الاصطناعي على البناء بشكل أسرع، لكن كل قرار تصميمي وكل قرار في تجربة المستخدم كان قراري.",
-              figure: { src: pdFigmaToCode, caption: "متغيرات Figma والقيم نفسها في CSS الموقع." },
+              figure: { src: pdFigmaToCodeAr, caption: "متغيرات Figma والقيم نفسها في CSS الموقع." },
             },
             {
               title: "نظام تصميم، لا مجرد مجموعة واجهات",
               body: "كثيرًا ما يبني المصممون مجموعة مكوّنات في Figma ويسمّونها نظام تصميم، لكنها في الحقيقة مجموعة واجهات (UI kit). أما نظام التصميم فهو منظومة متكاملة من الأسس والمكوّنات والقواعد والتوثيق تساعد كل فريق على العمل بتناسق وكفاءة. بنيت نظامي كنظام فعلي: خط Barlow Condensed للإنجليزية وخط Cairo للعربية، ولوحة ألوان صغيرة بالأحمر كلون تمييز وحيد، ومكوّنات قابلة لإعادة الاستخدام، ومتغيرات تقف خلف كل ذلك.",
-              figure: { src: pdDesignSystem, caption: "نظام التصميم: الألوان والطباعة والمكوّنات." },
+              figure: { src: pdDesignSystemAr, caption: "نظام التصميم: الألوان والطباعة والمكوّنات." },
             },
             {
               title: "تصميم واحد، لكل الشاشات، وبالاتجاهين",
               body: "صُمّم الموقع لسطح المكتب والشاشات المتجاوبة منذ البداية، من اليسار إلى اليمين للإنجليزية وبانعكاس نظيف من اليمين إلى اليسار للعربية، فلم يُضغط شيء ولم يُقلب في النهاية. ينعكس ترتيب التنقل ومحاذاة النص وتخطيطات البطاقات والأيقونات والأسهم الاتجاهية، وتبقى الشعارات والصور والفيديو وعلامات الهوية كما هي. تتموضع الحروف العربية واللاتينية على السطر بشكل مختلف، لذا ضبطت الأحجام وارتفاعات الأسطر لكل لغة للحفاظ على الثقل البصري والإيقاع نفسهما. وفي الشاشات الأصغر تنطوي قائمة التنقل في قائمة مدمجة ويبقى مبدّل اللغة على بُعد نقرة واحدة.",
-              figure: { src: pdResponsive, caption: "سطح المكتب بالإنجليزية، والجهاز اللوحي والجوال بالعربية (من اليمين إلى اليسار)." },
+              figure: { src: pdResponsiveAr, caption: "سطح المكتب بالإنجليزية، والجهاز اللوحي والجوال بالعربية (من اليمين إلى اليسار)." },
             },
           ],
         },
@@ -321,7 +330,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             {
               title: "من النموذج إلى صندوق الوارد",
               body: "لا تنتهي التجربة عندما يضغط الزائر على إرسال. صمّمت نموذج التواصل والرسالة التي يرسلها كتدفّق واحد، بالألوان والخطوط والنبرة نفسها، من لحظة كتابة الزائر لرسالته إلى لحظة وصولها إلى بريدي. لن يرى الزوّار هذه الرسالة أبدًا، لكنها نالت العناية نفسها التي نالتها الصفحة الرئيسية.",
-              figure: { src: pdFormToInbox, caption: "نموذج التواصل في الموقع، والرسالة التي تصل إلى بريدي." },
+              figure: { src: pdFormToInboxAr, caption: "نموذج التواصل في الموقع، والرسالة التي تصل إلى بريدي." },
             },
             {
               title: "فيديو الإطلاق",
@@ -337,7 +346,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "أنا سعيدة بالنتيجة. صنعته ببساطة لأنني أردت ملف أعمال خاصًا بي، وهذا بالضبط ما هو عليه.",
             "ثلاثة ألوان، لغتان، وملف أعمال واحد.",
           ],
-          figure: { src: pdFinalThoughts, caption: "خواطر أخيرة: المتغيرات دائمًا، تصميم مهيّأ للبناء، ولا يكتمل أبدًا." },
+          figure: { src: pdFinalThoughtsAr, caption: "خواطر أخيرة: المتغيرات دائمًا، تصميم مهيّأ للبناء، ولا يكتمل أبدًا." },
         },
       ],
     },
