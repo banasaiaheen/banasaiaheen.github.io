@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
 import { useDirection } from "../../i18n/useLanguage";
-import type { GallerySection, ListSection, ProjectSection, TextSection } from "../../data/projectPages";
+import type { Figure, GallerySection, ListSection, ProjectSection, TextSection } from "../../data/projectPages";
 
 /**
  * Figma: child-page-sections (342:1029) and child-page (375:4161). The stack of
@@ -12,6 +12,9 @@ import type { GallerySection, ListSection, ProjectSection, TextSection } from ".
  *  text     a title and paragraphs (Overview, Outcome, ...)
  *  list     a title and numbered items (What I Did, ...)
  *  gallery  a title and screens with captions (Selected Screens)
+ *
+ * A text section or a list item can also show a `figure` (16:9 image) and a list item a `video`,
+ * with a caption, under its text.
  *
  * Content comes from src/data/projectPages.ts.
  */
@@ -28,7 +31,7 @@ function SectionHeading({ children }: { children: string }) {
   return <h2 className="w-full text-bold-24 text-brand-cream lg:text-bold-32">{children}</h2>;
 }
 
-function TextLayout({ title, paragraphs }: TextSection) {
+function TextLayout({ title, paragraphs, figure }: TextSection) {
   return (
     <>
       <SectionHeading>{title}</SectionHeading>
@@ -37,6 +40,7 @@ function TextLayout({ title, paragraphs }: TextSection) {
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
+      {figure && <FigureBlock {...figure} />}
     </>
   );
 }
@@ -56,6 +60,8 @@ function ListLayout({ title, items }: ListSection) {
               <h3 className="min-w-0 flex-1 text-bold-20 text-brand-cream">{item.title}</h3>
             </div>
             <p className={cn("w-full", bodyText)}>{item.body}</p>
+            {item.figure && <FigureBlock {...item.figure} />}
+            {item.video && <FigureBlock {...item.video} video />}
           </div>
         ))}
       </div>
@@ -71,7 +77,7 @@ const MAX_IMAGE_RETRIES = 3;
  * request fails, retries a few times with a short delay before giving up. The
  * panel behind it shows while the image loads.
  */
-function GalleryImage({ src, alt }: { src: string; alt: string }) {
+function GalleryImage({ src, alt, ratio = "aspect-[1440/1024]" }: { src: string; alt: string; ratio?: string }) {
   const [attempt, setAttempt] = useState(0);
   const [failed, setFailed] = useState(false);
 
@@ -91,8 +97,32 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
       alt={alt}
       decoding="async"
       onError={() => setFailed(true)}
-      className="aspect-[1440/1024] w-full border border-neutral-16 bg-brand-panel object-cover"
+      className={cn(ratio, "w-full border border-neutral-16 bg-brand-panel object-cover")}
     />
+  );
+}
+
+/**
+ * A full-width 16:9 picture, or a video with controls, with its caption under it (same frame and
+ * caption style as the gallery). The video only loads its first frame until it is played.
+ */
+function FigureBlock({ src, caption, video }: Figure & { video?: boolean }) {
+  return (
+    <figure className="flex w-full flex-col gap-2">
+      {video ? (
+        <video
+          src={`${src}#t=0.1`}
+          controls
+          playsInline
+          preload="metadata"
+          aria-label={caption}
+          className="aspect-video w-full border border-neutral-16 bg-brand-panel"
+        />
+      ) : (
+        <GalleryImage src={src} alt={caption} ratio="aspect-video" />
+      )}
+      <figcaption className="text-regular-14 text-neutral-48">{caption}</figcaption>
+    </figure>
   );
 }
 

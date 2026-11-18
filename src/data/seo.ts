@@ -106,8 +106,12 @@ export function getAllRoutes(): RouteSeo[] {
     const path = `/projects/${slug}/`;
     const url = `${SITE_URL}${path}`;
     const images = page.sections
-      .flatMap((section) => (section.kind === "gallery" ? section.screens : []))
-      .flatMap((screen) => (screen.src?.startsWith("/") ? [`${SITE_URL}${screen.src}`] : []));
+      .flatMap((section) => {
+        if (section.kind === "gallery") return section.screens.map((screen) => screen.src);
+        if (section.kind === "list") return section.items.map((item) => item.figure?.src);
+        return [section.figure?.src];
+      })
+      .flatMap((src) => (src?.startsWith("/") ? [`${SITE_URL}${src}`] : []));
 
     return [
       {

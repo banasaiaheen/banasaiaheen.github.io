@@ -5,6 +5,15 @@ import doctorDashboard from "../assets/medconnect/doctor-dashboard.webp";
 import patientCalendar from "../assets/medconnect/patient-calendar.webp";
 import doctorPatients from "../assets/medconnect/doctor-patients.webp";
 import patientInbox from "../assets/medconnect/patient-inbox.webp";
+import pdOverview from "../assets/portfolio-design/overview.webp";
+import pdWhy from "../assets/portfolio-design/why-i-made-it.webp";
+import pdSketches from "../assets/portfolio-design/sketches.webp";
+import pdDesignSystem from "../assets/portfolio-design/design-system.webp";
+import pdResponsive from "../assets/portfolio-design/responsive.webp";
+import pdFigmaToCode from "../assets/portfolio-design/figma-to-code.webp";
+import pdFormToInbox from "../assets/portfolio-design/form-to-inbox.webp";
+import pdFinalThoughts from "../assets/portfolio-design/final-thoughts.webp";
+import pdLaunchVideo from "../assets/portfolio-design/launch-video.mp4";
 
 /**
  * ============================================================================
@@ -24,18 +33,36 @@ import patientInbox from "../assets/medconnect/patient-inbox.webp";
  *   - text     a title and paragraphs (Overview, Outcome, ...)
  *   - list     a title and numbered items (What I Did, ...)
  *   - gallery  a title and screens with captions (add `src` to show an image)
+ *
+ *  A text section, or a single item of a list section, can also carry a
+ *  `figure` (a full-width 16:9 image with a caption) and a list item a `video`
+ *  (same frame, with controls), shown under its text.
  * ============================================================================
  */
+/** A full-width 16:9 picture or video shown under a section's text, with a caption. */
+export interface Figure {
+  src: string;
+  caption: string;
+}
+
 export interface TextSection {
   kind: "text";
   title: string;
   paragraphs: string[];
+  figure?: Figure;
+}
+
+export interface ListItem {
+  title: string;
+  body: string;
+  figure?: Figure;
+  video?: Figure;
 }
 
 export interface ListSection {
   kind: "list";
   title: string;
-  items: { title: string; body: string }[];
+  items: ListItem[];
 }
 
 export interface GallerySection {
@@ -74,6 +101,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "The idea was to create something entirely my own, using my three favourite colours: red, black, and white. I wanted a clean, responsive site available in both English and my native language, Arabic, and I kept everything neat and simple on purpose. I've always believed you don't need an overwhelming variety of colours or a complex design for something to work.",
             "Everything was first designed and prototyped in Figma. Once the design was in place, I prototyped the entire experience navigation, interactions, both layouts to validate the user flow and make sure it felt polished before development ever started.",
           ],
+          figure: { src: pdOverview, caption: "The portfolio on desktop and mobile, in English and Arabic." },
         },
         {
           kind: "text",
@@ -83,6 +111,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "With no client and no deadline, I set my own goals: show process and decisions, not just final screens; work equally well in English and Arabic; look and feel like my personal brand; and grow easily as I add new projects.",
             "I was the client, the designer and the builder all at once, which made it the most fun project I've worked on, and the hardest one to call finished.",
           ],
+          figure: { src: pdWhy, caption: "Client, designer and builder: all me." },
         },
         {
           kind: "text",
@@ -91,6 +120,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "I didn't start with mood boards or research. I had the full vision of the portfolio in my head from day one, so I went straight to paper, sketched the layouts, and designed as I went.",
             "The direction came naturally from my personal brand: bold condensed headlines and a small, limited palette. Confident but not loud, with the work always in front.",
           ],
+          figure: { src: pdSketches, caption: "Early sketches: the home page, a project page and the mobile layout in RTL." },
         },
         {
           kind: "list",
@@ -111,14 +141,17 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             {
               title: "Designed by me, built with Claude Code",
               body: "My original plan was to publish this with Framer, but I changed my mind and built it with Claude Code instead. I learned some coding basics at university, so I wasn't starting from zero. I built it with React, Vite and Tailwind CSS, in a loop of designing in Figma, building in code, reviewing in the browser and refining in Figma. My Figma variables became the site's colours, type and spacing, so the design and the build stayed in sync. AI helped me build faster, but every design and UX decision was mine.",
+              figure: { src: pdFigmaToCode, caption: "Figma variables and the same values in the site's CSS." },
             },
             {
               title: "A design system, not just a UI kit",
               body: "People often build a set of components in Figma and call it a design system, but that's a UI kit. A design system is a complete system of foundations, components, rules and documentation that helps every team work consistently and efficiently. I built mine as a system: Barlow Condensed for English and Cairo for Arabic, a small palette with red as the single accent, reusable components, and variables behind all of it.",
+              figure: { src: pdDesignSystem, caption: "The design system: colour, typography and components." },
             },
             {
               title: "One design, every screen, both directions",
               body: "The site was designed for desktop and responsive from the start, left-to-right for English and a clean right-to-left mirror for Arabic, so nothing was squeezed down or flipped at the end. Navigation order, text alignment, card layouts and directional icons flip; logos, images, video and brand marks stay. Arabic and Latin scripts sit differently on the line, so I tuned sizes and line heights for each language to keep the same visual weight and rhythm. On smaller screens the navigation collapses into a compact menu, and the language switch stays one tap away.",
+              figure: { src: pdResponsive, caption: "Desktop in English, tablet and mobile in Arabic (RTL)." },
             },
           ],
         },
@@ -129,10 +162,12 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             {
               title: "From form to inbox",
               body: "The experience doesn't end when someone hits send. I designed the contact form and the email it delivers as one flow, in the same colours, type and tone, from the moment a visitor writes a message to the moment it lands in my inbox. Visitors will never see that email, but it still got the same care as the homepage.",
+              figure: { src: pdFormToInbox, caption: "The contact form on the site, and the email it sends to my inbox." },
             },
             {
               title: "A launch video",
               body: "The concept reflects my current state: touching grass between pixels. A cube placed in nature represents the balance between the digital and physical worlds. When I pick it up, it turns from a 3D object into a flat 2D pixel, which opens up to reveal my portfolio, then zooms out to the full desktop site, switches to Arabic and moves through the responsive layouts. I created the animation in Figma and edited the video in Runway. On the site itself, motion stays subtle, with small transitions that guide attention without slowing anyone down.",
+              video: { src: pdLaunchVideo, caption: "The launch video: a cube in nature becomes a pixel that opens into the portfolio." },
             },
           ],
         },
@@ -143,6 +178,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "I'm happy with how it turned out. I made it simply because I wanted a portfolio of my own, and that's exactly what it is.",
             "Three colours, two languages, one portfolio.",
           ],
+          figure: { src: pdFinalThoughts, caption: "Final thoughts: variables always, designed to be built, never finished." },
         },
       ],
     },
@@ -224,6 +260,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "كانت الفكرة أن أصنع شيئًا خاصًا بي بالكامل، باستخدام ألواني الثلاثة المفضلة: الأحمر والأسود والأبيض. أردت موقعًا نظيفًا ومتجاوبًا متاحًا بالإنجليزية وبلغتي الأم العربية، وحرصت عمدًا على أن يبقى كل شيء مرتبًا وبسيطًا. لطالما آمنت بأنك لا تحتاج إلى كمٍّ هائل من الألوان أو تصميم معقّد لكي ينجح ما تصنعه.",
             "صُمّم كل شيء أولًا ونُفّذ نموذجه الأولي في Figma. وبعد اكتمال التصميم، بنيت نموذجًا أوليًا للتجربة كاملة — التنقل والتفاعلات وكلا التخطيطين — للتحقق من رحلة المستخدم والتأكد من أنها مصقولة قبل أن يبدأ التطوير.",
           ],
+          figure: { src: pdOverview, caption: "ملف الأعمال على سطح المكتب والجوال، بالإنجليزية والعربية." },
         },
         {
           kind: "text",
@@ -233,6 +270,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "وبلا عميل ولا موعد تسليم، وضعت أهدافي بنفسي: أن أُظهر العملية والقرارات لا الشاشات النهائية فقط، وأن يعمل الموقع بالمستوى نفسه بالإنجليزية والعربية، وأن يبدو ويُشعر كهويتي الشخصية، وأن يتّسع بسهولة كلما أضفت مشاريع جديدة.",
             "كنت العميلة والمصممة والمطوّرة في آنٍ واحد، فكان أمتع مشروع عملت عليه، وأصعبه في أن أعتبره منتهيًا.",
           ],
+          figure: { src: pdWhy, caption: "العميلة والمصممة والمطوّرة: كلها أنا." },
         },
         {
           kind: "text",
@@ -241,6 +279,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "لم أبدأ بلوحات إلهام أو بحث. كانت الصورة الكاملة لملف الأعمال في رأسي منذ اليوم الأول، فانتقلت مباشرة إلى الورق ورسمت التخطيطات وصمّمت أثناء التقدّم.",
             "جاء الاتجاه بشكل طبيعي من هويتي الشخصية: عناوين عريضة ومكثّفة ولوحة ألوان صغيرة ومحدودة. واثق دون صخب، والأعمال دائمًا في المقدّمة.",
           ],
+          figure: { src: pdSketches, caption: "رسومات أولية: الصفحة الرئيسية وصفحة المشروع وتخطيط الجوال من اليمين إلى اليسار." },
         },
         {
           kind: "list",
@@ -261,14 +300,17 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             {
               title: "من تصميمي، ومبني باستخدام Claude Code",
               body: "كانت خطتي الأصلية أن أنشره عبر Framer، لكنني غيّرت رأيي وبنيته باستخدام Claude Code بدلًا من ذلك. تعلّمت بعض أساسيات البرمجة في الجامعة، فلم أبدأ من الصفر. بنيته باستخدام React وVite وTailwind CSS ضمن حلقة متكررة: أصمّم في Figma، وأبني بالكود، وأراجع في المتصفح، ثم أحسّن في Figma. تحوّلت متغيرات Figma إلى ألوان الموقع وخطوطه ومسافاته، فبقي التصميم والتنفيذ متطابقين دائمًا. ساعدني الذكاء الاصطناعي على البناء بشكل أسرع، لكن كل قرار تصميمي وكل قرار في تجربة المستخدم كان قراري.",
+              figure: { src: pdFigmaToCode, caption: "متغيرات Figma والقيم نفسها في CSS الموقع." },
             },
             {
               title: "نظام تصميم، لا مجرد مجموعة واجهات",
               body: "كثيرًا ما يبني المصممون مجموعة مكوّنات في Figma ويسمّونها نظام تصميم، لكنها في الحقيقة مجموعة واجهات (UI kit). أما نظام التصميم فهو منظومة متكاملة من الأسس والمكوّنات والقواعد والتوثيق تساعد كل فريق على العمل بتناسق وكفاءة. بنيت نظامي كنظام فعلي: خط Barlow Condensed للإنجليزية وخط Cairo للعربية، ولوحة ألوان صغيرة بالأحمر كلون تمييز وحيد، ومكوّنات قابلة لإعادة الاستخدام، ومتغيرات تقف خلف كل ذلك.",
+              figure: { src: pdDesignSystem, caption: "نظام التصميم: الألوان والطباعة والمكوّنات." },
             },
             {
               title: "تصميم واحد، لكل الشاشات، وبالاتجاهين",
               body: "صُمّم الموقع لسطح المكتب والشاشات المتجاوبة منذ البداية، من اليسار إلى اليمين للإنجليزية وبانعكاس نظيف من اليمين إلى اليسار للعربية، فلم يُضغط شيء ولم يُقلب في النهاية. ينعكس ترتيب التنقل ومحاذاة النص وتخطيطات البطاقات والأيقونات والأسهم الاتجاهية، وتبقى الشعارات والصور والفيديو وعلامات الهوية كما هي. تتموضع الحروف العربية واللاتينية على السطر بشكل مختلف، لذا ضبطت الأحجام وارتفاعات الأسطر لكل لغة للحفاظ على الثقل البصري والإيقاع نفسهما. وفي الشاشات الأصغر تنطوي قائمة التنقل في قائمة مدمجة ويبقى مبدّل اللغة على بُعد نقرة واحدة.",
+              figure: { src: pdResponsive, caption: "سطح المكتب بالإنجليزية، والجهاز اللوحي والجوال بالعربية (من اليمين إلى اليسار)." },
             },
           ],
         },
@@ -279,10 +321,12 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             {
               title: "من النموذج إلى صندوق الوارد",
               body: "لا تنتهي التجربة عندما يضغط الزائر على إرسال. صمّمت نموذج التواصل والرسالة التي يرسلها كتدفّق واحد، بالألوان والخطوط والنبرة نفسها، من لحظة كتابة الزائر لرسالته إلى لحظة وصولها إلى بريدي. لن يرى الزوّار هذه الرسالة أبدًا، لكنها نالت العناية نفسها التي نالتها الصفحة الرئيسية.",
+              figure: { src: pdFormToInbox, caption: "نموذج التواصل في الموقع، والرسالة التي تصل إلى بريدي." },
             },
             {
               title: "فيديو الإطلاق",
               body: "تعكس الفكرة حالتي الحالية: ألمس العشب بين البكسلات. وضعت مكعبًا في الطبيعة ليمثّل التوازن بين العالم الرقمي والمادي. وعندما ألتقطه يتحوّل من جسم ثلاثي الأبعاد إلى بكسل مسطّح ثنائي الأبعاد، ثم ينفتح ليكشف ملف أعمالي، فتبتعد الكاميرا لتُظهر الموقع كاملًا على سطح المكتب، ثم يتحوّل إلى العربية ويمرّ بالتخطيطات المتجاوبة. أنشأت الحركة في Figma وحرّرت الفيديو باستخدام Runway. أما في الموقع نفسه فتبقى الحركة هادئة، بانتقالات صغيرة توجّه الانتباه دون أن تبطّئ أحدًا.",
+              video: { src: pdLaunchVideo, caption: "فيديو الإطلاق: مكعب في الطبيعة يتحوّل إلى بكسل ينفتح على ملف الأعمال." },
             },
           ],
         },
@@ -293,6 +337,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             "أنا سعيدة بالنتيجة. صنعته ببساطة لأنني أردت ملف أعمال خاصًا بي، وهذا بالضبط ما هو عليه.",
             "ثلاثة ألوان، لغتان، وملف أعمال واحد.",
           ],
+          figure: { src: pdFinalThoughts, caption: "خواطر أخيرة: المتغيرات دائمًا، تصميم مهيّأ للبناء، ولا يكتمل أبدًا." },
         },
       ],
     },
