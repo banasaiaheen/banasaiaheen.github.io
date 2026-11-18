@@ -76,6 +76,23 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
           ],
         },
         {
+          kind: "text",
+          title: "Why I Made It",
+          paragraphs: [
+            "Honestly? I just wanted to. As a designer, I spend most of my time shaping other people's ideas, and I wanted one space that was completely mine: my rules, my brand, my pace.",
+            "With no client and no deadline, I set my own goals: show process and decisions, not just final screens; work equally well in English and Arabic; look and feel like my personal brand; and grow easily as I add new projects.",
+            "I was the client, the designer and the builder all at once, which made it the most fun project I've worked on, and the hardest one to call finished.",
+          ],
+        },
+        {
+          kind: "text",
+          title: "From Vision to Sketches",
+          paragraphs: [
+            "I didn't start with mood boards or research. I had the full vision of the portfolio in my head from day one, so I went straight to paper, sketched the layouts, and designed as I went.",
+            "The direction came naturally from my personal brand: bold condensed headlines and a small, limited palette. Confident but not loud, with the work always in front.",
+          ],
+        },
+        {
           kind: "list",
           title: "What I Did",
           items: [
@@ -93,7 +110,29 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             },
             {
               title: "Designed by me, built with Claude Code",
-              body: "My original plan was to publish this with Framer, but I changed my mind and built it with Claude Code instead. I learned some coding basics at university, so I wasn't starting from zero.",
+              body: "My original plan was to publish this with Framer, but I changed my mind and built it with Claude Code instead. I learned some coding basics at university, so I wasn't starting from zero. I built it with React, Vite and Tailwind CSS, in a loop of designing in Figma, building in code, reviewing in the browser and refining in Figma. My Figma variables became the site's colours, type and spacing, so the design and the build stayed in sync. AI helped me build faster, but every design and UX decision was mine.",
+            },
+            {
+              title: "A design system, not just a UI kit",
+              body: "People often build a set of components in Figma and call it a design system, but that's a UI kit. A design system is a complete system of foundations, components, rules and documentation that helps every team work consistently and efficiently. I built mine as a system: Barlow Condensed for English and Cairo for Arabic, a small palette with red as the single accent, reusable components, and variables behind all of it.",
+            },
+            {
+              title: "One design, every screen, both directions",
+              body: "The site was designed for desktop and responsive from the start, left-to-right for English and a clean right-to-left mirror for Arabic, so nothing was squeezed down or flipped at the end. Navigation order, text alignment, card layouts and directional icons flip; logos, images, video and brand marks stay. Arabic and Latin scripts sit differently on the line, so I tuned sizes and line heights for each language to keep the same visual weight and rhythm. On smaller screens the navigation collapses into a compact menu, and the language switch stays one tap away.",
+            },
+          ],
+        },
+        {
+          kind: "list",
+          title: "Beyond the Screen",
+          items: [
+            {
+              title: "From form to inbox",
+              body: "The experience doesn't end when someone hits send. I designed the contact form and the email it delivers as one flow, in the same colours, type and tone, from the moment a visitor writes a message to the moment it lands in my inbox. Visitors will never see that email, but it still got the same care as the homepage.",
+            },
+            {
+              title: "A launch video",
+              body: "The concept reflects my current state: touching grass between pixels. A cube placed in nature represents the balance between the digital and physical worlds. When I pick it up, it turns from a 3D object into a flat 2D pixel, which opens up to reveal my portfolio, then zooms out to the full desktop site, switches to Arabic and moves through the responsive layouts. I created the animation in Figma and edited the video in Runway. On the site itself, motion stays subtle, with small transitions that guide attention without slowing anyone down.",
             },
           ],
         },
@@ -187,6 +226,23 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
           ],
         },
         {
+          kind: "text",
+          title: "لماذا صنعته؟",
+          paragraphs: [
+            "بصراحة؟ أردت ذلك فحسب. بصفتي مصممة، أقضي معظم وقتي في تشكيل أفكار الآخرين، وأردت مساحة واحدة تخصّني بالكامل: قواعدي وهويتي وإيقاعي.",
+            "وبلا عميل ولا موعد تسليم، وضعت أهدافي بنفسي: أن أُظهر العملية والقرارات لا الشاشات النهائية فقط، وأن يعمل الموقع بالمستوى نفسه بالإنجليزية والعربية، وأن يبدو ويُشعر كهويتي الشخصية، وأن يتّسع بسهولة كلما أضفت مشاريع جديدة.",
+            "كنت العميلة والمصممة والمطوّرة في آنٍ واحد، فكان أمتع مشروع عملت عليه، وأصعبه في أن أعتبره منتهيًا.",
+          ],
+        },
+        {
+          kind: "text",
+          title: "من الرؤية إلى الرسومات",
+          paragraphs: [
+            "لم أبدأ بلوحات إلهام أو بحث. كانت الصورة الكاملة لملف الأعمال في رأسي منذ اليوم الأول، فانتقلت مباشرة إلى الورق ورسمت التخطيطات وصمّمت أثناء التقدّم.",
+            "جاء الاتجاه بشكل طبيعي من هويتي الشخصية: عناوين عريضة ومكثّفة ولوحة ألوان صغيرة ومحدودة. واثق دون صخب، والأعمال دائمًا في المقدّمة.",
+          ],
+        },
+        {
           kind: "list",
           title: "ما الذي قمت به",
           items: [
@@ -204,7 +260,29 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
             },
             {
               title: "من تصميمي، ومبني باستخدام Claude Code",
-              body: "كانت خطتي الأصلية أن أنشره عبر Framer، لكنني غيّرت رأيي وبنيته باستخدام Claude Code بدلًا من ذلك. تعلّمت بعض أساسيات البرمجة في الجامعة، فلم أبدأ من الصفر.",
+              body: "كانت خطتي الأصلية أن أنشره عبر Framer، لكنني غيّرت رأيي وبنيته باستخدام Claude Code بدلًا من ذلك. تعلّمت بعض أساسيات البرمجة في الجامعة، فلم أبدأ من الصفر. بنيته باستخدام React وVite وTailwind CSS ضمن حلقة متكررة: أصمّم في Figma، وأبني بالكود، وأراجع في المتصفح، ثم أحسّن في Figma. تحوّلت متغيرات Figma إلى ألوان الموقع وخطوطه ومسافاته، فبقي التصميم والتنفيذ متطابقين دائمًا. ساعدني الذكاء الاصطناعي على البناء بشكل أسرع، لكن كل قرار تصميمي وكل قرار في تجربة المستخدم كان قراري.",
+            },
+            {
+              title: "نظام تصميم، لا مجرد مجموعة واجهات",
+              body: "كثيرًا ما يبني المصممون مجموعة مكوّنات في Figma ويسمّونها نظام تصميم، لكنها في الحقيقة مجموعة واجهات (UI kit). أما نظام التصميم فهو منظومة متكاملة من الأسس والمكوّنات والقواعد والتوثيق تساعد كل فريق على العمل بتناسق وكفاءة. بنيت نظامي كنظام فعلي: خط Barlow Condensed للإنجليزية وخط Cairo للعربية، ولوحة ألوان صغيرة بالأحمر كلون تمييز وحيد، ومكوّنات قابلة لإعادة الاستخدام، ومتغيرات تقف خلف كل ذلك.",
+            },
+            {
+              title: "تصميم واحد، لكل الشاشات، وبالاتجاهين",
+              body: "صُمّم الموقع لسطح المكتب والشاشات المتجاوبة منذ البداية، من اليسار إلى اليمين للإنجليزية وبانعكاس نظيف من اليمين إلى اليسار للعربية، فلم يُضغط شيء ولم يُقلب في النهاية. ينعكس ترتيب التنقل ومحاذاة النص وتخطيطات البطاقات والأيقونات والأسهم الاتجاهية، وتبقى الشعارات والصور والفيديو وعلامات الهوية كما هي. تتموضع الحروف العربية واللاتينية على السطر بشكل مختلف، لذا ضبطت الأحجام وارتفاعات الأسطر لكل لغة للحفاظ على الثقل البصري والإيقاع نفسهما. وفي الشاشات الأصغر تنطوي قائمة التنقل في قائمة مدمجة ويبقى مبدّل اللغة على بُعد نقرة واحدة.",
+            },
+          ],
+        },
+        {
+          kind: "list",
+          title: "ما وراء الشاشة",
+          items: [
+            {
+              title: "من النموذج إلى صندوق الوارد",
+              body: "لا تنتهي التجربة عندما يضغط الزائر على إرسال. صمّمت نموذج التواصل والرسالة التي يرسلها كتدفّق واحد، بالألوان والخطوط والنبرة نفسها، من لحظة كتابة الزائر لرسالته إلى لحظة وصولها إلى بريدي. لن يرى الزوّار هذه الرسالة أبدًا، لكنها نالت العناية نفسها التي نالتها الصفحة الرئيسية.",
+            },
+            {
+              title: "فيديو الإطلاق",
+              body: "تعكس الفكرة حالتي الحالية: ألمس العشب بين البكسلات. وضعت مكعبًا في الطبيعة ليمثّل التوازن بين العالم الرقمي والمادي. وعندما ألتقطه يتحوّل من جسم ثلاثي الأبعاد إلى بكسل مسطّح ثنائي الأبعاد، ثم ينفتح ليكشف ملف أعمالي، فتبتعد الكاميرا لتُظهر الموقع كاملًا على سطح المكتب، ثم يتحوّل إلى العربية ويمرّ بالتخطيطات المتجاوبة. أنشأت الحركة في Figma وحرّرت الفيديو باستخدام Runway. أما في الموقع نفسه فتبقى الحركة هادئة، بانتقالات صغيرة توجّه الانتباه دون أن تبطّئ أحدًا.",
             },
           ],
         },
