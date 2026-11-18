@@ -132,12 +132,19 @@ function GalleryImage({ src, alt, ratio = "aspect-[1440/1024]" }: { src: string;
 function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
   const t = useTranslations();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const panRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const root = document.documentElement;
     const previousOverflow = root.style.overflow;
     root.style.overflow = "hidden";
     closeRef.current?.focus();
+    // On a phone the image is wider than the screen (see below): start in the middle of it.
+    const pan = panRef.current;
+    if (pan) {
+      const overflow = pan.scrollWidth - pan.clientWidth;
+      pan.scrollLeft = getComputedStyle(pan).direction === "rtl" ? -overflow / 2 : overflow / 2;
+    }
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
@@ -162,13 +169,21 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         type="button"
         onClick={onClose}
         aria-label={t.childPage.closeImage}
-        className="absolute end-4 top-4 flex size-10 items-center justify-center text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-red-bright lg:end-8 lg:top-8"
+        className="absolute end-4 top-4 z-10 flex size-10 items-center justify-center bg-black/60 text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-red-bright lg:end-8 lg:top-8"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <path d="M5 5l14 14M19 5L5 19" />
         </svg>
       </button>
-      <img src={src} alt={alt} className="max-h-full max-w-full object-contain" />
+      {/* On a phone the picture is shown larger than the screen, so small text can be read, and the
+          visitor pans across it; from lg up it is simply scaled to fit the whole screen. */}
+      <div ref={panRef} className="max-h-full max-w-full overflow-auto overscroll-contain lg:contents">
+        <img
+          src={src}
+          alt={alt}
+          className="block h-auto w-[1280px] max-w-none border border-neutral-16 object-contain lg:max-h-full lg:w-auto lg:max-w-full"
+        />
+      </div>
     </div>,
     document.body,
   );
