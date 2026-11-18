@@ -59,6 +59,8 @@ export interface TextSection {
   title: string;
   paragraphs: string[];
   figure?: Figure;
+  /** Shows the section as a full-width light band with dark text (used for the Outcome). */
+  light?: boolean;
 }
 
 export interface ListItem {
@@ -183,6 +185,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
         {
           kind: "text",
           title: "Outcome",
+          light: true,
           paragraphs: [
             "I'm happy with how it turned out. I made it simply because I wanted a portfolio of my own, and that's exactly what it is.",
             "Three colours, two languages, one portfolio.",
@@ -245,6 +248,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
         {
           kind: "text",
           title: "Outcome",
+          light: true,
           paragraphs: [
             "MedConnect is one of the first case studies I created in the early days of my UX/UI journey.",
             "It shows where I started: a full process, from research to finished screens, that I've kept building on since.",
@@ -342,6 +346,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
         {
           kind: "text",
           title: "النتيجة",
+          light: true,
           paragraphs: [
             "أنا سعيدة بالنتيجة. صنعته ببساطة لأنني أردت ملف أعمال خاصًا بي، وهذا بالضبط ما هو عليه.",
             "ثلاثة ألوان، لغتان، وملف أعمال واحد.",
@@ -404,6 +409,7 @@ export const PROJECT_PAGES: Record<Language, Record<string, ProjectPageContent>>
         {
           kind: "text",
           title: "النتيجة",
+          light: true,
           paragraphs: [
             "MedConnect إحدى أولى دراسات الحالة التي أنجزتها في بدايات رحلتي في تصميم تجربة المستخدم وواجهته.",
             "تُظهر من أين بدأت: عملية متكاملة، من البحث إلى الشاشات النهائية، واصلت البناء عليها منذ ذلك الحين.",

@@ -28,20 +28,23 @@ export interface ChildPageSectionsProps {
 // Body text is regular/18 on responsive and regular/20 on desktop (Figma child-page-sections).
 const bodyText = "text-regular-18 text-neutral-62 lg:text-regular-20";
 
-function SectionHeading({ children }: { children: string }) {
-  return <h2 className="w-full text-bold-24 text-brand-cream lg:text-bold-32">{children}</h2>;
+// The same on a light section (the colours of the light sections on the home page).
+const bodyTextLight = "text-regular-18 text-neutral-37 lg:text-regular-20";
+
+function SectionHeading({ children, light }: { children: string; light?: boolean }) {
+  return <h2 className={cn("w-full text-bold-24 lg:text-bold-32", light ? "text-brand-ink" : "text-brand-cream")}>{children}</h2>;
 }
 
-function TextLayout({ title, paragraphs, figure }: TextSection) {
+function TextLayout({ title, paragraphs, figure, light }: TextSection) {
   return (
     <>
-      <SectionHeading>{title}</SectionHeading>
-      <div className={cn("flex w-full flex-col gap-4", bodyText)}>
+      <SectionHeading light={light}>{title}</SectionHeading>
+      <div className={cn("flex w-full flex-col gap-4", light ? bodyTextLight : bodyText)}>
         {paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </div>
-      {figure && <FigureBlock {...figure} />}
+      {figure && <FigureBlock {...figure} light={light} />}
     </>
   );
 }
@@ -193,7 +196,7 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
  * A full-width 16:9 picture, or a video with controls, with its caption under it (same frame and
  * caption style as the gallery). The video only loads its first frame until it is played.
  */
-function FigureBlock({ src, caption, video }: Figure & { video?: boolean }) {
+function FigureBlock({ src, caption, video, light }: Figure & { video?: boolean; light?: boolean }) {
   return (
     <figure className="flex w-full flex-col gap-2">
       {video ? (
@@ -208,7 +211,7 @@ function FigureBlock({ src, caption, video }: Figure & { video?: boolean }) {
       ) : (
         <GalleryImage src={src} alt={caption} ratio="aspect-video" />
       )}
-      <figcaption className="text-regular-14 text-neutral-48">{caption}</figcaption>
+      <figcaption className={cn("text-regular-14", light ? "text-neutral-37" : "text-neutral-48")}>{caption}</figcaption>
     </figure>
   );
 }
@@ -237,13 +240,26 @@ export default function ChildPageSections({ sections, direction, className }: Ch
   const dir = useDirection(direction);
   return (
     <div dir={dir} className={cn("flex w-full flex-col gap-10 bg-brand-ink px-4 py-8 text-start lg:gap-[62px] lg:p-8", className)}>
-      {sections.map((section) => (
-        <section key={section.title} className="flex w-full flex-col items-start gap-6">
-          {section.kind === "text" && <TextLayout {...section} />}
-          {section.kind === "list" && <ListLayout {...section} />}
-          {section.kind === "gallery" && <GalleryLayout {...section} />}
-        </section>
-      ))}
+      {sections.map((section, index) => {
+        const light = section.kind === "text" && section.light;
+        return (
+          <section
+            key={section.title}
+            className={cn(
+              "flex flex-col items-start gap-6",
+              // A light section is a band across the whole width: it reaches out over this container's padding
+              // (and, as the last section, down to the next block).
+              light
+                ? cn("-mx-4 bg-brand-cream px-4 py-8 lg:-mx-8 lg:p-8", index === sections.length - 1 && "-mb-8")
+                : "w-full",
+            )}
+          >
+            {section.kind === "text" && <TextLayout {...section} />}
+            {section.kind === "list" && <ListLayout {...section} />}
+            {section.kind === "gallery" && <GalleryLayout {...section} />}
+          </section>
+        );
+      })}
     </div>
   );
 }
