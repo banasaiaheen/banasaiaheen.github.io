@@ -100,6 +100,8 @@ const ar: Translations = {
   },
   childPage: {
     figmaLink: "رابط FIGMA",
+    enlargeImage: "تكبير الصورة",
+    closeImage: "إغلاق الصورة",
   },
 };
 

@@ -115,5 +115,8 @@ export interface Translations {
   /** Chrome of project (child) pages. The project content itself lives in src/data/projectPages.ts. */
   childPage: {
     figmaLink: string;
+    /** Screen-reader labels of the enlarge-on-click images. */
+    enlargeImage: string;
+    closeImage: string;
   };
 }

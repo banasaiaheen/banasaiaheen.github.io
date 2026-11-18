@@ -100,6 +100,8 @@ const en: Translations = {
   },
   childPage: {
     figmaLink: "FIGMA Link",
+    enlargeImage: "Enlarge image",
+    closeImage: "Close image",
   },
 };
 

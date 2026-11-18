@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Direction } from "../../types/language";
 import { cn } from "../../utils/cn";
-import { useDirection } from "../../i18n/useLanguage";
+import { useDirection, useTranslations } from "../../i18n/useLanguage";
 import type { Figure, GallerySection, ListSection, ProjectSection, TextSection } from "../../data/projectPages";
 
 /**
@@ -78,8 +79,16 @@ const MAX_IMAGE_RETRIES = 3;
  * panel behind it shows while the image loads.
  */
 function GalleryImage({ src, alt, ratio = "aspect-[1440/1024]" }: { src: string; alt: string; ratio?: string }) {
+  const t = useTranslations();
   const [attempt, setAttempt] = useState(0);
   const [failed, setFailed] = useState(false);
+  const [enlarged, setEnlarged] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  // Stable, so the Lightbox's effect (scroll lock, focus) does not restart on every render.
+  const close = useCallback(() => {
+    setEnlarged(false);
+    triggerRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!failed || attempt >= MAX_IMAGE_RETRIES) return;
@@ -91,14 +100,77 @@ function GalleryImage({ src, alt, ratio = "aspect-[1440/1024]" }: { src: string;
   }, [failed, attempt]);
 
   return (
-    <img
-      // A changed URL makes the browser request the file again instead of reusing the failed one.
-      src={attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}retry=${attempt}`}
-      alt={alt}
-      decoding="async"
-      onError={() => setFailed(true)}
-      className={cn(ratio, "w-full border border-neutral-16 bg-brand-panel object-cover")}
-    />
+    <>
+      {/* Clicking the image shows it large, whole and uncropped (see Lightbox). */}
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setEnlarged(true)}
+        aria-haspopup="dialog"
+        aria-label={`${t.childPage.enlargeImage}: ${alt}`}
+        className="block w-full cursor-zoom-in focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-red-bright"
+      >
+        <img
+          // A changed URL makes the browser request the file again instead of reusing the failed one.
+          src={attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}retry=${attempt}`}
+          alt=""
+          decoding="async"
+          onError={() => setFailed(true)}
+          className={cn(ratio, "w-full border border-neutral-16 bg-brand-panel object-cover")}
+        />
+      </button>
+      {enlarged && <Lightbox src={src} alt={alt} onClose={close} />}
+    </>
+  );
+}
+
+/**
+ * The enlarged view of a gallery image: the whole picture on a dark backdrop. Closes on a click anywhere,
+ * the close button or Escape. The page behind does not scroll while it is open (only <html> is locked,
+ * like the mobile menu in Navigation, so the sticky bars keep working).
+ */
+function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  const t = useTranslations();
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    root.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      root.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onClose]);
+
+  // In a portal on <body>, so no animated or transformed ancestor can trap the fixed backdrop.
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt}
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex cursor-zoom-out items-center justify-center bg-black/90 p-4 lg:p-10"
+    >
+      <button
+        ref={closeRef}
+        type="button"
+        onClick={onClose}
+        aria-label={t.childPage.closeImage}
+        className="absolute end-4 top-4 flex size-10 items-center justify-center text-brand-cream focus-visible:outline-2 focus-visible:outline-brand-red-bright lg:end-8 lg:top-8"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M5 5l14 14M19 5L5 19" />
+        </svg>
+      </button>
+      <img src={src} alt={alt} className="max-h-full max-w-full object-contain" />
+    </div>,
+    document.body,
   );
 }
 
